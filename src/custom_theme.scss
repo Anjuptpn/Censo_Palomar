@@ -188,8 +188,4 @@ $tema: mat.define-light-theme((
 
 
 //Añadir a angular
-//@include mat.core-theme($tema);
-//@include mat.button-theme($tema);
-@include mat.strong-focus-indicators-theme($tema);
-@include mat.core-color($tema);
 @include mat.all-component-themes($tema);
