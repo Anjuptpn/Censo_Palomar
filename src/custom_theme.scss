@@ -1,0 +1,195 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+//Manual aquí: https://v17.material.angular.io/guide/theming
+//Generador de colores http://mcg.mbitson.com/#!?mcgpalette0=%233f51b5
+//Definición de los colores
+$my-primary-color: (
+    50 : #e5ebef,
+    100 : #becdd7,
+    200 : #93acbd,
+    300 : #688ba2,
+    400 : #47728e,
+    500 : #27597a,
+    600 : #235172,
+    700 : #1d4867,
+    800 : #173e5d,
+    900 : #0e2e4a,
+    A100 : #82bfff,
+    A200 : #4fa5ff,
+    A400 : #1c8bff,
+    A700 : #037eff,
+    contrast: (
+        50 : #173e5d,
+        100 : #173e5d,
+        200 : #173e5d,
+        300 : #173e5d,
+        400 : #e5ebef,
+        500 : #e5ebef,
+        600 : #e5ebef,
+        700 : #e5ebef,
+        800 : #e5ebef,
+        900 : #e5ebef,
+        A100 : #173e5d,
+        A200 : #173e5d,
+        A400 : #e5ebef,
+        A700 : #e5ebef,
+    )
+);
+
+$my-accent-color: (
+    50 : #e1e5e8,
+    100 : #b4bfc6,
+    200 : #8395a0,
+    300 : #516a79,
+    400 : #2b4a5d,
+    500 : #062a40,
+    600 : #05253a,
+    700 : #041f32,
+    800 : #03192a,
+    900 : #020f1c,
+    A100 : #5a98ff,
+    A200 : #2778ff,
+    A400 : #005bf3,
+    A700 : #0052da,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #ffffff,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #ffffff,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+$my-moonstone: (
+    50 : #eaf4f6,
+    100 : #cae5e7,
+    200 : #a6d3d8,
+    300 : #82c1c8,
+    400 : #68b4bc,
+    500 : #4da7b0,
+    600 : #469fa9,
+    700 : #3d96a0,
+    800 : #348c97,
+    900 : #257c87,
+    A100 : #c7f8ff,
+    A200 : #94f2ff,
+    A400 : #61ecff,
+    A700 : #47e9ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+$my-nonphotoblue: (
+    50 : #f5fcfe,
+    100 : #e5f6fd,
+    200 : #d4f1fc,
+    300 : #c2ebfb,
+    400 : #b5e6fa,
+    500 : #a8e2f9,
+    600 : #a0dff8,
+    700 : #97daf7,
+    800 : #8dd6f6,
+    900 : #7dcff5,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #ffffff,
+    A700 : #f9fdff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+$my-skyblue: (
+    50 : #f2f8fb,
+    100 : #dfeef5,
+    200 : #c9e2ee,
+    300 : #b3d6e7,
+    400 : #a3cee2,
+    500 : #93c5dd,
+    600 : #8bbfd9,
+    700 : #80b8d4,
+    800 : #76b0cf,
+    900 : #64a3c7,
+    A100 : #ffffff,
+    A200 : #ffffff,
+    A400 : #d0eeff,
+    A700 : #b7e5ff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+//Añadir paleta de colores
+$my-primary: mat.define-palette($my-primary-color);
+$my-accent: mat.define-palette($my-accent-color);
+//$my-warn: mat.define-palette($my-moonstone);
+
+//crear el tema
+$tema: mat.define-light-theme((
+    color:(
+        primary: $my-primary,
+        accent: $my-accent,
+        //warn: $my-warn,
+    ),
+    typography: mat.define-typography-config(),
+    density: 0,
+));
+
+
+//Añadir a angular
+//@include mat.core-theme($tema);
+//@include mat.button-theme($tema);
+@include mat.strong-focus-indicators-theme($tema);
+@include mat.core-color($tema);
+@include mat.all-component-themes($tema);
