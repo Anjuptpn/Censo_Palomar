@@ -1,0 +1,104 @@
+<div class="form-container center-child">
+    <form class="center-child" [formGroup]="pigeonForm" (ngSubmit)="submitPigeonRegister()">  
+        <mat-form-field>
+            <mat-label>Nombre de la paloma</mat-label>
+            <input type="text" matInput required formControlName="pigeonName">
+        </mat-form-field>
+        @if(pigeonForm.get('pigeonName')?.touched && pigeonForm.get('pigeonName')?.errors?.['required']){
+            <div class="error-form">
+                Debes introducir un nombre para la paloma.
+            </div>
+        }
+        <mat-form-field>
+          <mat-label>Nº de anilla</mat-label>
+          <input type="text" matInput required formControlName="ring">
+        </mat-form-field>
+        @if(pigeonForm.get('ring')?.touched && pigeonForm.get('ring')?.errors?.['required']){
+           <div class="error-form">
+               Debes introducir un número de anilla.
+           </div>
+        }
+        <mat-form-field>
+          <mat-label>Color</mat-label>
+          <input type="text" matInput formControlName="color">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Estirpe / Raza</mat-label>
+          <input type="text" matInput formControlName="breed">
+        </mat-form-field>     
+        <mat-form-field>
+          <mat-label>Fecha de nacimiento</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="birthday">
+          <mat-hint>D/M/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker touchUi #picker></mat-datepicker>
+        </mat-form-field>      
+
+        <mat-radio-group aria-label="Género de la paloma" formControlName="gender">
+          <label class="input-file-label">Género: </label><br>
+          <mat-radio-button value="Macho">Macho</mat-radio-button>
+          <mat-radio-button value="Hembra">Hembra</mat-radio-button>
+          <mat-radio-button value="Desconocido">Desconocido</mat-radio-button>
+        </mat-radio-group>
+
+        <mat-form-field>
+          <mat-label>Estado</mat-label>          
+          <input type="text" matInput formControlName="state" [matAutocomplete]="fill">
+          <mat-autocomplete #fill="matAutocomplete" >
+            @for (state of states; track $index) {
+              <mat-option [value]="state">{{state}}</mat-option>
+            }
+          </mat-autocomplete>
+          <mat-hint>Si el estado no está en la lista teclea uno</mat-hint>
+        </mat-form-field>
+
+        <mat-slide-toggle formControlName="registeredFather">¿El padre ya está registrado?</mat-slide-toggle>
+
+        <mat-form-field [ngClass]="{'hidden-field': !hasRegisteredFather}">
+          <mat-label>Padre</mat-label>
+          <mat-select formControlName="father">
+            @for (male of mockdataPigeon; track $index) {
+              <mat-option [value]="male.anilla">{{male.nombre}}</mat-option>
+            }
+          </mat-select>
+          <mat-hint>Si no está en la lista añádelo manualmente</mat-hint>
+        </mat-form-field>
+        <mat-form-field [ngClass]="{'hidden-field': hasRegisteredFather}">
+          <mat-label>Padre (Entrada Manual)</mat-label>
+          <input type="text" matInput placeholder="Padre" formControlName="father">          
+        </mat-form-field>
+
+        <mat-slide-toggle formControlName="registeredMother">¿La Madre ya está registrada?</mat-slide-toggle>
+        
+        <mat-form-field [ngClass]="{'hidden-field': !hasRegisteredMother}">
+          <mat-label>Madre</mat-label>
+          <mat-select  formControlName="mother">
+            @for (female of mockdataPigeon; track $index) {
+              <mat-option [value]="female.anilla">{{female.nombre}}</mat-option>
+            }
+          </mat-select>
+          <mat-hint>Si no está en la lista añádela manualmente</mat-hint>
+        </mat-form-field>         
+        <mat-form-field [ngClass]="{'hidden-field': hasRegisteredMother}">
+          <mat-label>Madre (Entrada Manual)</mat-label>
+          <input type="text" matInput placeholder="Madre" formControlName="mother">
+        </mat-form-field>
+
+        <label class="input-file-label">Subir imagen de la paloma</label>
+        <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="image">
+
+        <mat-form-field class="text-area">          
+          <mat-label>Notas</mat-label>
+          <textarea formControlName="notes" matInput rows="5"
+              placeholder="Notas, comentarios, observaciones, datos de interés...">
+          </textarea>
+       </mat-form-field> 
+       
+
+       <div class="button">
+         <button type="submit" mat-raised-button color="primary" [disabled]="!pigeonForm.valid">{{typeForm}}</button>
+        </div>
+    </form>
+
+</div>
+

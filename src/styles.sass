@@ -1,1 +1,104 @@
 /* You can add global styles to this file, and also import other style files */
+@import './app/css-variables'
+body
+    margin: 0
+
+.mat-drawer-backdrop.mat-drawer-shown
+    background-color: #a8e2f978 !important
+
+p, h1, h2, h3, h4, h5, h6, a
+    font-family: $fonts
+
+.center-child
+    display: flex
+    justify-content: center
+
+.center-and-middle-child
+    display: flex
+    justify-content: center
+    align-items: center
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled)
+    background-color: $non-photo-blue !important
+
+.links
+    color: $lapiz-lazuli
+
+.error-form
+    margin-top: -12px
+    padding: 8px 16px   
+    color: #dd0000
+    background-color: #f7d6e0
+    margin-bottom: 10px
+    font-family: $fonts
+
+input[type=file]::file-selector-button
+    border-radius: 5px
+    padding: 10px 10px
+    background-color: $lapiz-lazuli
+    color: $blanco
+    font-family: $fonts
+    font-size: 15px
+    border: 0px solid $non-photo-blue
+    cursor: pointer 
+    margin-bottom: 5px
+    margin-top:5px
+
+input[type=file]::file-selector-button:hover
+    background-color: $moonstone
+
+label.input-file-label
+        font-family: $fonts
+        font-size: 18px
+        font-weight: 500  
+
+.title-form
+    text-align: center
+    color: $lapiz-lazuli
+    font-size: 30px
+    font-weight: normal
+
+
+
+/*.custom-snackbar
+    .mdc-snackbar__surface
+        background-color: $lapiz-lazuli !important
+        border-radius: 3px !important
+        max-width: 100%
+        width: 100%*/
+    
+        
+.snackbar-error
+    .mdc-snackbar__surface
+        background-color: $prussian-blue !important
+        border-radius: 3px !important
+        max-width: 100%
+        width: 100%
+
+    .mdc-snackbar__label
+        color: $non-photo-blue !important
+        font-size: 16px !important
+
+    .mdc-button__label
+        color: $prussian-blue !important
+
+    .mat-mdc-focus-indicator
+        background-color: $sky-blue !important
+        border-radius: 5px
+
+.snackbar-success
+    .mdc-snackbar__surface
+        background-color: $lapiz-lazuli !important
+        border-radius: 3px !important
+        max-width: 100%
+        width: 100%
+
+    .mdc-snackbar__label
+        color: $blanco !important
+        font-size: 16px !important
+
+    .mdc-button__label
+        color: $prussian-blue !important
+    .mat-mdc-focus-indicator
+        background-color: $non-photo-blue !important
+        border-radius: 5px

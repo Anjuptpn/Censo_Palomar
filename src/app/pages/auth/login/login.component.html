@@ -1,0 +1,38 @@
+<app-header-forms [titleForm]="'Iniciar Sesión'" [webName]="'Censo Palomar'"></app-header-forms>
+<div class="form-container center-child">
+    <form class="center-child" [formGroup]="loginForm" (ngSubmit)="initSesionWithEmail()">
+        <mat-form-field>
+            <mat-label>Correo electrónico</mat-label>
+            <input type="text" matInput formControlName="email">
+        </mat-form-field>
+        @if(loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['pattern']){        
+          <div class="error-form">
+            Debes introducir un email válido
+          </div>
+        }
+        @if(loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']){
+          <div class="error-form">
+            Debes introducir un email
+          </div>
+        }
+        <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput formControlName="password">
+        </mat-form-field>
+
+        @if(loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']){
+          <div class="error-form">
+            Te has olvidado de poner la contraseña.
+          </div>
+        }
+        <div class="button">
+            <button type="submit" mat-flat-button color=primary [disabled]="!loginForm.valid">
+              Iniciar Sesión
+            </button>
+        </div>
+    </form>    
+</div>
+<div class="links-sign-in">
+  <p>¿No tienes cuenta? <a class="links" routerLink="/auth/sign-up/">Regístrate</a><br>
+    <a class="links" routerLink="/auth/recovery-password/">Olvidaste tu contraseña</a></p>  
+</div>

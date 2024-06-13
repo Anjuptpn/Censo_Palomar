@@ -1,0 +1,19 @@
+<mat-toolbar color=primary> 
+    <img class="logo-header" src="{{logoImg}}" alt="Censo Palomar">   
+    <span class="app-name">{{appName}}</span>
+    <span class="spacer-toolbar"></span>    
+    <button mat-icon-button class="menu-button" (click)="toggleSideNav()">
+      <mat-icon>menu</mat-icon>
+    </button>
+</mat-toolbar>
+<mat-sidenav-container class="sidenav-class" hasBackdrop="true" (backdropClick)="openSideNav(false)">
+  <mat-sidenav #sidenav mode="over" [(opened)] = "openMenu" position="end">
+      <app-menu (closeSidenavEvent)="openSideNav($event)"></app-menu>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+       
+    
+  </mat-sidenav-content>
+  
+</mat-sidenav-container>

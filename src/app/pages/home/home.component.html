@@ -1,0 +1,75 @@
+<div class="banner-home">
+    <img src="/assets/logo-A8e2f9.png">
+    <h1>Censo Palomar</h1>
+</div>
+<div class="second-section">
+    <div class="text-home">
+        <h3><strong>¡Bienvenido a Censo Palomar!</strong></h3>
+        <p>Nos complace presentarte una plataforma diseñada especialmente para que los colombófilos 
+            puedan registrar y gestionar sus aves de manera fácil. 
+            El objetivo es facilitarte el seguimiento y control de tu palomar, proporcionando una 
+            herramienta intuitiva y accesible para todos.</p>
+        <p>Para comenzar a utilizar la aplicación, regístrate creando una cuenta en nuestra plataforma. Luego, comienza 
+            a registrar tus palomas proporcionando la información básica requerida. Accede a tu cuenta 
+            en cualquier momento para actualizar datos y gestionar tu palomar de manera eficiente.</p>
+        <div class="buttons-home">
+            <button mat-flat-button color="primary" routerLink="/auth/login">Iniciar Sesión</button>
+            <button mat-flat-button color="primary" routerLink="/auth/sign-up">Registrarse</button>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper-news-section">
+    <div class="news-section-content">
+        <h1 class="title-section-home">Últimas Noticias</h1>
+        <hr class="line-home">
+        <div class="news-text-home">
+            @if (isSmallScreen){
+                <div class="wrapper-news">
+                    <div class="wrapper-image">
+                        <img src={{mockupsNews[0].imagen}} class="image-news">
+                    </div>
+                    <div class="wrapper-content-news">                            
+                        <h3 class="title-news">{{mockupsNews[0].titulo}}</h3>
+                        <p class="date-news">{{mockupsNews[0].fecha}} </p>
+                        <p class="category-news"><span>{{mockupsNews[0].categoria}}</span></p>
+                    </div>                            
+                    </div>
+            } @else {                        
+                @for( new of mockupsNews; track $index){
+                    <div class="wrapper-news">
+                        <div class="wrapper-image">
+                            <img src={{new.imagen}} class="image-news">
+                        </div>
+                        <div class="wrapper-content-news">                            
+                            <h3 class="title-news">{{new.titulo}}</h3>
+                            <p class="date-news">{{new.fecha}} </p>
+                            <p class="category-news"><span>{{new.categoria}}</span></p>
+                        </div>                            
+                    </div>
+                }
+            }
+        </div>
+        <div class="market-button-home">
+            <button mat-flat-button>Ver todas las noticias</button>
+        </div>
+    </div>
+</div>
+    
+<div class="wrapper-market-section">
+    <div class="market-section-home">
+        <h1 class="title-section-home">Anuncios</h1>
+        <hr class="line-home">
+        <div class="market-text-content">       
+            <div class="market-text-home">
+                <p>En esta sección próximamente se podrán ver los últimos anuncios publicados por los usuarios de la aplicación.</p>
+                <div class="market-button-home">
+                    <button mat-flat-button color=primary>Ver anuncios</button>
+                </div>
+            </div>
+        </div> 
+    </div>
+</div>
+<app-footer></app-footer>
+
+

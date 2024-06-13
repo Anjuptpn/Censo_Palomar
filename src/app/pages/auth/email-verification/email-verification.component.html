@@ -1,0 +1,13 @@
+<section class="center-child">
+    <div class="wrapper-content">
+        <h1 class="verification-title">Gracias por registrarte</h1>
+        <p>Te hemos enviado un email de confirmación a <strong>{{usuario?.email}}</strong><br>
+            Si no lo has recibido revisa tu bandeja de SPAM</p>
+    </div>
+    <div class="wrapper-content">
+        <h4>Si no has recibido el email, haz click en el siguiente botón para reenviar el correo.</h4>
+        <div class="wrapper-button center-child">
+            <button class="boton-email-verificacion" mat-raised-button color="primary" (click)="resendMail()">Reenviar email de verificación</button>
+        </div>
+    </div>
+</section>

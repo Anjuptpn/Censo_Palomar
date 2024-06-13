@@ -1,0 +1,76 @@
+@import '../../css-variables'
+
+.spacer-toolbar
+  flex: 1 1 auto
+
+mat-toolbar
+  position: fixed
+  top: 0
+  left: 0
+  z-index: 2
+  width: 100%
+  height: 100px
+
+.logo-header
+  width: 80px
+  margin: 0 25px
+
+.menu-button
+  background: $transparente
+  border: 0px
+
+$icon-size: 40px
+
+.menu-button 
+  mat-icon
+    width: $icon-size
+    height: $icon-size
+    font-size: $icon-size
+    color: $blanco
+    margin-right: 40px
+
+.app-name
+  font-family: $fonts
+  font-size: 40px
+
+mat-sidenav
+  width: 25%
+  background-color: $blanco-roto
+  height: calc(100vh - 100px)
+    
+mat-sidenav-content
+  width: 100%
+  min-height: calc(100vh - 100px)
+  overflow-y: hidden 
+
+mat-sidenav-container
+  margin-top: 100px
+
+
+
+
+//Móviles
+@media (max-width: 800px)
+    mat-toolbar
+      height: 80px
+
+    .logo-header
+      width: 60px
+      margin: 0px 8px 0px 0px
+
+    .menu-button 
+      mat-icon
+       margin-right: 0
+
+    .app-name
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+      font-size: 22px
+
+    mat-sidenav
+      width: 95%
+    
+    mat-sidenav-content
+      min-height: calc(100vh - 100px)
+
+    mat-sidenav-container
+      margin-top: 80px 

@@ -1,0 +1,69 @@
+<app-header-forms [titleForm]="'Registro de Usuario'" [webName]="'Censo Palomar'"></app-header-forms>
+<div class="form-container center-child">
+    <form class="center-child" [formGroup]="registerForm" (ngSubmit)="submitSignupUser()">  
+        <mat-form-field>
+            <mat-label>Nombre</mat-label>
+            <input type="text" matInput formControlName="name">
+        </mat-form-field>
+        @if(registerForm.get('name')?.touched && registerForm.get('name')?.errors?.['required']){
+            <div class="error-form">
+                Debes introducir un nombre.
+            </div>
+        }
+        <mat-form-field>
+            <mat-label>Correo electrónico</mat-label>
+          <input type="text" matInput formControlName="email">
+        </mat-form-field>
+       @if(registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['pattern']){
+           <div class="error-form">
+               Debes introducir un email válido
+           </div>
+       }
+       @if(registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required']){
+           <div class="error-form">
+            Debes introducir un email
+           </div>
+       }
+       <mat-form-field>
+            <mat-label>Club</mat-label>
+            <input type="text" matInput formControlName="club">
+       </mat-form-field>    
+       <mat-form-field>
+            <mat-label>Contraseña</mat-label>
+            <input type="password" matInput formControlName="password">
+       </mat-form-field>
+      @if(registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required']){
+          <div class="error-form">
+            Debes poner una contraseña.
+          </div>
+      }
+      @if (registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['minlength']){
+        <div class="error-form">
+            La contraseña debe tener al menos {{ registerForm.get('password')?.errors?.['minlength']?.requiredLength}} caracteres.
+        </div> 
+      }
+      <!-- Cambio de look del botón aquí https://www.viget.com/articles/styling-native-file-upload-input-field/ -->
+      <label class="input-file-label">Subir imagen de perfil</label>
+      <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="image" (change)="getFileForm($event)">      
+      <mat-checkbox required formControlName="policy">
+            Acepto las <a href="#">condiciones de uso</a>
+        </mat-checkbox>
+      @if (registerForm.get('policy')?.touched && registerForm.get('policy')?.errors?.['required']){
+          <div class="error-form">
+              Debes leer y aceptar las políticas de uso.
+          </div>
+      }    
+
+     <div class="button">
+       <button type="submit" mat-raised-button color="primary" [disabled]="!registerForm.valid">Regístrate</button>
+    </div>
+    </form>    
+</div>
+<div class="links-signup">
+    <p>
+        <a class="enlace-signup" routerLink="/auth/login/">¿Ya tienes cuenta?</a>  
+    </p>
+</div>
+
+
+

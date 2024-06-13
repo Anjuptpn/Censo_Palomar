@@ -1,0 +1,41 @@
+@import '../../css-variables'
+
+.menu-item
+    padding: 12px 15px
+    display: flex
+    flex-direction: row
+    align-items: center
+    cursor: pointer
+
+    mat-icon
+        color: $prussian-blue
+        font-size: 30px
+        height: 30px
+        width: 40px
+
+.menu-link
+    text-decoration: none
+    font-family: $fonts
+    color: $prussian-blue
+    font-weight: bold
+    letter-spacing: 0.1em
+
+.menu-item:hover
+    background-color: $non-photo-blue
+
+.active-link
+    background-color: $moonstone-transparent-25
+    color: red
+    font-weight: 800
+
+.sidenav-button-close
+    border: 0px
+    margin: 5px
+    border-radius: 50px
+    background-color: $blanco-roto
+    cursor: pointer
+    mat-icon
+        color: $prussian-blue
+
+.sidenav-button-close:hover    
+    background-color: $non-photo-blue

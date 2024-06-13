@@ -1,0 +1,183 @@
+@import '../../css-variables'
+.banner-home
+    background-image: linear-gradient(to bottom, #00000090, #00000090), url('/assets/rock-dove.jpg')
+    background-repeat: no-repeat
+    background-size: cover
+    background-position: top center
+
+    width: 100%
+    height: calc(100vh - 100px)
+
+    display: flex
+    align-items: center
+    justify-content: center
+
+    img
+        width: 100px
+        margin-right: 2em
+    
+    h1
+        color: $non-photo-blue
+        font-family: $fonts
+        font-size: 100px
+        font-weight: normal
+
+
+    
+.second-section
+    background-image: linear-gradient(to bottom, #fafafadd, #fafafadd), url('/assets/flock-background.png')
+    background-repeat: no-repeat
+    background-size: cover
+    background-position: bottom right
+    width: 100%
+    display: flex
+    justify-content: center
+    align-content: center
+    padding: 50px 0
+
+    .text-home
+        //background-color: #fafafa
+        width: 60%
+        
+
+.buttons-home, .market-button-home
+    display: flex
+    justify-content: center
+    
+    button
+        margin: 10px 15px
+        padding: 25px 50px
+
+.wrapper-market-section
+    display: flex
+    justify-content: center
+    .market-section-home
+        width: 90%        
+
+        .title-section-home
+            color: $prussian-blue
+        .line-home
+            color: $sky-blue
+            margin-top: -8px
+
+
+        .market-text-content
+            display: flex
+            justify-content: center
+            .market-text-home
+                width: 60%
+
+.wrapper-news-section
+    display: flex
+    justify-content: center
+    background-color: $prussian-blue
+
+    .news-section-content
+        width: 90%
+        .title-section-home 
+            color: $blanco   
+        .line-home
+            color: $blanco
+            margin-top: -8px
+
+        .news-text-home
+            color: $blanco 
+            display: flex
+            justify-content: center           
+            .wrapper-news                
+                width: 33%
+                border: 1px solid $non-photo-blue
+                margin: 20px 10px 30px 10px
+                border-radius: 15px
+                .wrapper-image
+                    border-radius: 15px 15px 0 0
+                    .image-news
+                        border-radius: 15px 15px 0 0
+                        width: 100%
+                        justify-content: center
+                
+                .wrapper-content-news
+                    padding: 0 10px 0 10px
+                    
+                    .date-news
+                        margin-top: -15px
+                    .category-news
+                        text-align: right
+                        span
+                            padding: 10px 20px
+                            border-radius: 15px
+                            background-color: $moonstone
+        .market-button-home
+            margin-bottom: 50px
+
+
+
+@media (max-width: 800px)
+    .banner-home
+        background-position: 25% center
+
+        width: 100%
+        height: calc(70vh - 80px)
+
+        display: flex
+        flex-direction: column
+
+        img
+            width: 90px
+            margin-right: 1em
+    
+        h1
+            font-size: 40px
+           
+
+    .second-section
+         
+         display: flex
+         justify-content: center
+         align-content: center
+         padding: 15px 0
+
+         .text-home
+            width: 90%
+        
+
+    .buttons-home, .market-button-home
+        flex-direction: column
+    
+        button
+            margin: 10px 15px
+            padding: 25px 50px
+
+    .wrapper-market-section
+        .market-section-home
+            width: 95%      
+
+            .line-home
+                margin-top: -8px
+
+            .market-text-content
+                .market-text-home
+                    width: 90%
+
+    .wrapper-news-section
+        .news-section-content
+            width: 95%
+               
+            .line-home                
+                margin-top: -8px
+
+            .news-text-home         
+                .wrapper-news                
+                    width: 90%
+                    margin: 20px 10px 30px 10px
+                
+                    .wrapper-content-news
+                        padding: 0 10px 0 10px                    
+                        .date-news
+                            margin-top: -15px
+                        .category-news
+                            text-align: right
+                            span
+                                padding: 10px 20px
+            .market-button-home
+                margin-bottom: 50px

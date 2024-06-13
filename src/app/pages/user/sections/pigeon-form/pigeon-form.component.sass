@@ -1,0 +1,26 @@
+.form-container
+    background-image: linear-gradient(to bottom, #fafafadd, #fafafadd), url('/assets/flock-background.png')
+    background-repeat: no-repeat
+    background-size: cover
+    background-position: bottom right
+    padding-bottom: 50px
+    form
+        flex-direction: column
+        width: 30%
+        mat-slide-toggle
+            padding: 8px 20px
+        mat-radio-group
+            padding-left: 8px
+        .text-area
+            margin-top: 8px
+        .button
+            button
+                width: 100%
+
+.hidden-field
+    display: none
+
+@media (max-width: 800px)
+    .form-container
+        form
+            width: 90%
