@@ -1,10 +1,21 @@
 <button class="sidenav-button-close" (click)="emitCloseSidenav()"><mat-icon>close</mat-icon></button>
 
 @for (link of menuLinks; track $index) {
-  <div class="menu-item" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"
-    [routerLink]="link.link"
-    (click)="emitCloseSidenav()">
+  @if (link.tag === 'Cerrar Sesión'){
+    <div class="menu-item" (click)="logout()">
       <mat-icon>{{link.icon}}</mat-icon>
       <span class="menu-link">  {{link.tag}} </span>
-  </div>
+    </div>
+  } @else {
+    <div class="menu-item" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"
+      [routerLink]="link.link"
+      (click)="emitCloseSidenav()">
+        @if (link.icon === ''){
+          <img src='{{link.image}}' alt="ICON" width="30px">
+        } @else {
+          <mat-icon>{{link.icon}}</mat-icon>
+        }        
+        <span class="menu-link">  {{link.tag}} </span>
+    </div>
+  }
 }

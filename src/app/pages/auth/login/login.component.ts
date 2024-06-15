@@ -42,9 +42,9 @@ export class LoginComponent implements OnInit{
     });
   }
 
-  initSesionWithEmail(){
+  async initSesionWithEmail(){
     try{
-      this.authService.loginWithEmailAndPassword(
+      await this.authService.loginWithEmailAndPassword(
         this.loginForm.get('email')?.value,
         this.loginForm.get('password')?.value);
     }

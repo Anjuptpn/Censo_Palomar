@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, User, authState, createUserWithEmailAndPassword, getAuth, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, User, authState, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { UserInterface } from '../../../sections/Models/user.model';
-import { Firestore, Timestamp, doc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { DocumentSnapshot, Firestore, Timestamp, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { StorageService } from '../../../sections/services-shared/storage.service';
 
@@ -22,12 +22,13 @@ export class AuthService {
 
   constructor() { }
 
-  async userSignup(imageFile: File, userData: UserInterface ): Promise<void>{
+  async userSignup(imageFile: File, userData: UserInterface, role = 'Colombófilo'): Promise<void>{
     try{
       //Aquí se extrae el objeto User del Usercredentials que devuelve.
       const { user } = await createUserWithEmailAndPassword( this.auth, userData.email, userData.password);
       if (user){
         userData.id = user.uid;
+        userData.rol = role;
         this.saveUserData(userData, imageFile);
         this.sendVerificationEmail(user);
         this.router.navigate(['/auth/email-verification']);        
@@ -73,7 +74,7 @@ export class AuthService {
 
   private checkIfMailIsVerificated (user: User) :void{
     const verified = user.emailVerified;
-    const route = verified ? 'user/register-pigeon' : '/auth/email-verification';
+    const route = verified ? 'user/pigeon-register' : '/auth/email-verification';
     this.router.navigate([route]);
   }
 
@@ -92,8 +93,7 @@ export class AuthService {
       await this.auth.signOut();
     }catch (error){
       throw(this.extractErrorCode(error));
-    }
-    
+    }    
   }
 
   private extractErrorCode(error: any){
@@ -102,4 +102,14 @@ export class AuthService {
   }
 
   //Pendiente (actualizar Usuario, traer información del usuario)
+  async getUserInfoFromFirebase(id: string){
+    try{
+      const document = doc(this.firestore, 'usuarios', id);
+      const response = await getDoc(document);
+      return response.data() as UserInterface;
+
+    } catch (error){
+      throw(this.extractErrorCode(error));
+    }
+  }
 }

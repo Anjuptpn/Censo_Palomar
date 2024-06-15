@@ -1,1 +1,37 @@
-<p>profile works!</p>
+<h1 class="profile-title title-form">Perfil</h1>
+<div class="container center-child">    
+    <div class="wrapper-profile">        
+        <div class="wrapper-image center-child">
+            @if(currentUserData?.urlImage != '' || currentUserData?.urlImage != null){
+                <img src="{{currentUserData?.urlImage}}" alt="Imagen de perfil">
+            }@else {
+                <img src="assets/logo-27597a-cuadro.png" alt="Imagen de perfil">
+            }
+        </div>
+        <div class="user-information center-child">
+            <mat-list class="profile-list">
+                <mat-list-item>
+                    <span matListItemTitle class="title-item">Nombre</span> 
+                    <span matListItemIcon class="icon-item"><mat-icon>person</mat-icon></span>
+                    <span matListItemLine class="info-item">{{currentUserData?.name}}</span> 
+                </mat-list-item>
+                <mat-list-item>
+                    <span matListItemTitle class="title-item">Correo</span> 
+                    <span matListItemIcon class="icon-item"><mat-icon>mail</mat-icon></span>
+                    <span matListItemLine class="info-item">{{currentUserData?.email}}</span> 
+                </mat-list-item>
+                <mat-list-item>
+                    <span matListItemTitle class="title-item">Club</span> 
+                    <span matListItemIcon class="icon-item"><mat-icon>groups</mat-icon></span>
+                    <span matListItemLine class="info-item">{{currentUserData?.club}}</span> 
+                </mat-list-item>
+                <mat-list-item>
+                    <span matListItemTitle class="title-item">Fecha de Registro</span> 
+                    <span matListItemIcon class="icon-item"><mat-icon>calendar_month</mat-icon></span>
+                    <span matListItemLine class="info-item">{{currentUserData?.registerDate?.toMillis() | date: 'dd/MM/yyyy'}}</span> 
+                </mat-list-item>
+    
+            </mat-list>
+        </div>
+    </div>
+</div>

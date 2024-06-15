@@ -6,7 +6,7 @@ export interface UserInterface{
     email: string;
     club: string;
     registerDate: Timestamp;
-    rol: 'colombofilo',
+    rol: string,
     password: string;
     policy: boolean;
     urlImage: string;
