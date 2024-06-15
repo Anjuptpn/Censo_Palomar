@@ -9,29 +9,44 @@
             }
         </div>
         <div class="user-information center-child">
-            <mat-list class="profile-list">
-                <mat-list-item>
-                    <span matListItemTitle class="title-item">Nombre</span> 
-                    <span matListItemIcon class="icon-item"><mat-icon>person</mat-icon></span>
-                    <span matListItemLine class="info-item">{{currentUserData?.name}}</span> 
-                </mat-list-item>
-                <mat-list-item>
-                    <span matListItemTitle class="title-item">Correo</span> 
-                    <span matListItemIcon class="icon-item"><mat-icon>mail</mat-icon></span>
-                    <span matListItemLine class="info-item">{{currentUserData?.email}}</span> 
-                </mat-list-item>
-                <mat-list-item>
-                    <span matListItemTitle class="title-item">Club</span> 
-                    <span matListItemIcon class="icon-item"><mat-icon>groups</mat-icon></span>
-                    <span matListItemLine class="info-item">{{currentUserData?.club}}</span> 
-                </mat-list-item>
-                <mat-list-item>
-                    <span matListItemTitle class="title-item">Fecha de Registro</span> 
-                    <span matListItemIcon class="icon-item"><mat-icon>calendar_month</mat-icon></span>
-                    <span matListItemLine class="info-item">{{currentUserData?.registerDate?.toMillis() | date: 'dd/MM/yyyy'}}</span> 
-                </mat-list-item>
+            <div class="profile-list">
+                <div class="profile-item-list">
+                    <div class="icon-list-wrapper">
+                        <span  class="icon-item"><mat-icon>person</mat-icon></span>
+                    </div>                        
+                    <div class="info-list-wrapper">
+                        <span class="title-item">Nombre</span> 
+                        <span  class="info-item">{{currentUserData?.name}}</span> 
+                    </div>
+                </div>
+                <div class="profile-item-list">
+                    <div class="icon-list-wrapper">
+                        <span  class="icon-item"><mat-icon>mail</mat-icon></span>
+                    </div>                        
+                    <div class="info-list-wrapper">
+                        <span class="title-item">Correo</span> 
+                        <span  class="info-item">{{currentUserData?.email}}</span> 
+                    </div>
+                </div>
+                <div class="profile-item-list">
+                    <div class="icon-list-wrapper">
+                        <span  class="icon-item"><mat-icon>groups</mat-icon></span>
+                    </div>                        
+                    <div class="info-list-wrapper">
+                        <span class="title-item">Club</span> 
+                        <span  class="info-item">{{currentUserData?.club}}</span> 
+                    </div>
+                </div>
+                <div class="profile-item-list">
+                    <div class="icon-list-wrapper">
+                        <span  class="icon-item"><mat-icon>calendar_month</mat-icon></span>
+                    </div>                        
+                    <div class="info-list-wrapper">
+                        <span class="title-item">Fecha de Registro</span> 
+                        <span  class="info-item">{{currentUserData?.registerDate?.toMillis() | date: 'dd/MM/yyyy'}}</span> 
+                    </div>
+                </div>
     
-            </mat-list>
-        </div>
+            </div>
     </div>
 </div>

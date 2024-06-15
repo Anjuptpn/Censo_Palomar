@@ -1,54 +1,79 @@
 @import '../../../css-variables'
+
+$icon-size: 40px
+
 .container
     .wrapper-profile
-        //border: 4px solid $lapiz-lazuli
-        //border-radius: 15px
         width: 30%
     .wrapper-image
         img
-            width: 200px
+            border-radius: 5px
+            width: 300px    
+        
 
 .profile-list
-    width: 100%
-    mat-list-item
-        //border-bottom: 1px solid $moonstone
-        border: 1px solid $non-photo-blue
-        border-radius: 5px
-        margin-bottom: 5px
-        .title-item
-            color: $prussian-blue
-            font-size: 12px
-        .info-item
-            color: $moonstone
-            font-size: 20px
-            margin-top: 5px
-        .icon-item
-            color: $lapiz-lazuli            
-            mat-icon 
-                font-size: 40px
-                width: 40px
-                height: 40px
-
-.profile-list
-    mat-list-item:hover
+    .profile-item-list:hover
         border: 1px solid $moonstone
 
+.container
+    .wrapper-profile
+        .user-information
+            font-family: $fonts
+            margin-top: 20px
+            margin-bottom: 100px
+            .profile-list
+                .profile-item-list
+                    display: flex
+                    flex-direction: row
+                    padding: 18px
+                    border: 1px solid $non-photo-blue
+                    border-radius: 5px
+                    margin-bottom: 8px
+                    .icon-list-wrapper 
+                        display: flex
+                        //justify-content: center 
+                        align-items: center 
+                        margin-right: 20px                     
+                        .icon-item
+                            width: $icon-size
+                            height: $icon-size
+                            mat-icon 
+                                color: $lapiz-lazuli
+                                font-size: $icon-size
+                                width: $icon-size
+                                height: $icon-size
+                .info-list-wrapper
+                    display: flex
+                    flex-direction: column
+                    .title-item
+                        font-size: 12px
+                        color: $prussian-blue
+
+                    .info-item
+                        color: $moonstone
+                        font-size: 20px
+
 @media (max-width: 800px)
+    $icon-size: 35px
     .container
         .wrapper-profile
-            width: 100%
-
-    .profile-list
-        width: 98%
-        mat-list-item
-            .title-item
-                font-size: 12px
-            .info-item
-                font-size: 16px
-                margin-top: 3px
-            .icon-item                
-                mat-icon 
-                    font-size: 35px
-                    width: 35px
-                    height: 35px
-
+            width: 95%
+            .user-information
+                .profile-list
+                    .profile-item-list                        
+                        padding: 15px
+                        margin-bottom: 5px
+                        .icon-list-wrapper 
+                            margin-right: 18px                     
+                            .icon-item
+                                width: $icon-size
+                                height: $icon-size
+                                mat-icon 
+                                    font-size: $icon-size
+                                    width: $icon-size
+                                    height: $icon-size
+                    .info-list-wrapper
+                        .title-item
+                            font-size: 12px
+                        .info-item
+                            font-size: 18px
