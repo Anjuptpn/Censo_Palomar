@@ -8,12 +8,9 @@ $icon-size: 40px
     .wrapper-image
         img
             border-radius: 5px
-            width: 300px    
-        
+            max-width: 300px
+            max-height: 250px
 
-.profile-list
-    .profile-item-list:hover
-        border: 1px solid $moonstone
 
 .container
     .wrapper-profile
@@ -21,7 +18,9 @@ $icon-size: 40px
             font-family: $fonts
             margin-top: 20px
             margin-bottom: 100px
+            
             .profile-list
+                width: 100%
                 .profile-item-list
                     display: flex
                     flex-direction: row
@@ -31,7 +30,6 @@ $icon-size: 40px
                     margin-bottom: 8px
                     .icon-list-wrapper 
                         display: flex
-                        //justify-content: center 
                         align-items: center 
                         margin-right: 20px                     
                         .icon-item
@@ -53,6 +51,13 @@ $icon-size: 40px
                         color: $moonstone
                         font-size: 20px
 
+.container
+    .wrapper-profile
+        .user-information
+            .profile-list
+                .profile-item-list:hover
+                    border: 1px solid $moonstone
+    
 @media (max-width: 800px)
     $icon-size: 35px
     .container

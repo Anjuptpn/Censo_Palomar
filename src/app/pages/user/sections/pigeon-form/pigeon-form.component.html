@@ -1,5 +1,5 @@
 <div class="form-container center-child">
-    <form class="center-child" [formGroup]="pigeonForm" (ngSubmit)="submitPigeonRegister()">  
+    <form class="center-child" [formGroup]="pigeonForm" (ngSubmit)="submitPigeonForm()">  
         <mat-form-field>
             <mat-label>Nombre de la paloma</mat-label>
             <input type="text" matInput required formControlName="pigeonName">
@@ -85,7 +85,7 @@
         </mat-form-field>
 
         <label class="input-file-label">Subir imagen de la paloma</label>
-        <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="image">
+        <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="image" (change)="getImageFile($event)">
 
         <mat-form-field class="text-area">          
           <mat-label>Notas</mat-label>

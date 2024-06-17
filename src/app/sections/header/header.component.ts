@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, RouterOutlet, MatSidenavModule, MenuComponent, CommonModule ],
+  imports: [MatToolbarModule, MatIconModule, RouterOutlet, MatSidenavModule, MenuComponent, CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.sass'
 })

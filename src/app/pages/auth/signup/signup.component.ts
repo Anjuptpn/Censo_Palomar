@@ -7,11 +7,10 @@ import { MatInput } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { HeaderFormsComponent } from '../sections/header-forms/header-forms.component';
-import { UserInterface } from '../../../sections/Models/user.model';
+import { UserInterface } from '../../../Models/user.model';
 import { AuthService } from '../services/auth.service';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsServicesService } from '../services/firebase-errors.services.service';
-import { StorageService } from '../../../sections/services-shared/storage.service';
+import { FirebaseErrorsService } from '../services/firebase-errors.service';
 
 @Component({
   selector: 'app-signup',
@@ -32,8 +31,7 @@ export class SignupComponent implements OnInit{
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private snackbar = inject(SnackbarService);
-  private firebaseErrors = inject(FirebaseErrorsServicesService);
-  private storageService = inject(StorageService);
+  private firebaseErrors = inject(FirebaseErrorsService);
 
   private readonly emailPattern =
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -53,7 +51,7 @@ export class SignupComponent implements OnInit{
       password: ['', [Validators.required, Validators.minLength(8)]],
       name: [ '', Validators.required],
       club: [''],
-      image:[''],
+      urlImage:[''],
       policy: ['', [Validators.required, Validators.requiredTrue]]
     });
   }

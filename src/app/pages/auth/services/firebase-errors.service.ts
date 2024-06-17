@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class FirebaseErrorsServicesService {
+export class FirebaseErrorsService {
 
   translateErrorCode (code: string){
     let message: string = '';

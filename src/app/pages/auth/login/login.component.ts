@@ -7,7 +7,7 @@ import { RouterLink } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsServicesService } from '../services/firebase-errors.services.service';
+import { FirebaseErrorsService } from '../services/firebase-errors.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit{
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
   private snackbar = inject(SnackbarService);
-  private firebaseErrors = inject(FirebaseErrorsServicesService);
+  private firebaseErrors = inject(FirebaseErrorsService);
 
   usuario$! : Observable<any>;
 

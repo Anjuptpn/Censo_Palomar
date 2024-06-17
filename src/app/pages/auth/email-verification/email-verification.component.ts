@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { filter, tap } from 'rxjs';
 import { User } from '@angular/fire/auth';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsServicesService } from '../services/firebase-errors.services.service';
+import { FirebaseErrorsService } from '../services/firebase-errors.service';
 
 @Component({
   selector: 'app-email-verification',
@@ -17,7 +17,7 @@ export class EmailVerificationComponent {
 
   private authService = inject(AuthService);
   private snackbar = inject(SnackbarService);
-  private firebaseErrors = inject(FirebaseErrorsServicesService)
+  private firebaseErrors = inject(FirebaseErrorsService)
 
   usuario: User | null = null;
 

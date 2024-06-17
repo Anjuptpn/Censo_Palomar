@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { HeaderFormsComponent } from '../sections/header-forms/header-forms.component';
 import { AuthService } from '../services/auth.service';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsServicesService } from '../services/firebase-errors.services.service';
+import { FirebaseErrorsService } from '../services/firebase-errors.service';
 
 @Component({
   selector: 'app-recovery-password',
@@ -19,7 +19,7 @@ export class RecoveryPasswordComponent {
 
   private readonly authService = inject(AuthService);
   private snackbar = inject(SnackbarService);
-  private firebaseErrors = inject(FirebaseErrorsServicesService);
+  private firebaseErrors = inject(FirebaseErrorsService);
 
   email!: FormControl;
   hasError = false;

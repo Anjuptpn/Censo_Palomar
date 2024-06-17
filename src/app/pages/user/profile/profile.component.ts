@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { AuthService } from '../../auth/services/auth.service';
 import { User } from '@angular/fire/auth';
-import { UserInterface } from '../../../sections/Models/user.model';
+import { UserInterface } from '../../../Models/user.model';
 import { filter, tap } from 'rxjs';
 import { MatIcon } from '@angular/material/icon';
 import {MatListModule} from '@angular/material/list';

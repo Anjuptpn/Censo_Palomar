@@ -1,9 +1,10 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth, User, authState, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { UserInterface } from '../../../sections/Models/user.model';
-import { DocumentSnapshot, Firestore, Timestamp, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
+import { UserInterface } from '../../../Models/user.model';
+import { Timestamp } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
-import { StorageService } from '../../../sections/services-shared/storage.service';
+import { StorageService } from '../../../services-shared/storage.service';
+import { FirebaseService } from '../../../services-shared/firebase.service';
 
 interface RespuestaDeError{
   code: string;
@@ -16,9 +17,9 @@ interface RespuestaDeError{
 export class AuthService {
 
   private auth = inject (Auth);
-  private firestore = inject(Firestore);
   private router = inject(Router);
   private storageService = inject(StorageService);
+  private firebaseService = inject(FirebaseService);
 
   constructor() { }
 
@@ -29,7 +30,15 @@ export class AuthService {
       if (user){
         userData.id = user.uid;
         userData.rol = role;
-        this.saveUserData(userData, imageFile);
+        userData.password = '-';
+        userData.registerDate = Timestamp.fromDate(new Date());
+        if (imageFile.name !== 'null.null'){
+          userData.urlImage = await this.storageService.uploadImage(imageFile, 'perfiles-usuarios');
+        } else {
+          userData.urlImage = "https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/perfiles-usuarios%2Fcirculo-grande-500.png?alt=media&token=5aba1c10-7acf-4da5-8b0a-72e1ac2bfe56"
+        }
+        //this.saveUserData(userData);
+        this.firebaseService.saveInFirestore(userData, 'usuarios', user.uid);
         this.sendVerificationEmail(user);
         this.router.navigate(['/auth/email-verification']);        
       }      
@@ -42,17 +51,6 @@ export class AuthService {
   get currentUserState(){
     return authState(this.auth);
   }
-
-  //Guarda los datos en una coleccion de Firebase
-  private async saveUserData (userData: UserInterface, imageFile: File){
-    if (imageFile.name !== 'null.null'){
-      userData.urlImage = await this.storageService.uploadImage(imageFile, 'perfiles-usuarios');
-    }
-    userData.password = '-';
-    userData.registerDate = Timestamp.fromDate(new Date());
-    const document = doc(this.firestore, 'usuarios', userData.id); 
-    return await setDoc(document, userData);
-  } 
 
   async sendVerificationEmail (user: User): Promise<void>{
     try{
@@ -101,15 +99,14 @@ export class AuthService {
     return code;      
   }
 
-  //Pendiente (actualizar Usuario, traer información del usuario)
   async getUserInfoFromFirebase(id: string){
-    try{
-      const document = doc(this.firestore, 'usuarios', id);
-      const response = await getDoc(document);
+    try{      
+      const response = await this.firebaseService.getCollectionFromFirebase(id, 'usuarios');
       return response.data() as UserInterface;
-
     } catch (error){
       throw(this.extractErrorCode(error));
     }
   }
+
+    //Pendiente (actualizar Usuario)
 }
