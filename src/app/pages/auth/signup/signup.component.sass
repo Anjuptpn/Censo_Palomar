@@ -2,7 +2,7 @@
 .form-container
     form
         flex-direction: column
-        width: 30%
+        width: 40%
     .button
         button
             width: 100%
@@ -23,7 +23,12 @@
         width: 30%
         border-radius: 3px
 
-@media (max-width: 800px)
+@media (max-width: $breakpoint-movil)
     .form-container
         form
             width: 90%
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .form-container
+            form
+                width: 70%

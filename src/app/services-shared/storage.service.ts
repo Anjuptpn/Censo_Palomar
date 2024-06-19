@@ -22,5 +22,5 @@ export class StorageService {
     }).catch((error)=> {
       throw(error);
     });
-  }
+  }  
 }

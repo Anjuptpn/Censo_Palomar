@@ -1,0 +1,108 @@
+@import '../../../css-variables'
+
+$icon-size: 40px
+
+.container-pigeon-list
+    margin-bottom: 100px
+    .wrapper-pigeon-list
+        a
+            text-decoration: none
+        width: 40%
+        .pigeon-item
+            display: flex
+            align-items: center
+            justify-content: center
+            border: 2px solid $lapiz-lazuli
+            margin-top: 12px
+            padding:10px
+            border-radius: 10px
+            .image-pigeon-content
+                display: flex
+                align-items: center
+                justify-content: center
+                vertical-align: middle
+                padding: 0
+                width: 20%
+                background-color: $transparente
+                img
+                    aspect-ratio: 1/1
+                    width: 100%
+                    object-fit: cover
+                    border-radius: 10px
+                    
+            .info-pigeon-content                
+                .pigeon-item-content                    
+                    justify-content: flex-start
+                    padding: 0 0 0 30px
+                    margin-top: 0px
+                    margin-bottom: 2px
+                    color: $prussian-blue
+                    .label-pigeon
+                        font-weight: bolder
+                        font-size: 16px
+                    .info-pigeon
+                        margin-left: 10px
+                        font-size: 16px             
+                width: 80%
+                .icons-zone
+                    margin-left: 25px
+                    display: flex
+                    justify-content: left
+                    mat-icon 
+                        font-size: $icon-size
+                        width: $icon-size
+                        height: $icon-size
+                        color: $lapiz-lazuli
+                .state-zone
+                    background-color: $lapiz-lazuli
+                    padding: 8px
+                    font-size: 16px
+                    font-family: $fonts
+                    font-weight: 600
+                    border-radius: 15px
+                    color: $blanco
+                    margin-left: 70px
+.wrapper-pigeon-list
+    a
+        .pigeon-item:hover
+            background-color: $non-photo-blue
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-pigeon-list
+        .wrapper-pigeon-list                
+            width: 68%
+            
+
+@media (max-width: $breakpoint-movil)
+    $icon-size: 35px
+    .container-pigeon-list
+        margin-bottom: 80px
+        .wrapper-pigeon-list                
+            width: 96%
+            .pigeon-item                
+                margin-top: 10px
+                padding: 8px
+                .image-pigeon-content
+                    width: 20% 
+                .info-pigeon-content                
+                    .pigeon-item-content
+                        padding: 0 0 0 10px
+                        .label-pigeon
+                            font-size: 15px
+                        .info-pigeon
+                            margin-left: 3px
+                            font-size: 15px             
+                    width: 80%
+                    .icons-zone
+                        margin-left: 15px
+                        display: flex
+                        justify-content: left
+                        mat-icon 
+                            font-size: $icon-size
+                            width: $icon-size
+                            height: $icon-size
+                    .state-zone
+                        padding: 5px 8px
+                        font-size: 15px
+                        margin-left: 50px
+

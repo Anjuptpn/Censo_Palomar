@@ -1,1 +1,38 @@
-<p>pigeon-list works!</p>
+<div class="wrapper-title-edit-pigeon center-child">
+    <div class="title-edit-pigeon">
+        <h2 class="title-form">Palomas</h2>
+    </div>
+</div>
+<div class="container-pigeon-list center-child">
+    <div class="wrapper-pigeon-list">
+        
+        @if(pigeonList.length > 0){
+            @for(pigeon of pigeonList; track $index){
+                <a [routerLink]="['/user/pigeon-profile', pigeon.id]">
+                <div class="pigeon-item">
+                    <div class="image-pigeon-content">
+                        <img src="{{pigeon.image}}" alt="Paloma">        
+                    </div>
+                    <div class="info-pigeon-content">
+                        <p class="pigeon-item-content"><span class="label-pigeon">Nombre: </span><span class="info-pigeon">{{pigeon.pigeonName}}</span></p>
+                        <p class="pigeon-item-content"><span class="label-pigeon">Anilla: </span><span class="info-pigeon">{{pigeon.ring}}</span></p>
+                        <p class="pigeon-item-content"><span class="label-pigeon">Color: </span><span class="info-pigeon">{{ (pigeon.color == "") ? "--" : pigeon.color}}</span></p>
+                        <div class="icons-zone">
+                            @if(pigeon.gender === 'Macho'){
+                                <mat-icon>male</mat-icon>        
+                            }@else if(pigeon.gender === 'Hembra'){
+                                <mat-icon>female</mat-icon>        
+                            }@else {
+                                <mat-icon>question_mark</mat-icon>
+                            }
+                            <span class="state-zone">{{pigeon.state == "" ? 'Sin estado' : pigeon.state}}</span>            
+                        </div> 
+                    </div>
+                </div>
+                </a>
+            }
+        }@else {
+            <h3 class="empty-list title-h5">Todavía no tienes palomas registradas.<br>¡Ánímate y pon la primera!</h3>
+        }
+    </div>
+</div>

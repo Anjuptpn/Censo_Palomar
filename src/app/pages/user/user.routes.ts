@@ -9,6 +9,14 @@ export const routes: Routes = [
         loadComponent: () => import('./pigeon-list/pigeon-list.component').then(
             (m) => m.PigeonListComponent)
     },
+    {path: 'edit-pigeon/:id', 
+        loadComponent: () => import('./edit-pigeon/edit-pigeon.component').then(
+            (m) => m.EditPigeonComponent)
+    },
+    {path: 'pigeon-profile/:id', 
+        loadComponent: () => import('./pigeon-profile/pigeon-profile.component').then(
+            (m) => m.PigeonProfileComponent)
+    },
     {path: '', 
         loadComponent: () => import('./profile/profile.component').then(
             (m)=> m.ProfileComponent)

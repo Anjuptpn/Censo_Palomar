@@ -1,0 +1,142 @@
+@import '../../../css-variables'
+
+.container-pigeon-profile
+    margin-top: 30px
+    .wrapper-pigeon-profile
+        width: 70%
+        display: flex
+        flex-direction: row
+        flex-wrap: wrap
+        color: $prussian-blue
+        .pigeon-profile-image-wrapper
+            width: 38%
+            display: flex
+            justify-content: center
+            align-items: top
+            img
+                aspect-ratio: 4/3
+                width: 100%
+                object-fit: cover
+                border-radius: 10px
+                vertical-align: middle        
+        .info-pigeon-wrapper
+            width: 57%
+            margin-left: 2% 
+            .pigeon-basic-info
+                position: relative
+                border: 2px solid $lapiz-lazuli
+                border-radius: 10px
+                padding: 1%
+                .info-pigeon-line
+                    padding: 0
+                    margin: 5px 20px 0 20px
+                    .label-field
+                        font-weight: 600
+                        font-size: 17px
+                    .info-field
+                        font-size: 17px
+                p:last-child
+                    margin-bottom: 45px
+                
+                .pigeon-state
+                    background-color: $prussian-blue
+                    color: $blanco
+                    font-family: $fonts
+                    padding: 8px 12px
+                    border-radius: 10px
+                    position: absolute
+                    bottom: 10px
+                    right: 20px              
+            .info-pigeons-parents
+                margin-top: 20px
+                border: 2px solid $lapiz-lazuli
+                border-radius: 10px
+                padding: 1%                
+                .parent-info
+                    position: relative
+                    background-color: $non-photo-blue
+                    padding: 15px
+                    margin: 4px 20px 8px 20px
+                    font-size: 18px
+                    border-radius: 10px
+                    .parent-label
+                       font-weight: bold
+                    mat-icon 
+                        position: absolute
+                        top: 50%
+                        transform: translateY(-50%)
+                        right: 20px
+                        color: $prussian-blue
+                .parent-info:hover
+                    background-color: $sky-blue
+                    
+                    
+                        
+    .wrapper-notes
+        border: 2px solid $lapiz-lazuli
+        border-radius: 10px
+        width: 97%
+        margin-top: 20px
+        .title-h5
+            margin-top: 10px
+        .pigeon-notes
+            padding: 0 20px 0 20px
+
+.title-h5
+    margin:0
+    padding: 8px 0 0 0
+    text-align: center
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-pigeon-profile
+        .wrapper-pigeon-profile
+            width: 96%
+
+
+@media (max-width: $breakpoint-movil)
+    .container-pigeon-profile
+        .wrapper-pigeon-profile
+            width: 96%
+            flex-wrap: wrap
+            .pigeon-profile-image-wrapper
+                width: 100%
+                align-items: top       
+            .info-pigeon-wrapper
+                width: 100% 
+                margin-top: 10px
+                padding: 0
+                margin-left: 0
+                .pigeon-basic-info
+                    .info-pigeon-line
+                        margin: 5px 10px 0 10px
+                        .label-field
+                            font-weight: 600
+                            font-size: 16px
+                        .info-field
+                            font-size: 16px                    
+                    .pigeon-state
+                        padding: 6px 8px
+                        position: absolute
+                        bottom: 5px
+                        right: 5px  
+                    p:last-child
+                        margin-bottom: 43px             
+                .info-pigeons-parents
+                    margin-top: 10px
+                    .title-h5
+                        margin-bottom: 8px             
+                    .parent-info
+                        position: relative
+                        padding: 8px
+                        margin: 4px 10px 8px 10px
+                        font-size: 16px
+                        mat-icon 
+                            right: 18px    
+        .wrapper-notes 
+            width: 100%
+            margin-top: 10px
+            .title-h5
+                margin-top: 10px
+            .pigeon-notes
+                padding: 0 10px 0 10px
+                margin-top: 5px

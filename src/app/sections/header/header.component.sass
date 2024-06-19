@@ -47,10 +47,12 @@ mat-sidenav-container
   margin-top: 100px
 
 
-
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+  mat-sidenav
+      width: 50%
 
 //Móviles
-@media (max-width: 800px)
+@media (max-width: $breakpoint-movil)
     mat-toolbar
       height: 80px
 

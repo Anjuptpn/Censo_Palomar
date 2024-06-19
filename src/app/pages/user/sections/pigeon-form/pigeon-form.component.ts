@@ -8,12 +8,12 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import * as estados from '../../../../Models/pigeonStates';
+import * as estados from '../../../../models/pigeonStates';
 import { CommonModule } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
-import { PigeonInterface } from '../../../../Models/pigeon.model';
+import { PigeonInterface } from '../../../../models/pigeon.model';
 import { FirebaseService } from '../../../../services-shared/firebase.service';
 import { Timestamp } from '@angular/fire/firestore';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -41,6 +41,7 @@ import { StorageService } from '../../../../services-shared/storage.service';
 })
 export class PigeonFormComponent implements OnInit{
   @Input() typeForm!: string;
+  @Input() pigeonId!: string;
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly snackbar = inject(SnackbarService);
@@ -84,7 +85,7 @@ export class PigeonFormComponent implements OnInit{
         breed:['Jansen'],
         state: ['Viva'],
         registeredFather: [false],
-        father: ['Mandarria'],
+        father: ['Valeroso'],
         registeredMother: [false],
         mother: ['Bienmesabe'],
         image: ['https://media.istockphoto.com/id/155552819/es/foto/paloma-blanca.webp?s=1024x1024&w=is&k=20&c=vDWrbuNOygy6IFILWAL9Y4v1lcfr8bf4glA44aU0xKE='],
@@ -150,7 +151,7 @@ export class PigeonFormComponent implements OnInit{
       if (imageFile.name !== 'null.null'){
         return await this.storageService.uploadImage(imageFile, path);
       } else {
-        return "https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/perfiles-usuarios%2Fcirculo-grande-500.png?alt=media&token=5aba1c10-7acf-4da5-8b0a-72e1ac2bfe56"
+        return "https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/assets-firebase%2Fcuadrado-grande-500.jpg?alt=media&token=b34f2714-9938-46c6-851c-2b6ccdcf47ed"
       }
     } catch (error){
       throw(error);

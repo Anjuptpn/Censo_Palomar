@@ -1,7 +1,9 @@
+@import '../../../css-variables'
+
 .form-container
     form
         flex-direction: column
-        width: 30%
+        width: 40%
 
         .button            
             button
@@ -11,10 +13,15 @@
     p
         text-align: center
 
-@media (max-width: 800px)
+@media (max-width: $breakpoint-movil)
     .form-container
         form
             width: 90%
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .form-container
+        form
+            width: 60%
 
 
   

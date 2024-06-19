@@ -7,7 +7,7 @@ import { MatInput } from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { HeaderFormsComponent } from '../sections/header-forms/header-forms.component';
-import { UserInterface } from '../../../Models/user.model';
+import { UserInterface } from '../../../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../services/firebase-errors.service';

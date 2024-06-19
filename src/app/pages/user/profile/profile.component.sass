@@ -4,7 +4,7 @@ $icon-size: 40px
 
 .container
     .wrapper-profile
-        width: 30%
+        width: 40%
     .wrapper-image
         img
             border-radius: 5px
@@ -57,8 +57,13 @@ $icon-size: 40px
             .profile-list
                 .profile-item-list:hover
                     border: 1px solid $moonstone
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)    
+    .container
+        .wrapper-profile
+            width: 50%
     
-@media (max-width: 800px)
+@media (max-width: $breakpoint-movil)
     $icon-size: 35px
     .container
         .wrapper-profile

@@ -1,5 +1,7 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import { Observable } from 'rxjs';
+import { PigeonInterface } from '../models/pigeon.model';
 
 
 @Injectable({
@@ -24,13 +26,23 @@ export class FirebaseService {
   }
 
   //Recuperar una colección concreta
-  async getCollectionFromFirebase(id: string, path: string){
+  getDocumentFromFirebase(id: string, path: string){
     try{
       const document = doc(this.firestore, path, id);
-      return await getDoc(document);
+      return getDoc(document);
     } catch (error){
       throw (error);
     }
+  }
+
+  getCollectionFromFirebase<collectionType>(path: string): Observable<collectionType[]>{
+    try{
+      const dataCollection = collection(this.firestore, path);
+      return collectionData(dataCollection) as Observable<collectionType[]>;
+    } catch (error){
+      throw (error);
+    }
+
   }
 
   

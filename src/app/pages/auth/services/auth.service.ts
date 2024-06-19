@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Auth, User, authState, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
-import { UserInterface } from '../../../Models/user.model';
+import { UserInterface } from '../../../models/user.model';
 import { Timestamp } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { StorageService } from '../../../services-shared/storage.service';
@@ -72,7 +72,7 @@ export class AuthService {
 
   private checkIfMailIsVerificated (user: User) :void{
     const verified = user.emailVerified;
-    const route = verified ? 'user/pigeon-register' : '/auth/email-verification';
+    const route = verified ? 'user/pigeon-list' : '/auth/email-verification';
     this.router.navigate([route]);
   }
 
@@ -101,7 +101,7 @@ export class AuthService {
 
   async getUserInfoFromFirebase(id: string){
     try{      
-      const response = await this.firebaseService.getCollectionFromFirebase(id, 'usuarios');
+      const response = await this.firebaseService.getDocumentFromFirebase(id, 'usuarios');
       return response.data() as UserInterface;
     } catch (error){
       throw(this.extractErrorCode(error));

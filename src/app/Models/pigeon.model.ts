@@ -1,6 +1,7 @@
 import { Timestamp } from "@angular/fire/firestore";
 
-export interface PigeonInterface{
+export interface PigeonInterface
+{
     id: string;
     pigeonName: string;
     ring: string;

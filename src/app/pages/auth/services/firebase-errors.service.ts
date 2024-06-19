@@ -33,9 +33,12 @@ export class FirebaseErrorsService {
         message =
           'No existe usuario con esas credenciales';
         break;
-      case 'auth/invalid-email  ':
+      case 'auth/invalid-email':
         message = 'El email usado no es un';
         break;
+      case 'auth/invalid-credential':
+         message = 'El correo, la contraseña o ambos son incorrectos.';
+         break;
       case 'auth/cannot-delete-own-user-account':
         message = 'No puedes borrar tu cuenta de usuario. Contacta con un administrador';
         break;
