@@ -8,11 +8,12 @@ import { User } from '@angular/fire/auth';
 import { FirebaseErrorsService } from '../../auth/services/firebase-errors.service';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
 import { CommonModule } from '@angular/common';
+import { CompetitionsListComponent } from '../sections/competitions-list/competitions-list.component';
 
 @Component({
   selector: 'app-pigeon-profile',
   standalone: true,
-  imports: [MatIconModule, CommonModule],
+  imports: [MatIconModule, CommonModule, CompetitionsListComponent],
   templateUrl: './pigeon-profile.component.html',
   styleUrl: './pigeon-profile.component.sass'
 })

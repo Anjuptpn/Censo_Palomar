@@ -1,0 +1,121 @@
+@import '../../../../css-variables'
+
+$icon-size: 35px
+.container-competition-list
+    margin-top: 50px
+    color: $prussian-blue
+    .wrapper-competition-list
+        width: 69%
+        background-color: $prussian-blue
+        border-radius: 15px
+        padding: 0 20px 20px 20px
+        .title-competition
+            .title-h3
+                text-align: center
+                color: $blanco
+        .wrapper-competitions-items            
+            .wrapper-item-competition
+                background-color: $blanco
+                padding: 20px
+                margin-top: 10px
+                border-radius: 15px
+                display: flex
+                flex-wrap: wrap
+                .wrapper-icons-competitions
+                    background-color: $non-photo-blue
+                    border-radius: 15px
+                    display: flex
+                    flex-wrap: wrap
+                    width: 30%
+                    .points
+                        display: flex
+                        justify-content: center
+                        align-items: center
+                        width: 40%
+                        img
+                            width: 45px
+                        span
+                            font-weight: 700
+                            margin-left: 6px
+                            font-size: 25px
+                    .wrapper-speed-distance
+                        width: 60%
+                        display: flex
+                        justify-content: center
+                        flex-direction: column
+                        .distance, .speed
+                            display: flex
+                            justify-content: left
+                            align-items: center
+                            mat-icon
+                                color: $prussian-blue
+                                width: $icon-size
+                                height: $icon-size
+                                font-size: $icon-size
+                            span
+                                margin-left: 5px
+                                font-weight: 600                       
+                .wrapper-info-competition 
+                    display: flex
+                    flex-wrap: nowrap
+                    width: 70%
+                    .wrapper-first-column, .wrapper-second-column
+                        padding: 0 0 0 15px
+                        width: 50%
+                        .item-line
+                            padding: 0
+                            margin: 3px 0 0 0
+                            .label-item
+                                font-weight: 600
+                
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-competition-list
+        margin-top: 40px
+        .wrapper-competition-list
+            width: 92%
+                      
+@media (max-width: $breakpoint-movil)
+    $icon-size: 22px
+    .container-competition-list
+        margin-top: 30px
+        .wrapper-competition-list
+            width: 100%
+            padding: 0 8px 8px 8px
+            .wrapper-competitions-items  
+                width: 100%         
+                .wrapper-item-competition
+                    padding: 8px
+                    margin-top: 10px
+                    .wrapper-icons-competitions
+                        width: 30%
+                        .points
+                            flex-direction: column
+                            width: 100%
+                            img
+                                width: 35px
+                            span
+                                font-weight: 700
+                                margin-left: 0
+                                font-size: 22px
+                        .wrapper-speed-distance
+                            width: 100%
+                            .distance, .speed
+                                flex-direction: column
+                                align-content: center
+                                justify-content: center
+                                mat-icon
+                                    width: $icon-size
+                                    height: $icon-size
+                                    font-size: $icon-size
+                                span
+                                    margin-left: 3px
+                                    font-size: 14px  
+                                    font-weight: 500                    
+                    .wrapper-info-competition 
+                        flex-wrap: wrap
+                        width: 70%
+                        .wrapper-first-column, .wrapper-second-column
+                            padding: 0 0 0 10px
+                            width: 100%
+                            font-size: 15px
+        
