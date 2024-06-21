@@ -2,19 +2,19 @@ import { Routes } from "@angular/router";
 
 export const routes: Routes = [    
     {path: 'pigeon-register', 
-        loadComponent: () => import('./pigeon-register/pigeon-register.component').then(
+        loadComponent: () => import('./pigeons/pigeon-register/pigeon-register.component').then(
             (m)=> m.PigeonRegisterComponent)
     },
     {path: 'pigeon-list', 
-        loadComponent: () => import('./pigeon-list/pigeon-list.component').then(
+        loadComponent: () => import('./pigeons/pigeon-list/pigeon-list.component').then(
             (m) => m.PigeonListComponent)
     },
     {path: 'edit-pigeon/:id', 
-        loadComponent: () => import('./edit-pigeon/edit-pigeon.component').then(
+        loadComponent: () => import('./pigeons/edit-pigeon/edit-pigeon.component').then(
             (m) => m.EditPigeonComponent)
     },
     {path: 'pigeon-profile/:id', 
-        loadComponent: () => import('./pigeon-profile/pigeon-profile.component').then(
+        loadComponent: () => import('./pigeons/pigeon-profile/pigeon-profile.component').then(
             (m) => m.PigeonProfileComponent)
     },
     {path: '', 

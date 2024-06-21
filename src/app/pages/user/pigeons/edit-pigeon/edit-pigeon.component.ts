@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { PigeonFormComponent } from '../sections/pigeon-form/pigeon-form.component';
+import { PigeonFormComponent } from '../../sections/pigeon-form/pigeon-form.component';
 
 @Component({
   selector: 'app-edit-pigeon',

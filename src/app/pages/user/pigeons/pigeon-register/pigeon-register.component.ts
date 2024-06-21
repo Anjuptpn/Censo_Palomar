@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { PigeonFormComponent } from '../sections/pigeon-form/pigeon-form.component';
+import { PigeonFormComponent } from '../../sections/pigeon-form/pigeon-form.component';
 
 @Component({
   selector: 'app-pigeon-register',

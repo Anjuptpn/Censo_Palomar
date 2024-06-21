@@ -1,0 +1,69 @@
+@import '../../../../css-variables'
+
+$toolbar-icon-size: 40px
+.container-toolbar
+    // position: fixed //esto pone la barra fija en la parte inferior pero queda extraño
+    // bottom: 0 
+    // left: 0
+    // width: 100%
+    color: $blanco
+    background-color: $lapiz-lazuli
+    .wrapper-toolbar
+        .action-wrapper
+            display: flex
+            flex-wrap: wrap
+            a
+                padding: 15px
+                width: 80px
+                background-color: $lapiz-lazuli
+                text-align: center
+                mat-icon
+                    width: $toolbar-icon-size
+                    height: $toolbar-icon-size
+                    font-size: $toolbar-icon-size
+                p
+                    padding: 0
+                    margin: -5px
+
+.spacer
+    height: 0
+
+.action-wrapper
+    a:hover
+        color: $non-photo-blue
+        cursor: pointer
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    $toolbar-icon-size: 35px
+    .container-toolbar
+        .wrapper-toolbar
+            .action-wrapper
+                a
+                    padding: 15px
+                    width: 90px
+                    mat-icon
+                        width: $toolbar-icon-size
+                        height: $toolbar-icon-size
+                        font-size: $toolbar-icon-size
+    .spacer
+        height: 0
+                      
+@media (max-width: $breakpoint-movil)
+    $toolbar-icon-size: 30px
+    .container-toolbar
+        position: fixed //En movil queda bien
+        bottom: 0 
+        left: 0
+        width: 100%
+        .wrapper-toolbar
+            .action-wrapper
+                a
+                    padding: 8px
+                    width: 65px
+                    font-size: 12px
+                    mat-icon
+                        width: $toolbar-icon-size
+                        height: $toolbar-icon-size
+                        font-size: $toolbar-icon-size
+    .spacer
+        height: 35px

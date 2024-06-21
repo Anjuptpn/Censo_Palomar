@@ -1,1 +1,26 @@
-<p>tools-bar works!</p>
+<p>competitions-list works!</p>
+<p>Current Pigeon {{pigeonId}}</p>
+<p>Current User: {{currentUser?.uid}} - {{currentUser?.email}}</p>
+<div class="spacer"></div>
+<div class="container-toolbar center-child">
+    <div class="wrapper-toolbar center-child">
+        <div class="action-wrapper">
+            <a [routerLink]="">
+                <mat-icon>delete</mat-icon>
+                <p>Eliminar</p>
+            </a>
+            <a [routerLink]="">
+                <mat-icon>emoji_events</mat-icon>
+                <p>Añadir<br>Competición</p>
+            </a>
+            <a [routerLink]="">
+                <mat-icon>edit_square</mat-icon>
+                <p>Editar</p>
+            </a>
+            <a [routerLink]="">
+                <mat-icon>arrow_back</mat-icon>
+                <p>Volver</p>
+            </a>
+        </div>
+    </div>
+</div>

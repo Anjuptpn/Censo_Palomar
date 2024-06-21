@@ -1,8 +1,8 @@
 import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
-import { FirebaseService } from '../../../services-shared/firebase.service';
+import { FirebaseService } from '../../../../services-shared/firebase.service';
 import { User } from '@angular/fire/auth';
-import { AuthService } from '../../auth/services/auth.service';
-import { PigeonInterface } from '../../../models/pigeon.model';
+import { AuthService } from '../../../auth/services/auth.service';
+import { PigeonInterface } from '../../../../models/pigeon.model';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
