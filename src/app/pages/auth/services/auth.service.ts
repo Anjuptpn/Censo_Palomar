@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Auth, User, authState, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, EmailAuthProvider, User, authState, createUserWithEmailAndPassword, reauthenticateWithCredential, sendEmailVerification, sendPasswordResetEmail, signInWithEmailAndPassword, updatePassword } from '@angular/fire/auth';
 import { UserInterface } from '../../../models/user.model';
 import { Timestamp } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
@@ -109,4 +109,21 @@ export class AuthService {
   }
 
     //Pendiente (actualizar Usuario)
+    async changePassword(oldPassword: string, newPassword: string, user: User): Promise<boolean>{
+      if(user.email == null){
+        return false;
+      }
+      try{
+        const credentials = EmailAuthProvider.credential(user.email, oldPassword);
+        await reauthenticateWithCredential(user, credentials);
+        await updatePassword(user, newPassword)
+        return true;
+        
+      } catch (error){
+        throw(this.extractErrorCode(error));
+        return false;
+      }
+      
+
+    }
 }

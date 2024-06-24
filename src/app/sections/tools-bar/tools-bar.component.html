@@ -1,5 +1,5 @@
 <p>competitions-list works!</p>
-<p>Current Pigeon {{pigeonId}}</p>
+<p>Current Pigeon {{itemId}}</p>
 <p>Current User: {{currentUser?.uid}} - {{currentUser?.email}}</p>
 <div class="spacer"></div>
 <div class="container-toolbar center-child">
@@ -9,15 +9,15 @@
                 <mat-icon>delete</mat-icon>
                 <p>Eliminar</p>
             </a>
-            <a [routerLink]="">
+            <a [routerLink]="['/user/add-competition',itemId]">
                 <mat-icon>emoji_events</mat-icon>
                 <p>Añadir<br>Competición</p>
             </a>
-            <a [routerLink]="">
+            <a [routerLink]="['/user/edit-pigeon',itemId]">
                 <mat-icon>edit_square</mat-icon>
                 <p>Editar</p>
             </a>
-            <a [routerLink]="">
+            <a (click)="goBack()">
                 <mat-icon>arrow_back</mat-icon>
                 <p>Volver</p>
             </a>

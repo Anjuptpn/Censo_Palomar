@@ -1,4 +1,4 @@
-@import '../../../../css-variables'
+@import '../../general-styles/css-variables'
 
 $toolbar-icon-size: 40px
 .container-toolbar
@@ -13,10 +13,12 @@ $toolbar-icon-size: 40px
             display: flex
             flex-wrap: wrap
             a
+                color: $blanco
                 padding: 15px
                 width: 80px
                 background-color: $lapiz-lazuli
-                text-align: center
+                text-align: center                
+                text-decoration: none
                 mat-icon
                     width: $toolbar-icon-size
                     height: $toolbar-icon-size
@@ -30,7 +32,7 @@ $toolbar-icon-size: 40px
 
 .action-wrapper
     a:hover
-        color: $non-photo-blue
+        color: $non-photo-blue !important
         cursor: pointer
 
 @media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)

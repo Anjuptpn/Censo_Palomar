@@ -1,0 +1,184 @@
+<!-- @if (fechaActual !== null) {
+    <h1>La fecha actual es {{fechaActual.toMillis() | date: 'dd/MM/yyyy HH:mm:ss'}}</h1>
+}
+@if (fechadeSalida !== null) {
+    <h1>La fecha de Salida es {{fechadeSalida.toMillis() | date: 'dd/MM/yyyy HH:mm:ss'}}</h1>
+}
+@if (fechadeLlegada !== null) {
+    <h1>La fecha de llegada es {{fechadeLlegada.toMillis() | date: 'dd/MM/yyyy HH:mm:ss'}}</h1>
+}
+@if (duracion !== null) {
+    <h1>La diferencia es {{duracion/1000/60}} en otras palabras {{datesService.convertirSegundosAHorasMinutosYSegundos(duracion/1000)}}</h1>
+} -->
+    
+
+<div class="form-container center-child">
+    <div class="wrapper-form">
+        <form class="center-child" [formGroup]="competitionForm" (ngSubmit)="submitCompetitionForm()">
+            <mat-form-field>
+                <mat-label>Nombre de la Competición</mat-label>
+                <input type="text" matInput required formControlName="competitionName">
+            </mat-form-field>
+            @if(competitionForm.get('competitionName')?.touched && competitionForm.get('competitionName')?.errors?.['required']){
+                <div class="error-form">
+                    Debes introducir un nombre para la competición.
+                </div>
+            }
+            <mat-form-field>
+                <mat-label>Punto de Suelta</mat-label>
+                <input type="text" matInput formControlName="competitionPlace">
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Modalidad</mat-label>          
+                <input type="text" matInput formControlName="competitionType" [matAutocomplete]="fill">
+                <mat-autocomplete #fill="matAutocomplete" >
+                    <mat-option [value]="'Velocidad'">Velocidad</mat-option>
+                    <mat-option [value]="'Velocidad Jóvenes'">Velocidad Jóvenes</mat-option>
+                    <mat-option [value]="'Medio Fondo'">Medio Fondo</mat-option>
+                    <mat-option [value]="'Fondo'">Fondo</mat-option>
+                    <mat-option [value]="'Gran Fondo'">Gran Fondo</mat-option>                 
+                </mat-autocomplete>
+                <mat-hint>Si la modalidad no está en la lista teclea una</mat-hint>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-label>Clasificación</mat-label>
+                <input type="text" matInput formControlName="ranking" numbersOnly>
+                <mat-hint>Puesto en el que ha quedado en el concurso</mat-hint>
+                
+                
+            </mat-form-field>
+            @if(competitionForm.get('ranking')?.errors?.['pattern']){
+                <div class="error-form">
+                    Debes introducir sólo números válidos ej. 1, 45, 36.89...
+                </div>
+            }
+
+            <mat-form-field>
+                <mat-label>Distancia</mat-label>
+                <input type="text" matInput formControlName="distance" numbersOnly>
+                <mat-hint>En metros</mat-hint>
+            </mat-form-field>
+            @if(competitionForm.get('distance')?.errors?.['pattern']){
+                <div class="error-form">
+                    Debes introducir sólo números válidos ej. 1, 45, 36.89...
+                </div>
+            }
+
+            <mat-form-field>
+                <mat-label>Puntos</mat-label>
+                <input type="text" matInput formControlName="points" numbersOnly>
+            </mat-form-field>
+            @if(competitionForm.get('points')?.errors?.['pattern']){
+                <div class="error-form">
+                    Debes introducir sólo números válidos ej. 1, 45, 36.89...
+                </div>
+            }
+
+            <mat-form-field>
+                <mat-label>Fecha de la Suelta</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="competitionDate">
+                <mat-hint>D/M/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #picker></mat-datepicker>
+            </mat-form-field> 
+
+            @if(competitionForm.get('competitionDate')?.errors?.['matDatepickerParse']){
+                <div class="error-form">
+                    El formato de la fecha no es correcto debe ser D/M/YYYY
+                </div>
+            }
+
+            <mat-label class="inputs-time">Hora de la suelta</mat-label>
+            <div class="time-group">
+                <mat-form-field>
+                    <mat-label>Hora</mat-label>
+                    <input type="text" matInput formControlName="startHour" numbersOnly placeholder="00">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Minutos</mat-label>
+                    <input type="text" matInput formControlName="startMinutes" numbersOnly placeholder="00">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Segundos</mat-label>
+                    <input type="text" matInput formControlName="startSeconds" numbersOnly placeholder="00">
+                </mat-form-field>
+            </div>
+            @if(competitionForm.get('startHour')?.errors?.['pattern']){
+                <div class="error-form">
+                    El campo de horas debe estar formado por números del 00 al 23
+                </div>
+            }
+            @if(competitionForm.get('startMinutes')?.errors?.['pattern']){
+                <div class="error-form">
+                    El campo de los minutos debe estar formado por números del 00 al 59
+                </div>
+            }
+            @if(competitionForm.get('startSeconds')?.errors?.['pattern']){
+                <div class="error-form">
+                    El campo de los segundos debe estar formado por números del 00 al 59
+                </div>
+            }
+
+            <mat-form-field>
+                <mat-label>Fecha de llegada</mat-label>
+                <input matInput [matDatepicker]="pickerArriveDate" formControlName="arriveDate">
+                <mat-hint>D/M/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="pickerArriveDate"></mat-datepicker-toggle>
+                <mat-datepicker touchUi #pickerArriveDate></mat-datepicker>
+            </mat-form-field>
+            @if(competitionForm.get('arriveDate')?.errors?.['matDatepickerParse']){
+                <div class="error-form">
+                    El formato de la fecha no es correcto debe ser D/M/YYYY
+                </div>
+            }
+
+            <mat-label class="inputs-time">Hora de llegada</mat-label>
+            <div class="time-group">
+                <mat-form-field>
+                    <mat-label>Hora</mat-label>
+                    <input type="text" matInput formControlName="finishHour" numbersOnly placeholder="00">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Minutos</mat-label>
+                    <input type="text" matInput formControlName="finishMinutes" numbersOnly placeholder="00">
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Segundos</mat-label>
+                    <input type="text" matInput formControlName="finishSeconds" numbersOnly placeholder="00">
+                </mat-form-field>
+            </div>
+            @if(competitionForm.get('finishHour')?.errors?.['pattern']){
+                <div class="error-form">
+                    El campo de horas debe estar formado por números del 00 al 23
+                </div>
+            }
+            @if(competitionForm.get('finishMinutes')?.errors?.['pattern']){
+                <div class="error-form">
+                    El campo de los minutos debe estar formado por números del 00 al 59
+                </div>
+            }
+            @if(competitionForm.get('finishSeconds')?.errors?.['pattern']){
+                <div class="error-form">
+                    El campo de los segundos debe estar formado por números del 00 al 59
+                </div>
+            }
+            <mat-form-field class="text-area">          
+                <mat-label>Observaciones</mat-label>
+                <textarea formControlName="notes" matInput rows="4"
+                    placeholder="Notas, comentarios, observaciones, datos de interés sobre la competición...">
+                </textarea>
+            </mat-form-field> 
+
+            El error: {{competitionForm.value | json}}
+
+
+
+            <div class="button">
+                <button type="submit" mat-raised-button color="primary">{{typeForm}}</button>
+                <!-- <button type="submit" mat-raised-button color="primary" [disabled]="!competitionForm.valid">{{typeForm}}</button> -->
+            </div>
+        </form>
+    </div>
+</div>

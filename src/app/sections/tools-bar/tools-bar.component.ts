@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,5 +13,13 @@ import { RouterLink } from '@angular/router';
 })
 export class ToolsBarComponent {
   @Input() currentUser!: User | null;
-  @Input() pigeonId!: string;
+  @Input() itemId!: string;
+  @Input() path!: string;
+
+  constructor(private location: Location){}
+
+goBack(): void{
+  this.location.back()
+}
+
 }

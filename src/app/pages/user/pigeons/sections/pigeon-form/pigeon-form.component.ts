@@ -8,18 +8,18 @@ import {MatRadioModule} from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import * as estados from '../../../../models/pigeonStates';
-import { CommonModule } from '@angular/common';
+import * as estados from '../../../../../models/pigeonStates';
+import { CommonModule, Location } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
-import { PigeonInterface } from '../../../../models/pigeon.model';
-import { FirebaseService } from '../../../../services-shared/firebase.service';
 import { Timestamp } from '@angular/fire/firestore';
-import { AuthService } from '../../../auth/services/auth.service';
 import { User } from '@angular/fire/auth';
-import { Observable, throwError } from 'rxjs';
-import { StorageService } from '../../../../services-shared/storage.service';
+import { SnackbarService } from '../../../../../sections/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../auth/services/firebase-errors.service';
+import { FirebaseService } from '../../../../../services-shared/firebase.service';
+import { AuthService } from '../../../../auth/services/auth.service';
+import { StorageService } from '../../../../../services-shared/storage.service';
+import { PigeonInterface } from '../../../../../models/pigeon.model';
+
 
 
 @Component({
@@ -37,7 +37,7 @@ import { StorageService } from '../../../../services-shared/storage.service';
               CommonModule,
               MatSelectModule ],
   templateUrl: './pigeon-form.component.html',
-  styleUrl: './pigeon-form.component.sass'
+  styleUrl: '../../../../../general-styles/form-styles.sass'
 })
 export class PigeonFormComponent implements OnInit{
   @Input() typeForm!: string;
@@ -49,6 +49,7 @@ export class PigeonFormComponent implements OnInit{
   private readonly firebaseService = inject (FirebaseService);
   private readonly authService = inject(AuthService);
   private readonly storageService = inject(StorageService);
+  private readonly location = inject(Location);
 
   states = estados.pigeonStates;
   currentUser: User | null = null;
@@ -113,36 +114,33 @@ export class PigeonFormComponent implements OnInit{
   }
 
   submitPigeonForm(){
-    if (this.typeForm === "Editar Paloma"){
-      console.log("En desarrollo");
+    if(this.pigeonForm.valid){
+      if (this.typeForm === "Editar Paloma"){
+        console.log("En desarrollo");
+      } else {
+        this.registerPigeonInFirestore();
+      }
     } else {
-      this.registerPigeonInFirestore();
+      this.snackbar.showSnackBar(`Hay campos obligatorios vacíos. \n Revisa bien los campos obligatorios`,
+        'cerrar',  8, 'snackbar-error');
     }
   }
 
   async registerPigeonInFirestore(){
-    if(this.pigeonForm.valid){
-      try{
-        let pigeonData: PigeonInterface = this.pigeonForm.value;
-        pigeonData.registerDate = Timestamp.fromDate(new Date());
-        pigeonData.id = pigeonData.registerDate + '-' + pigeonData.ring;
-        pigeonData.image = await this.uploadImageToFirestore(this.imageFile, 'Palomas/'+this.currentUser?.email); 
-        const path = 'usuarios/'+this.currentUser?.uid+'/palomas';
-        await this.firebaseService.saveInFirestore(pigeonData, path, pigeonData.id);
-        this.snackbar.showSnackBar("Se ha añadido la paloma correctamente", 'cerrar', 8, 'snackbar-success');
-        this.pigeonForm.reset();
-      } catch (error){
-        this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
-                                    'cerrar',
-                                    8,
-                                    'snackbar-error');
-      }
-    }else{
-      this.snackbar.showSnackBar("Hay campos obligatorios vacíos.<br>Revisa bien los campos obligatorios",
-                                      'cerrar',
-                                      8,
-                                      'snackbar-error');
+    try{
+      let pigeonData: PigeonInterface = this.pigeonForm.value;
+      pigeonData.registerDate = Timestamp.fromDate(new Date());
+      pigeonData.id = pigeonData.registerDate + '-' + pigeonData.ring;
+      pigeonData.image = await this.uploadImageToFirestore(this.imageFile, 'Palomas/'+this.currentUser?.email); 
+      const path = 'usuarios/'+this.currentUser?.uid+'/palomas';
+      await this.firebaseService.saveInFirestore(pigeonData, path, pigeonData.id);
+      this.snackbar.showSnackBar("Se ha añadido la paloma correctamente", 'cerrar', 8, 'snackbar-success');
+      this.pigeonForm.reset();
+    } catch (error){
+      this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
+                          'cerrar',  8,  'snackbar-error');
     }
+    
   }
 
   async uploadImageToFirestore(imageFile: File, path: string){
@@ -161,6 +159,10 @@ export class PigeonFormComponent implements OnInit{
 
   getImageFile ($event: any){
     this.imageFile = $event.target.files[0];
+  }
+
+  goBack(): void{
+    this.location.back()
   }
 
   mockdataPigeon =[
