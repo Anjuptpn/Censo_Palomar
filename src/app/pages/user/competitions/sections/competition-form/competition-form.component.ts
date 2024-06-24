@@ -90,8 +90,6 @@ export class CompetitionFormComponent {
       if (this.typeForm === "Editar Paloma"){
         console.log("En desarrollo");
       } else {
-        
-        console.log("El RESULTADO", competitionData);
         this.registerCompetitionInFirestore(competitionData);
       }
     } else {
@@ -139,8 +137,14 @@ export class CompetitionFormComponent {
       console.log(error);
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                                   'cerrar', 12, 'snackbar-error');
+    }    
+  }
+
+  //Si el campo está vacío ponemos la misma fecha
+  onChangeCompetitionDate(){
+    if(this.competitionForm.get('arriveDate')?.value == null){
+      this.competitionForm.get('arriveDate')?.setValue(this.competitionForm.get('competitionDate')?.value)
     }
-    
   }
 
 }
