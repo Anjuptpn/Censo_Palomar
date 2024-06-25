@@ -156,15 +156,13 @@
                     placeholder="Notas, comentarios, observaciones, datos de interés sobre la competición...">
                 </textarea>
             </mat-form-field> 
-
-            El error: {{competitionForm.value | json}}
-
-
-
             <div class="button">
                 <button type="submit" mat-raised-button color="primary">{{typeForm}}</button>
                 <!-- <button type="submit" mat-raised-button color="primary" [disabled]="!competitionForm.valid">{{typeForm}}</button> -->
             </div>
         </form>
+        <div class="button">
+            <button mat-raised-button color="primary" (click)="goBack()">Cancelar</button>
+          </div>
     </div>
 </div>

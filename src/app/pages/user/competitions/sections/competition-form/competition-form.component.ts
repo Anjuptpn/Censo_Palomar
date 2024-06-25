@@ -5,14 +5,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
-import { CommonModule } from '@angular/common';
-import { Timestamp } from '@angular/fire/firestore';
+import { CommonModule, Location } from '@angular/common';
 import { User } from '@angular/fire/auth';
 import { SnackbarService } from '../../../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../../../../auth/services/firebase-errors.service';
 import { FirebaseService } from '../../../../../services-shared/firebase.service';
 import { AuthService } from '../../../../auth/services/auth.service';
-import { PigeonInterface } from '../../../../../models/pigeon.model';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { DatesService } from '../../../../../services-shared/dates.service';
 import { CompetitionInterface } from '../../../../../models/competition.model';
@@ -42,7 +40,8 @@ export class CompetitionFormComponent {
   private readonly firebaseErrors = inject(FirebaseErrorsService);
   private readonly firebaseService = inject (FirebaseService);
   private readonly authService = inject(AuthService);
-  readonly datesService = inject(DatesService);
+  readonly datesService = inject(DatesService);  
+  private readonly location = inject(Location);
 
   currentUser: User | null = null;
   competitionForm!: FormGroup;
@@ -145,6 +144,10 @@ export class CompetitionFormComponent {
     if(this.competitionForm.get('arriveDate')?.value == null){
       this.competitionForm.get('arriveDate')?.setValue(this.competitionForm.get('competitionDate')?.value)
     }
+  }
+
+  goBack(): void{
+    this.location.back()
   }
 
 }
