@@ -5,6 +5,8 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
 
 @Component({
   selector: 'app-pigeon-list',
@@ -16,6 +18,8 @@ import { RouterLink } from '@angular/router';
 export class PigeonListComponent {
   private firebaseService = inject(FirebaseService);
   private authService = inject(AuthService);
+  private snackbar = inject(SnackbarService);  
+  private readonly firebaseErrors = inject(FirebaseErrorsService);
 
   currentUser: User | null = null;
   pigeonList: PigeonInterface[] = []; 
@@ -34,7 +38,8 @@ export class PigeonListComponent {
         this.pigeonList = pigeons;
       });
     } catch (error){
-      console.log(error);
+      this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
+                          'cerrar',  8,  'snackbar-error');
     }     
   }
 }

@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../auth/services/auth.service';
 import { User } from '@angular/fire/auth';
 import { PigeonInterface } from '../../../../models/pigeon.model';
+import { CompetitionFormComponent } from '../sections/competition-form/competition-form.component';
 
 @Component({
   selector: 'app-edit-competition',
   standalone: true,
-  imports: [],
+  imports: [CompetitionFormComponent],
   templateUrl: './edit-competition.component.html',
   styleUrl: './edit-competition.component.sass'
 })
@@ -29,5 +30,7 @@ export class EditCompetitionComponent implements OnInit{
       //this.getPigeonWithId(user?.uid as string);
     });
   }
+
+  
 
 }

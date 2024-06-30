@@ -14,7 +14,7 @@ export class DialogService {
   showDialog(dialogTitle: string, dialogMessage: string, cancelButtonDialog: string, 
                 confirmButtonDialog: string): Observable<boolean>{
                   
-    let data: DialogInterface = {title: dialogTitle, 
+    const data: DialogInterface = {title: dialogTitle, 
                                   message: dialogMessage, 
                                   cancelButton: cancelButtonDialog, 
                                   confirmButton: confirmButtonDialog};

@@ -21,24 +21,27 @@ export class DatesService {
     return Timestamp.fromDate(new Date(stringDate));
   }
 
-  calculateDatesDifference(date1: Timestamp | null, date2: Timestamp | null){
-    if (date1 == null || date2 == null){
+  calculateDatesDifference(finishdate: Timestamp | null, startDate: Timestamp | null){
+    if (finishdate == null || startDate == null){
       return null
     }
-    return (date1.toMillis() - date2.toMillis())/60000;
+    return (finishdate.toMillis() - startDate.toMillis())/60000;
   }
 
-  convertirSegundosAHorasMinutosYSegundos(seconds: number | null){
-    if (seconds == null){
+  convertirSegundosAHorasMinutosYSegundos(mins: number | null | undefined){
+    if (mins == null || undefined){
       return null
     }
+    const seconds = mins*60;
+
     const hour = String (Math.floor(seconds/3600));
     const minutes = String (Math.floor((seconds / 60) % 60));
-    const calculateSeconds = String (seconds % 60);
+    const calculateSeconds = String (Math.floor(seconds % 60));
 
     return this.fillWithZeros(hour, 2) + ':' + this.fillWithZeros(minutes, 2)
-                      +':'+this.fillWithZeros(calculateSeconds, 2);
+                       +':'+this.fillWithZeros(calculateSeconds, 2);
   }
+  
 
   private fillWithZeros (data: string, lengthString: number): string{
     if (data.length < lengthString){
@@ -61,6 +64,21 @@ export class DatesService {
     }
     return distance/time;
 
+  }
+
+  separateDateComponents(timestamp: Timestamp | null | undefined){
+    if (timestamp == null || timestamp == undefined){
+      return null;
+    }
+    let date = new Date (timestamp.toMillis());
+    const objectDate = {
+      //stringDate: this.fillWithZeros((date.getMonth() + 1).toString(), 2) + '/' + this.fillWithZeros(date.getDate().toString(), 2) + '/' + date.getFullYear(),
+      date : date,
+      hour: this.fillWithZeros(date.getHours().toString() as string, 2) ,
+      minutes: this.fillWithZeros(date.getMinutes().toString(), 2),
+      seconds: this.fillWithZeros(date.getSeconds().toString(), 2)
+    };
+    return objectDate;
   }
 
   // Añade mucha más complejidad al problema de lo que soluciona se descarta.

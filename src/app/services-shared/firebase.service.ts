@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, deleteDoc, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { PigeonInterface } from '../models/pigeon.model';
 
@@ -20,15 +20,14 @@ export class FirebaseService {
       const document = doc(this.firestore, path, id);
       return await setDoc(document, dataCollection);
     } catch (error){
-      console.log(error);
       throw (error);
     }
   }
 
   //Recuperar una colección concreta
-  getDocumentFromFirebase(id: string, path: string){
+  async getDocumentFromFirebase(id: string, path: string){
     try{
-      const document = doc(this.firestore, path, id);
+      const document = await doc(this.firestore, path, id);
       return getDoc(document);
     } catch (error){
       throw (error);
@@ -44,6 +43,27 @@ export class FirebaseService {
     }
 
   }
+
+  //Actualizar Documentos
+  async updateDocumentInFirestore(dataCollection: any, path: string, id: string){
+    try{
+      const document = doc(this.firestore, path, id);
+      return await updateDoc(document, dataCollection);
+    } catch (error){
+      throw (error);
+    }
+  }
+
+  async deleteDocumentInFirestore(path: string){
+    try{
+      const document = doc(this.firestore, path);
+      return await deleteDoc(document);
+    } catch (error){
+      throw (error);
+    }
+  }
+
+
 
   
   

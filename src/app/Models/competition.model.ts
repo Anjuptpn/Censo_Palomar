@@ -14,5 +14,5 @@ export interface CompetitionInterface
     points: number, 
     id: string,
     notes: string, 
-    registerDate: Timestamp,  
+    registerDate: Timestamp | null,  
 }

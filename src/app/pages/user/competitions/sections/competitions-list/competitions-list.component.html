@@ -4,56 +4,68 @@
             <h4 class="title-h3">Competiciones</h4>
         </div>
         <div class="wrapper-competitions-items">
-            @if(mockCompetitions.length > 0){
-                @for(competition of mockCompetitions; track $index ){
-                    <div class="wrapper-item-competition">
-                        <div class="wrapper-icons-competitions">
-                            <div class="points">
-                                <img src="assets/trophy-20-solid.svg" alt=""> 
-                                <span>{{competition.points}}</span>
-                            </div>
-                            <div class="wrapper-speed-distance">
-                                <div class="distance">
-                                    <mat-icon>straighten</mat-icon>
-                                    <span>{{competition.distance}}<span class="unidades"> m</span></span>
+            @if(competitionsList.length > 0){
+                @for(competition of competitionsList; track $index ){
+                    <a [routerLink]="['/user/view-competition', pigeonId, competition.id]">
+                        <div class="wrapper-item-competition">
+                            <div class="wrapper-icons-competitions">
+                                <div class="points">
+                                    <img src="assets/trophy-20-solid.svg" alt=""> 
+                                    <span>{{competition.points != null ? competition.points : '--'}}</span>
                                 </div>
-                                <div class="speed">
-                                    <mat-icon>speed</mat-icon>
-                                    <span>{{competition.speed}}<span class="unidades"> m/min</span></span>
+                                <div class="wrapper-speed-distance">
+                                    <div class="distance">
+                                        <mat-icon>straighten</mat-icon>
+                                        <span>
+                                            {{competition.distance != null ? competition.distance : '--'}}
+                                            <span class="unidades"> m</span>
+                                        </span>
+                                    </div>
+                                    <div class="speed">
+                                        <mat-icon>speed</mat-icon>
+                                        <span>
+                                            {{ competition.speed != null ? (competition.speed | number:'1.0-2')?.replace(',', '') : '--'}}
+                                            <span class="unidades"> m/min</span></span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="wrapper-info-competition">
-                            <div class="wrapper-first-column">
-                                <p class="item-line">
-                                    <span class="label-item">Competición: </span>
-                                    <span class="info-item">{{competition.competitionName}}</span>
-                                </p>
-                                <p class="item-line">
-                                    <span class="label-item">Fecha:  </span>
-                                    <span class="info-item">{{competition.competitonDate}}</span>
-                                </p>
-                                <p class="item-line">
-                                    <span class="label-item">Puntos: </span>
-                                    <span class="info-item">{{competition.points}}</span>
-                                </p>
-                            </div>
-                            <div class="wrapper-second-column">
-                                <p class="item-line">
-                                    <span class="label-item">Lugar de suelta: </span>
-                                    <span class="info-item">{{competition.competitionPlace}}</span>
-                                </p>
-                                <p class="item-line">
-                                    <span class="label-item">Modalidad: </span>
-                                    <span class="info-item">{{competition.competitionType}}</span>
-                                </p>
-                            </div>
+                            <div class="wrapper-info-competition">
+                                <div class="wrapper-first-column">
+                                    <p class="item-line">
+                                        <span class="label-item">Competición: </span>
+                                        <span class="info-item">{{competition.competitionName}}</span>
+                                    </p>
+                                    <p class="item-line">
+                                        <span class="label-item">Fecha:  </span>
+                                        <span class="info-item">
+                                            {{competition.competitionDate != null ? (competition.competitionDate.toMillis() | date: 'dd/MM/YYYY') : 'No especificada'}}
+                                        </span>
+                                    </p>
+                                    <p class="item-line">
+                                        <span class="label-item">Puntos: </span>
+                                        <span class="info-item">{{competition.points != null ? competition.points : '--'}}</span>
+                                    </p>
+                                </div>
+                                <div class="wrapper-second-column">
+                                    <p class="item-line">
+                                        <span class="label-item">Lugar de suelta: </span>
+                                        <span class="info-item">{{competition.competitionPlace != null ? competition.competitionPlace : 'No especificado'}}</span>
+                                    </p>
+                                    <p class="item-line">
+                                        <span class="label-item">Modalidad: </span>
+                                        <span class="info-item">{{competition.competitionType != null ? competition.competitionType : 'No especificada'}}</span>
+                                    </p>
+                                    <p class=" item-line show-more">
+                                        Ver más
+                                    </p>
+                                </div>
 
+                            </div>
                         </div>
-                    </div>                
+                    </a>                
                 }
             }@else {
-                <h3 class="empty-list-competitions title-h5">Todavía no tienes palomas registradas.<br>¡Ánímate y pon la primera!</h3>
+                <h3 class="empty-list-competitions title-h5">Esta Paloma no tiene competiciones registradas</h3>
             }
         </div>
     </div>

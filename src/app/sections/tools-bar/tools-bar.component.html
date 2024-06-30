@@ -2,18 +2,28 @@
 <div class="container-toolbar center-child">
     <div class="wrapper-toolbar center-child">
         <div class="action-wrapper">
-            <a [routerLink]="">
+            <a (click)="openModal(path === '/user/edit-pigeon/' ? 'Paloma' : 'Competición')">
                 <mat-icon>delete</mat-icon>
                 <p>Eliminar</p>
             </a>
-            <a [routerLink]="['/user/add-competition',itemId]">
-                <mat-icon>emoji_events</mat-icon>
-                <p>Añadir<br>Competición</p>
-            </a>
-            <a [routerLink]="['/user/edit-pigeon',itemId]">
-                <mat-icon>edit_square</mat-icon>
-                <p>Editar</p>
-            </a>
+            @if (path === '/user/edit-pigeon/'){
+                <a [routerLink]="['/user/add-competition',itemId]">
+                    <mat-icon>emoji_events</mat-icon>
+                    <p>Añadir<br>Competición</p>
+                </a>
+            }
+            @if(path === '/user/edit-competition/'){
+                <a [routerLink]="[path, itemId, competitionId]">
+                    <mat-icon>edit_square</mat-icon>
+                    <p>Editar</p>
+                </a>
+            }@else {
+                <a [routerLink]="[path, itemId]">
+                    <mat-icon>edit_square</mat-icon>
+                    <p>Editar</p>
+                </a>
+            }
+                    
             <a (click)="goBack()">
                 <mat-icon>arrow_back</mat-icon>
                 <p>Volver</p>

@@ -63,11 +63,11 @@ export class PigeonFormComponent implements OnInit{
     this.inicializePigeonForm(this.typeForm);
     this.pigeonForm.get('registeredFather')?.valueChanges.subscribe( active =>{
       this.hasRegisteredFather = active;
-      console.log("Padre", this.hasRegisteredFather);    
+      //console.log("Padre", this.hasRegisteredFather);    
     });
     this.pigeonForm.get('registeredMother')?.valueChanges.subscribe( active =>{
       this.hasRegisteredMother = active;
-      console.log("Madre", this.hasRegisteredMother);      
+      //console.log("Madre", this.hasRegisteredMother);      
     });
     this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
@@ -130,7 +130,7 @@ export class PigeonFormComponent implements OnInit{
     try{
       let pigeonData: PigeonInterface = this.pigeonForm.value;
       pigeonData.registerDate = Timestamp.fromDate(new Date());
-      pigeonData.id = pigeonData.registerDate + '-' + pigeonData.ring;
+      pigeonData.id = pigeonData.registerDate + '-' + pigeonData.ring.replace(/ /g,"-");
       pigeonData.image = await this.uploadImageToFirestore(this.imageFile, 'Palomas/'+this.currentUser?.email); 
       const path = 'usuarios/'+this.currentUser?.uid+'/palomas';
       await this.firebaseService.saveInFirestore(pigeonData, path, pigeonData.id);

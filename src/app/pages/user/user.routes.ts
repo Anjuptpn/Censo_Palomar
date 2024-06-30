@@ -25,6 +25,10 @@ export const routes: Routes = [
         loadComponent: () => import('./competitions/edit-competition/edit-competition.component').then(
             (m) => m.EditCompetitionComponent)
     },
+    {path: 'view-competition/:pigeonId/:competitionId', 
+        loadComponent: () => import('./competitions/view-competition/view-competition.component').then(
+            (m) => m.ViewCompetitionComponent)
+    },
     {path: '', 
         loadComponent: () => import('./profile/profile.component').then(
             (m)=> m.ProfileComponent)

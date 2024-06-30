@@ -9,11 +9,12 @@ import { CommonModule, Location } from '@angular/common';
 import { User } from '@angular/fire/auth';
 import { SnackbarService } from '../../../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../../../../auth/services/firebase-errors.service';
-import { FirebaseService } from '../../../../../services-shared/firebase.service';
 import { AuthService } from '../../../../auth/services/auth.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { DatesService } from '../../../../../services-shared/dates.service';
 import { CompetitionInterface } from '../../../../../models/competition.model';
+import { CompetitionsService } from '../../competitions.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-competition-form',
@@ -38,58 +39,57 @@ export class CompetitionFormComponent {
   private readonly formBuilder = inject(FormBuilder);
   private readonly snackbar = inject(SnackbarService);
   private readonly firebaseErrors = inject(FirebaseErrorsService);
-  private readonly firebaseService = inject (FirebaseService);
   private readonly authService = inject(AuthService);
   readonly datesService = inject(DatesService);  
   private readonly location = inject(Location);
+  private readonly competitionsService = inject(CompetitionsService);
+  private readonly router = inject(Router);
 
   currentUser: User | null = null;
   competitionForm!: FormGroup;
+  //currentCompetition: CompetitionInterface | null = null;
+  currentCompetition: any = null;
   private readonly numberPattern = /^\d+(.\d+)?$/; //No funciona con input type number.
   private readonly minutesAndSecondsPattern = /^[0-5][0-9]$/;
   private readonly hoursPattern = /^(0[0-9]|1[0-9]|2[0-3])$/;
 
-  ngOnInit(): void {    
-    this.inicializePigeonForm(this.typeForm);    
+   ngOnInit(): void {    
+    this.inicializePigeonForm();
     this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
-    })    
+      if (this.typeForm === 'Editar Competición' && user != null ){
+        this.getCompetitionToEdit(user.uid);
+      }      
+    });     
   }
 
-  private inicializePigeonForm (type: string){
-    if (type === 'Editar Paloma'){
-      
-      
-    } else {
-      this.competitionForm = this.formBuilder.group({
-        ranking: [ , Validators.pattern(this.numberPattern)],
-        competitionName: ['', Validators.required],
-        competitionPlace: [''],
-        competitionType: [],
-        competitionDate: [],
-        arriveDate: [],
-        distance: [, Validators.pattern(this.numberPattern)],
-        points: [ , Validators.pattern(this.numberPattern)],
-        startHour: [, Validators.pattern(this.hoursPattern)],
-        startMinutes: [,Validators.pattern(this.minutesAndSecondsPattern)],
-        startSeconds: [,Validators.pattern(this.minutesAndSecondsPattern)],
-        finishHour: [, Validators.pattern(this.hoursPattern)],
-        finishMinutes: [,Validators.pattern(this.minutesAndSecondsPattern)],
-        finishSeconds: [,Validators.pattern(this.minutesAndSecondsPattern)],
-        notes: [''],
-        
-      });
-    }
+  private inicializePigeonForm (){    
+    this.competitionForm = this.formBuilder.group({
+      ranking: [ , Validators.pattern(this.numberPattern)],
+      competitionName: ['', Validators.required],
+      competitionPlace: [],
+      competitionType: [],
+      competitionDate: [],
+      arriveDate: [],
+      distance: [, Validators.pattern(this.numberPattern)],
+      points: [ , Validators.pattern(this.numberPattern)],
+      startHour: [, Validators.pattern(this.hoursPattern)],
+      startMinutes: [,Validators.pattern(this.minutesAndSecondsPattern)],
+      startSeconds: [,Validators.pattern(this.minutesAndSecondsPattern)],
+      finishHour: [, Validators.pattern(this.hoursPattern)],
+      finishMinutes: [,Validators.pattern(this.minutesAndSecondsPattern)],
+      finishSeconds: [,Validators.pattern(this.minutesAndSecondsPattern)],
+      notes: [''],        
+    });
   }
 
   submitCompetitionForm(){
     if (this.competitionForm.valid){
-      let competitionData: CompetitionInterface = this.prepareFormData();
-      
-      if (this.typeForm === "Editar Paloma"){
-        console.log("En desarrollo");
+      const competitionData: CompetitionInterface = this.prepareFormData();      
+      if (this.typeForm === "Editar Competición"){
+        this.updateCompetition(competitionData);
       } else {
-        this.registerCompetitionInFirestore(competitionData);
+        this.registerCompetition(competitionData);
       }
     } else {
       this.snackbar.showSnackBar(
@@ -99,41 +99,72 @@ export class CompetitionFormComponent {
   }
 
   prepareFormData(): CompetitionInterface{
-    let competition: CompetitionInterface = <CompetitionInterface>{};
-    competition.competitionDate = this.datesService.createFirebaseTimestamp(
-      this.competitionForm.get('competitionDate')?.value, 
-      this.competitionForm.get('startHour')?.value,
-      this.competitionForm.get('startMinutes')?.value,
-      this.competitionForm.get('startSeconds')?.value);
-    competition.arriveDate = this.datesService.createFirebaseTimestamp(
-      this.competitionForm.get('arriveDate')?.value,
-      this.competitionForm.get('finishHour')?.value,
-      this.competitionForm.get('finishMinutes')?.value,
-      this.competitionForm.get('finishSeconds')?.value);       
-    competition.duration = this.datesService.calculateDatesDifference(competition.arriveDate, competition.competitionDate);
-    competition.registerDate = this.datesService.getCurrentDate();
-    competition.ranking =  this.competitionForm.get('ranking')?.value;
-    competition.competitionName = this.competitionForm.get('competitionName')?.value;
-    competition.competitionPlace = this.competitionForm.get('competitionPlace')?.value;
-    competition.competitionType = this.competitionForm.get('competitionType')?.value;
-    competition.notes = this.competitionForm.get('notes')?.value;
-    competition.points = this.competitionForm.get('points')?.value;
-    competition.distance = this.competitionForm.get('distance')?.value;
-    competition.competitionName = this.competitionForm.get('competitionName')?.value;
-    competition.registerDate = this.datesService.getCurrentDate();
-    competition.id = competition.registerDate + '-' + competition.competitionName;
-    competition.speed = this.datesService.calculateSpeed(competition.distance, competition.duration);
+    const startDate = this.datesService.createFirebaseTimestamp(
+      this.competitionForm.value.competitionDate, this.competitionForm.value.startHour, 
+      this.competitionForm.value.startMinutes, this.competitionForm.value.startSeconds);
+    const finishDate = this.datesService.createFirebaseTimestamp(
+      this.competitionForm.value.arriveDate, this.competitionForm.value.finishHour, 
+      this.competitionForm.value.finishMinutes, this.competitionForm.value.finishSeconds);    
+    const duration = this.datesService.calculateDatesDifference(finishDate, startDate);
+
+    let competition: CompetitionInterface = {
+      competitionName: this.competitionForm.value.competitionName,
+      competitionType: this.competitionForm.value.competitionType,
+      competitionPlace: this.competitionForm.value.competitionPlace,
+      points: this.competitionForm.value.points,
+      ranking: this.competitionForm.value.ranking,
+      notes: this.competitionForm.value.notes,
+      distance: this.competitionForm.value.distance,
+      competitionDate: startDate,
+      arriveDate: finishDate,
+      duration: duration,
+      speed: this.datesService.calculateSpeed(this.competitionForm.value.distance, duration),
+      registerDate: null,
+      id : ''      
+    };  
+    
+    if (this.typeForm == "Editar Competición"){
+      competition.registerDate = this.currentCompetition.registerDate;
+      competition.id = this.currentCompetition.id;
+    } else {
+      const currentDate = this.datesService.getCurrentDate();
+      competition.registerDate = currentDate;
+      competition.id = currentDate+ '-' + this.competitionForm.value.competitionName.replace(/ /g,"-");
+    }
     return competition;
   }
 
-  async registerCompetitionInFirestore(competition: CompetitionInterface){    
+  async registerCompetition(competition: CompetitionInterface){    
     try{
-      const path = 'usuarios/'+this.currentUser?.uid+'/palomas/'+this.pigeonId+'/competiciones';
-      await this.firebaseService.saveInFirestore(competition, path, competition.id);
-      this.snackbar.showSnackBar("Se ha añadido la competición correctamente", 'cerrar', 12, 'snackbar-success');
-      this.competitionForm.reset();
+      if (this.currentUser == null || this.currentUser == undefined){
+        this.snackbar.showSnackBar("Debes estar registrado para añadir una competición", 'cerrar', 12, 'snackbar-error');
+      } else if (this.pigeonId == null){
+        this.snackbar.showSnackBar("No hay una paloma asociada a esta competición, vuelve hacia atrás y selecciona una paloma", 'cerrar', 12, 'snackbar-error');
+      } else {
+        await this.competitionsService.registerCompetitionInFirestore(this.currentUser?.uid, this.pigeonId, competition);
+        this.snackbar.showSnackBar("Se ha añadido la competición correctamente", 'cerrar', 12, 'snackbar-success');
+        this.competitionForm.reset();
+      }
     } catch (error){
-      console.log(error);
+      this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
+                                  'cerrar', 12, 'snackbar-error');
+    }    
+  }
+
+  async updateCompetition(competition: CompetitionInterface){    
+    try{
+      if (this.currentUser == null || this.currentUser == undefined){
+        this.snackbar.showSnackBar("Debes estar registrado para editar una competición", 'cerrar', 12, 'snackbar-error');
+      } else if (this.pigeonId == null){
+        this.snackbar.showSnackBar("No hay una paloma asociada a esta competición, vuelve hacia atrás y selecciona una paloma", 'cerrar', 12, 'snackbar-error');
+      } else {
+        await this.competitionsService.updateCompetition(this.currentUser?.uid, this.pigeonId, competition);
+        this.snackbar.showSnackBar("Se ha actualizado la competición correctamente", 'cerrar', 12, 'snackbar-success');
+        this.competitionForm.reset();
+        this.goBack();
+
+      }
+    } catch (error){
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                                   'cerrar', 12, 'snackbar-error');
     }    
@@ -148,6 +179,46 @@ export class CompetitionFormComponent {
 
   goBack(): void{
     this.location.back()
+  }
+
+  //Funciones para editar
+  async getCompetitionToEdit(userId: string){    
+    try{
+      if (userId == null || userId == undefined || userId == ''){
+        this.snackbar.showSnackBar("Debes estar registrado para editar una competición", 'cerrar', 12, 'snackbar-error');
+      } else {
+        this.currentCompetition = await this.competitionsService.getCompetitionWithId(userId, this.pigeonId, this.competitionId) as CompetitionInterface;
+        this.patchValueToForm(this.currentCompetition);
+      }
+    console.log(this.currentCompetition);
+    } catch (error){
+      this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 
+                                      'cerrar', 8, 'snackbar-error');
+    } 
+  }
+
+  patchValueToForm(data: CompetitionInterface){
+    const startDate = this.datesService.separateDateComponents(data.competitionDate);
+    const finishDate = this.datesService.separateDateComponents(data.arriveDate);
+    
+    let dataForm = {
+      competitionName: data.competitionName,
+      competitionPlace: data.competitionPlace,
+      competitionType: data.competitionType,
+      ranking: data.ranking,
+      notes: data.notes,
+      points: data.points,
+      distance: data.distance,
+      competitionDate: startDate?.date,
+      startHour: startDate?.hour,
+      startMinutes: startDate?.minutes,
+      startSeconds: startDate?.seconds,
+      arriveDate: finishDate?.date,
+      finishHour: finishDate?.hour,
+      finishMinutes: finishDate?.minutes,
+      finishSeconds: finishDate?.seconds
+    }
+    this.competitionForm.patchValue(dataForm)    
   }
 
 }
