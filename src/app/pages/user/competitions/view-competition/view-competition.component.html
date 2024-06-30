@@ -91,11 +91,21 @@
                     <mat-icon fontSet="material-icons-outlined">timer</mat-icon>                
                     <span class="metric-label">Duración: </span>
                     <span class="metric-info"> 
-                        {{currentCompetition?.duration != null ? convertMMinutes(currentCompetition?.duration) : "Sin especificar" }}
+                        {{currentCompetition?.duration != null ? convertMinutes(currentCompetition?.duration) : "Sin especificar" }}
                     </span>
                 </p>
             </div>
         </div>
+        @if (currentCompetition?.notes != null && currentCompetition?.notes != ''){
+            <div class="wrapper-notes center-child">
+                <div class="container-notes">
+                    <span class="label-notes">Observaciones</span>
+                    <p class="notes">                   
+                        {{currentCompetition?.notes}}
+                    </p>
+                </div>
+            </div>
+        }
 
     </div>
 </div>
