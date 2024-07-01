@@ -7,11 +7,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-pigeon-list',
   standalone: true,
-  imports: [MatIconModule, RouterLink],
+  imports: [MatIconModule, RouterLink, MatButtonModule],
   templateUrl: './pigeon-list.component.html',
   styleUrl: './pigeon-list.component.sass'
 })

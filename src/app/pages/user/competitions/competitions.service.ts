@@ -9,9 +9,7 @@ import { CompetitionInterface } from '../../../models/competition.model';
 export class CompetitionsService {
 
 
-  constructor(private firebaseService: FirebaseService,
-              
-  ) { }
+  constructor(private firebaseService: FirebaseService) { }
 
   async getCompetitionWithId(userId: string, pigeonId: string, competitionId: string){
     try{
@@ -44,7 +42,7 @@ export class CompetitionsService {
     }
   }
 
-  async deleteCompetition (userId: string | null, pigeonId: string, competitionId: string){
+  async deleteCompetition (userId: string, pigeonId: string, competitionId: string){
     try{
       const path = 'usuarios/'+userId+'/palomas/'+pigeonId+'/competiciones/'+competitionId;
       await this.firebaseService.deleteDocumentInFirestore(path);

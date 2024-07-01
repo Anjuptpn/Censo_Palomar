@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '@angular/fire/auth';
@@ -10,6 +10,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
 import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
 import { PigeonInterface } from '../../../../models/pigeon.model';
+import { PigeonsService } from '../pigeons.service';
 
 @Component({
   selector: 'app-pigeon-profile',
@@ -18,21 +19,23 @@ import { PigeonInterface } from '../../../../models/pigeon.model';
   templateUrl: './pigeon-profile.component.html',
   styleUrl: './pigeon-profile.component.sass'
 })
-export class PigeonProfileComponent implements OnInit{
+export class PigeonProfileComponent implements OnInit, OnDestroy{
 
   private activedRoute = inject(ActivatedRoute);
   private firebaseService = inject(FirebaseService);
   private authService = inject(AuthService);
   private firebaseErrorsService = inject(FirebaseErrorsService);
   private snackbar = inject(SnackbarService);
+  private pigeonService = inject(PigeonsService);
 
   id: string = '';
   currentUser: User | null = null;
   currentPigeon: PigeonInterface | null = null;
+  currentSubscribe: any; 
 
   ngOnInit(): void {
     this.id = this.activedRoute.snapshot.params['id'];
-    this.authService.currentUserState.subscribe( (user) => {
+    this.currentSubscribe = this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
       this.getPigeonWithId(user?.uid as string);
     });
@@ -41,15 +44,18 @@ export class PigeonProfileComponent implements OnInit{
   getPigeonWithId(userId: string){
     try{
       const path = 'usuarios/'+userId+'/palomas';
-      this.firebaseService.getDocumentFromFirebase(this.id, path).then( response =>
-        this.currentPigeon = response.data() as PigeonInterface
-      );
+      this.firebaseService.getDocumentFromFirebase(this.id, path).then( response => {
+        this.currentPigeon = response.data() as PigeonInterface;
+        this.pigeonService.saveImageURL(this.currentPigeon.image);
+      });
     }catch (error){
       this.snackbar.showSnackBar(this.firebaseErrorsService.translateErrorCode(error as string), 
                                       'cerrar', 8, 'snackbar-error');
     }
   }
 
-  
+  ngOnDestroy(): void {
+    this.currentSubscribe.unsubscribe();
+  }
 
 }

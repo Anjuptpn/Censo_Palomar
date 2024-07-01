@@ -24,7 +24,7 @@ export const menuLinks = [
       "image": "assets/icon-paloma.svg"
     },
     {
-      "tag": "Registro Paloma",
+      "tag": "Registrar Paloma",
       "link": "/user/pigeon-register",
       "icon": "",
       "image": "assets/Icon-add-paloma.svg"

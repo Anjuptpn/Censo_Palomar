@@ -8,6 +8,7 @@ import { FirebaseErrorsService } from '../../pages/auth/services/firebase-errors
 import { DialogService } from '../dialog/dialog.service';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../../pages/auth/services/auth.service';
+import { PigeonsService } from '../../pages/user/pigeons/pigeons.service';
 
 @Component({
   selector: 'app-tools-bar',
@@ -27,7 +28,8 @@ export class ToolsBarComponent {
               private snackbar: SnackbarService,
               private firebaseErrors: FirebaseErrorsService,
               private dialogService: DialogService,
-              private authService: AuthService){
+              private authService: AuthService,
+              private pigeonService: PigeonsService){
     this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
     });
@@ -54,7 +56,14 @@ export class ToolsBarComponent {
         }
 
       } else if (this.path === '/user/edit-pigeon/'){
-        console.log("Estamos en ello");
+        try{
+          await this.pigeonService.deletePigeon(this.currentUser!.uid, this.itemId);
+          this.snackbar.showSnackBar("Se ha borrado la competición", 'cerrar', 12, 'snackbar-error');
+          this.goBack();
+        }catch (error){
+          this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
+                                      'cerrar', 12, 'snackbar-error');
+        } 
       }
 
     }

@@ -4,8 +4,7 @@
     </div>
 </div>
 <div class="container-pigeon-list center-child">
-    <div class="wrapper-pigeon-list">
-        
+    <div class="wrapper-pigeon-list">        
         @if(pigeonList.length > 0){
             @for(pigeon of pigeonList; track $index){
                 <a [routerLink]="['/user/pigeon-profile', pigeon.id]">
@@ -34,5 +33,13 @@
         }@else {
             <h3 class="empty-list title-h5">Todavía no tienes palomas registradas.<br>¡Ánímate y pon la primera!</h3>
         }
+
+        <div class="button">
+            <button mat-raised-button color="primary" [routerLink]="'/user/pigeon-register'"> 
+                <img src='assets/Icon-add-paloma-white.png' alt="ICON" width="25px">                
+                     Registrar Paloma
+            </button>
+        </div>
     </div>
+    
 </div>
