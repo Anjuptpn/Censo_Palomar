@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -19,6 +19,7 @@ import { FirebaseService } from '../../../../../services-shared/firebase.service
 import { AuthService } from '../../../../auth/services/auth.service';
 import { StorageService } from '../../../../../services-shared/storage.service';
 import { PigeonInterface } from '../../../../../models/pigeon.model';
+import { PigeonsService } from '../../pigeons.service';
 
 
 
@@ -39,7 +40,7 @@ import { PigeonInterface } from '../../../../../models/pigeon.model';
   templateUrl: './pigeon-form.component.html',
   styleUrl: '../../../../../general-styles/form-styles.sass'
 })
-export class PigeonFormComponent implements OnInit{
+export class PigeonFormComponent implements OnInit, OnDestroy{
   @Input() typeForm!: string;
   @Input() pigeonId!: string;
 
@@ -50,6 +51,7 @@ export class PigeonFormComponent implements OnInit{
   private readonly authService = inject(AuthService);
   private readonly storageService = inject(StorageService);
   private readonly location = inject(Location);
+  private readonly pigeonService = inject(PigeonsService);
 
   states = estados.pigeonStates;
   currentUser: User | null = null;
@@ -58,24 +60,25 @@ export class PigeonFormComponent implements OnInit{
   hasRegisteredMother = true;
   pigeonForm!: FormGroup;
 
+  currentAuthSubcribe: any;
+  pigeonMother: any;
+  pigeonFather: any;
+
 
   ngOnInit(): void {    
     this.inicializePigeonForm(this.typeForm);
-    this.pigeonForm.get('registeredFather')?.valueChanges.subscribe( active =>{
-      this.hasRegisteredFather = active;
-      //console.log("Padre", this.hasRegisteredFather);    
+    this.pigeonFather = this.pigeonForm.get('registeredFather')?.valueChanges.subscribe( active =>{
+      this.hasRegisteredFather = active;  
     });
-    this.pigeonForm.get('registeredMother')?.valueChanges.subscribe( active =>{
-      this.hasRegisteredMother = active;
-      //console.log("Madre", this.hasRegisteredMother);      
+    this.pigeonMother = this.pigeonForm.get('registeredMother')?.valueChanges.subscribe( active =>{
+      this.hasRegisteredMother = active;     
     });
-    this.authService.currentUserState.subscribe( (user) => {
+    this.currentAuthSubcribe = this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
     })    
   }
 
   private inicializePigeonForm (type: string){
-    console.log(type);
     if (type === 'Editar Paloma'){
       this.pigeonForm = this.formBuilder.group({
         pigeonName: ['Parchita', Validators.required],
@@ -114,48 +117,45 @@ export class PigeonFormComponent implements OnInit{
   }
 
   submitPigeonForm(){
-    if(this.pigeonForm.valid){
-      if (this.typeForm === "Editar Paloma"){
-        console.log("En desarrollo");
-      } else {
-        this.registerPigeonInFirestore();
-      }
+    if(this.pigeonForm.valid){      
+      this.prepareFormData().then(pigeon => {
+        if (this.typeForm === "Editar Paloma"){
+          console.log("En desarrollo");
+        } else {
+          this.registerPigeon(pigeon);
+        }        
+      }).catch(error => {
+        this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
+                             'cerrar',  8,  'snackbar-error');
+      });
     } else {
-      this.snackbar.showSnackBar(`Hay campos obligatorios vacíos. \n Revisa bien los campos obligatorios`,
+      this.snackbar.showSnackBar(`Hay campos obligatorios vacíos o incorrectos. \n Revisa bien los campos`,
         'cerrar',  8, 'snackbar-error');
     }
   }
 
-  async registerPigeonInFirestore(){
-    try{
-      let pigeonData: PigeonInterface = this.pigeonForm.value;
-      pigeonData.registerDate = Timestamp.fromDate(new Date());
-      pigeonData.id = pigeonData.registerDate + '-' + pigeonData.ring.replace(/ /g,"-");
-      pigeonData.image = await this.uploadImageToFirestore(this.imageFile, 'Palomas/'+this.currentUser?.email); 
-      const path = 'usuarios/'+this.currentUser?.uid+'/palomas';
-      await this.firebaseService.saveInFirestore(pigeonData, path, pigeonData.id);
-      this.snackbar.showSnackBar("Se ha añadido la paloma correctamente", 'cerrar', 8, 'snackbar-success');
-      this.pigeonForm.reset();
-    } catch (error){
-      this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
-                          'cerrar',  8,  'snackbar-error');
-    }
-    
-  }
+  async prepareFormData(): Promise<PigeonInterface>{ 
+    let pigeonData: PigeonInterface = this.pigeonForm.value;
+    pigeonData.registerDate = Timestamp.fromDate(new Date());
+    pigeonData.id = pigeonData.registerDate + '-' + pigeonData.ring.replace(/ /g,"-");
+    pigeonData.image = await this.pigeonService.uploadImageToFirestore(this.imageFile, 'Palomas/'+this.currentUser?.email);
+    return pigeonData;
+  }  
 
-  async uploadImageToFirestore(imageFile: File, path: string){
+  async registerPigeon(pigeon: PigeonInterface){
     try{
-      console.log("Nombre de la Imagen", imageFile.name);
-      if (imageFile.name !== 'null.null'){
-        return await this.storageService.uploadImage(imageFile, path);
+      if (this.currentUser == null || this.currentUser == undefined){
+        this.snackbar.showSnackBar("Debes estar registrado para añadir una competición", 'cerrar', 12, 'snackbar-error');
       } else {
-        return "https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/assets-firebase%2Fcuadrado-grande-500.jpg?alt=media&token=b34f2714-9938-46c6-851c-2b6ccdcf47ed"
+        await this.pigeonService.registerPigeonInFirestore(this.currentUser.uid, pigeon);
+        this.snackbar.showSnackBar("Se ha añadido la paloma correctamente", 'cerrar', 8, 'snackbar-success');
+        this.pigeonForm.reset();
       }
     } catch (error){
-      throw(error);
+         this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
+                             'cerrar',  8,  'snackbar-error');
     }
-
-  }
+  } 
 
   getImageFile ($event: any){
     this.imageFile = $event.target.files[0];
@@ -163,6 +163,12 @@ export class PigeonFormComponent implements OnInit{
 
   goBack(): void{
     this.location.back()
+  }
+
+  ngOnDestroy(): void {
+    this.currentAuthSubcribe.unsubscribe();
+    this.pigeonMother.unsubscribe();
+    this.pigeonFather.unsubscribe();
   }
 
   mockdataPigeon =[

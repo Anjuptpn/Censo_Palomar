@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from '../../../services-shared/firebase.service';
 import { StorageService } from '../../../services-shared/storage.service';
+import { PigeonInterface } from '../../../models/pigeon.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,36 @@ export class PigeonsService {
       await this.storageService.deleteImage(this.imageURL);
     }
 
+  }
+
+  async uploadImageToFirestore(imageFile: File, path: string){
+    try{
+      if (imageFile.name !== 'null.null'){
+        return await this.storageService.uploadImage(imageFile, path);
+      } else {
+        return "https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/assets-firebase%2Fcuadrado-grande-500.jpg?alt=media&token=b34f2714-9938-46c6-851c-2b6ccdcf47ed"
+      }
+    } catch (error){
+      throw(error);
+    }
+
+  }
+
+  async registerPigeonInFirestore(userId: string, pigeon: PigeonInterface){
+    try{
+      const path = 'usuarios/'+userId+'/palomas';
+      await this.firebaseService.saveInFirestore(pigeon, path, pigeon.id)
+    } catch (error){
+      throw(error);
+    }
+  }
+
+  async updatePigeon (userId: string, pigeon: PigeonInterface){
+    try{
+      const path = 'usuarios/'+userId+'/palomas/';
+      await this.firebaseService.updateDocumentInFirestore(pigeon, path, pigeon.id);
+    } catch (error){
+      throw(error);
+    }
   }
 }

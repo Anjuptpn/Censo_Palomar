@@ -58,14 +58,13 @@ export class ToolsBarComponent {
       } else if (this.path === '/user/edit-pigeon/'){
         try{
           await this.pigeonService.deletePigeon(this.currentUser!.uid, this.itemId);
-          this.snackbar.showSnackBar("Se ha borrado la competición", 'cerrar', 12, 'snackbar-error');
+          this.snackbar.showSnackBar("Se ha borrado la paloma", 'cerrar', 12, 'snackbar-error');
           this.goBack();
         }catch (error){
           this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                                       'cerrar', 12, 'snackbar-error');
         } 
       }
-
     }
   }
 

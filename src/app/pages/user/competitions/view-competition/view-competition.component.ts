@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { CompetitionInterface } from '../../../../models/competition.model';
 import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
@@ -18,7 +18,7 @@ import { CompetitionsService } from '../competitions.service';
   templateUrl: './view-competition.component.html',
   styleUrl: './view-competition.component.sass'
 })
-export class ViewCompetitionComponent implements OnInit{
+export class ViewCompetitionComponent implements OnInit, OnDestroy{
 
   private activedRoute = inject(ActivatedRoute);
   private snackbar = inject(SnackbarService);
@@ -31,11 +31,12 @@ export class ViewCompetitionComponent implements OnInit{
   pigeonId: string = '';
   currentUser: User | null = null;
   currentCompetition:  CompetitionInterface | null = null;
+  currentSubscription: any;
 
   ngOnInit(): void {
     this.pigeonId = this.activedRoute.snapshot.params['pigeonId'];
     this.competitionId = this.activedRoute.snapshot.params['competitionId'];
-    this.authService.currentUserState.subscribe( (user) => {
+    this.currentSubscription = this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
       this.getCompetition(user?.uid as string);
     });
@@ -59,6 +60,10 @@ export class ViewCompetitionComponent implements OnInit{
       return null;
     }
     return this.datesService.convertirSegundosAHorasMinutosYSegundos(minutes);
+  }
+
+  ngOnDestroy(): void {
+    this.currentSubscription.unsubscribe;
   }
 
 }
