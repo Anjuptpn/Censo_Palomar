@@ -15,9 +15,7 @@ import { Timestamp } from '@angular/fire/firestore';
 import { User } from '@angular/fire/auth';
 import { SnackbarService } from '../../../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../../../../auth/services/firebase-errors.service';
-import { FirebaseService } from '../../../../../services-shared/firebase.service';
 import { AuthService } from '../../../../auth/services/auth.service';
-import { StorageService } from '../../../../../services-shared/storage.service';
 import { PigeonInterface } from '../../../../../models/pigeon.model';
 import { PigeonsService } from '../../pigeons.service';
 
@@ -157,7 +155,6 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
       } else {
         await this.pigeonService.updatePigeon(this.currentUser.uid, pigeon);
         this.snackbar.showSnackBar("Se ha actualizado la paloma correctamente", 'cerrar', 8, 'snackbar-success');
-        this.pigeonForm.reset();
         this.goBack();
       }
     } catch (error){
@@ -191,7 +188,6 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
         this.patchValueToForm(this.currentPigeon);
       }
     }catch (error){
-      console.log("GetpigeonEdit", error)
        this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 
                                         'cerrar', 8, 'snackbar-error');
     }
@@ -210,7 +206,6 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
       this.hasRegisteredFather = data.registeredFather;
       this.hasRegisteredMother = data.registeredMother; 
     } catch (error){
-      console.log("Error", error);
       this.snackbar.showSnackBar("Error recuperando los datos de la paloma. Vuelve a intentarlo más tarde", 'cerrar', 12, 'snackbar-error');
     }    
   }

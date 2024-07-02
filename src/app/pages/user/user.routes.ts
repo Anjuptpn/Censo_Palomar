@@ -29,8 +29,12 @@ export const routes: Routes = [
         loadComponent: () => import('./competitions/view-competition/view-competition.component').then(
             (m) => m.ViewCompetitionComponent)
     },
+    {path: 'update-user', 
+        loadComponent: () => import('./users/update-user/update-user.component').then(
+            (m) => m.UpdateUserComponent)
+    },
     {path: '', 
-        loadComponent: () => import('./profile/profile.component').then(
+        loadComponent: () => import('./users/profile/profile.component').then(
             (m)=> m.ProfileComponent)
     }    
 ] 

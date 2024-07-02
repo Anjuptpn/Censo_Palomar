@@ -21,7 +21,7 @@
                 </div>
                 <div class="profile-item-list">
                     <div class="icon-list-wrapper">
-                        <span  class="icon-item"><mat-icon>mail</mat-icon></span>
+                        <span  class="icon-item"><mat-icon fontSet="material-icons-outlined">mail</mat-icon></span>
                     </div>                        
                     <div class="info-list-wrapper">
                         <span class="title-item">Correo</span> 
@@ -48,5 +48,11 @@
                 </div>
     
             </div>
+    </div>
+    <div class="button">
+        <button mat-raised-button color="primary" [routerLink]="'/user/update-user'"> 
+            <mat-icon>person</mat-icon>                
+                 Actualizar perfil
+        </button>
     </div>
 </div>

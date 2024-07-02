@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
-import {MatSelectModule} from '@angular/material/select';
 import { RouterLink } from '@angular/router';
 import { HeaderFormsComponent } from '../sections/header-forms/header-forms.component';
 import { UserInterface } from '../../../models/user.model';
@@ -17,7 +16,6 @@ import { FirebaseErrorsService } from '../services/firebase-errors.service';
   standalone: true,
   imports: [MatCheckboxModule, 
                 MatFormFieldModule, 
-                MatSelectModule,
                 MatButtonModule, 
                 MatInput, 
                 ReactiveFormsModule, 
@@ -36,7 +34,6 @@ export class SignupComponent implements OnInit{
   private readonly emailPattern =
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   registerForm!: FormGroup;
-  showError = true;
   imageFile = new File([], "null.null"); //fichero vacío, no se permite que sea null
 
   ngOnInit(): void {
@@ -60,7 +57,7 @@ export class SignupComponent implements OnInit{
     if (this.registerForm.valid){
       try{        
         const userData: UserInterface = this.registerForm.value;
-        await this.authService.userSignup(this.imageFile, userData,);
+        await this.authService.userSignup(this.imageFile, userData);
         this.registerForm.reset();
       } catch (error){ 
         this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
@@ -76,7 +73,7 @@ export class SignupComponent implements OnInit{
     }
   }
 
-  getFileForm($event: any){
+  getFileForm($event: any): void{
     this.imageFile = $event.target.files[0];
   }  
 }

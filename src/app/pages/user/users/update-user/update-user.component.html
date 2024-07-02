@@ -1,0 +1,36 @@
+<div class="title">
+    <h3 class="title-h3">
+        Actualiza tu información
+    </h3>
+</div>
+<div class="form-container center-child">
+    <div class="wrapper-form">
+        <form class="center-child" [formGroup]="userForm" (ngSubmit)="submitUpdateUser()">  
+            <mat-form-field>
+                <mat-label>Nombre</mat-label>
+                <input type="text" matInput formControlName="name">
+            </mat-form-field>
+            @if(userForm.get('name')?.touched && userForm.get('name')?.errors?.['required']){
+                <div class="error-form">
+                    Debes introducir un nombre.
+                </div>
+            }
+            <mat-form-field>
+                <mat-label>Correo electrónico</mat-label>
+              <input matInput readonly formControlName="email" >
+            </mat-form-field>
+           <mat-form-field>
+                <mat-label>Club</mat-label>
+                <input type="text" matInput formControlName="club">
+           </mat-form-field>  
+          <label class="input-file-label">Subir imagen de perfil</label>
+          <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="image" (change)="getFileForm($event)">      
+          <div class="button">
+            <button type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid">Actualizar</button>
+          </div>          
+        </form> 
+        <div class="button">
+            <button mat-raised-button color="primary" (click)="goBack()">Cancelar</button>
+          </div>
+    </div>
+</div>
