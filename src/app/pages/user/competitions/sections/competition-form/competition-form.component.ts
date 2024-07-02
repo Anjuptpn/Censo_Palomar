@@ -190,7 +190,6 @@ export class CompetitionFormComponent {
         this.currentCompetition = await this.competitionsService.getCompetitionWithId(userId, this.pigeonId, this.competitionId) as CompetitionInterface;
         this.patchValueToForm(this.currentCompetition);
       }
-    console.log(this.currentCompetition);
     } catch (error){
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 
                                       'cerrar', 8, 'snackbar-error');

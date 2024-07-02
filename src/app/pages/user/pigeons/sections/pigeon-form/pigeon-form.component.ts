@@ -47,9 +47,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   private readonly formBuilder = inject(FormBuilder);
   private readonly snackbar = inject(SnackbarService);
   private readonly firebaseErrors = inject(FirebaseErrorsService);
-  private readonly firebaseService = inject (FirebaseService);
   private readonly authService = inject(AuthService);
-  private readonly storageService = inject(StorageService);
   private readonly location = inject(Location);
   private readonly pigeonService = inject(PigeonsService);
 
@@ -59,11 +57,11 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   hasRegisteredFather = true;
   hasRegisteredMother = true;
   pigeonForm!: FormGroup;
+  currentPigeon: PigeonInterface | null = null;
 
   currentAuthSubcribe: any;
   pigeonMother: any;
   pigeonFather: any;
-
 
   ngOnInit(): void {    
     this.inicializePigeonForm(this.typeForm);
@@ -75,52 +73,35 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     });
     this.currentAuthSubcribe = this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
+      if (this.typeForm === "Editar Paloma" && user != null){
+        this.getPigeonToEdit(user?.uid);
+      }
     })    
   }
 
   private inicializePigeonForm (type: string){
-    if (type === 'Editar Paloma'){
-      this.pigeonForm = this.formBuilder.group({
-        pigeonName: ['Parchita', Validators.required],
-        ring: ['CAN0152452-23', Validators.required],
-        birthday: [ ''],
-        gender: ['Macho'],
-        color:['Rodado'],
-        breed:['Jansen'],
-        state: ['Viva'],
-        registeredFather: [false],
-        father: ['Valeroso'],
-        registeredMother: [false],
-        mother: ['Bienmesabe'],
-        image: ['https://media.istockphoto.com/id/155552819/es/foto/paloma-blanca.webp?s=1024x1024&w=is&k=20&c=vDWrbuNOygy6IFILWAL9Y4v1lcfr8bf4glA44aU0xKE='],
-        notes: ['Las notas son importartes, pero en este caso no hay. Gracias por su colaboración. Gracias.'],
-      });
-      this.hasRegisteredFather = this.pigeonForm.get('registeredFather')?.value;
-      this.hasRegisteredMother = this.pigeonForm.get('registeredMother')?.value;
-    } else {
-      this.pigeonForm = this.formBuilder.group({
-        pigeonName: ['', Validators.required],
-        ring: ['', Validators.required],
-        birthday: [],
-        gender: [''],
-        color:[''],
-        breed:[''],
-        state: [''],
-        registeredFather: [true],
-        father: [''],
-        registeredMother: [true],
-        mother: [''],
-        image: [''],
-        notes: [''],
-      });
-    }
+    this.pigeonForm = this.formBuilder.group({
+      pigeonName: ['', Validators.required],
+      ring: ['', Validators.required],
+      birthday: [],
+      gender: [''],
+      color:[''],
+      breed:[''],
+      state: [''],
+      registeredFather: [true],
+      father: [''],
+      registeredMother: [true],
+      mother: [''],
+      image: [''],
+      notes: [''],
+    });       
   }
 
   submitPigeonForm(){
     if(this.pigeonForm.valid){      
       this.prepareFormData().then(pigeon => {
         if (this.typeForm === "Editar Paloma"){
-          console.log("En desarrollo");
+          this.updatePigeon(pigeon);
         } else {
           this.registerPigeon(pigeon);
         }        
@@ -135,21 +116,49 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   }
 
   async prepareFormData(): Promise<PigeonInterface>{ 
-    let pigeonData: PigeonInterface = this.pigeonForm.value;
-    pigeonData.registerDate = Timestamp.fromDate(new Date());
-    pigeonData.id = pigeonData.registerDate + '-' + pigeonData.ring.replace(/ /g,"-");
-    pigeonData.image = await this.pigeonService.uploadImageToFirestore(this.imageFile, 'Palomas/'+this.currentUser?.email);
+    let pigeonData: PigeonInterface = this.pigeonForm.value;    
+    if (this.typeForm === 'Editar Paloma' && this.imageFile.name === 'null.null'){
+      pigeonData.image = this.currentPigeon!.image;
+    } else {
+      if (this.typeForm === "Editar Paloma"){
+        this.pigeonService.deletePigeonImage(this.currentPigeon!.image);
+      }
+      pigeonData.image = await this.pigeonService.uploadImageToFirestore(this.imageFile, 'Palomas/'+this.currentUser?.email);
+    } 
+    if (this.typeForm === 'Editar Paloma' && this.currentPigeon != null){
+      pigeonData.registerDate = this.currentPigeon.registerDate;
+      pigeonData.id = this.currentPigeon.id;
+    } else {
+      pigeonData.registerDate = this.typeForm === 'Editar Paloma' ? this.currentPigeon!.registerDate : Timestamp.fromDate(new Date());
+      pigeonData.id = pigeonData.registerDate + '-' + pigeonData.ring.replace(/ /g,"-");
+    }
     return pigeonData;
   }  
 
   async registerPigeon(pigeon: PigeonInterface){
     try{
       if (this.currentUser == null || this.currentUser == undefined){
-        this.snackbar.showSnackBar("Debes estar registrado para añadir una competición", 'cerrar', 12, 'snackbar-error');
+        this.snackbar.showSnackBar("Debes estar registrado para añadir una paloma", 'cerrar', 12, 'snackbar-error');
       } else {
         await this.pigeonService.registerPigeonInFirestore(this.currentUser.uid, pigeon);
         this.snackbar.showSnackBar("Se ha añadido la paloma correctamente", 'cerrar', 8, 'snackbar-success');
         this.pigeonForm.reset();
+      }
+    } catch (error){
+         this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
+                             'cerrar',  8,  'snackbar-error');
+    }
+  } 
+
+  async updatePigeon(pigeon: PigeonInterface){
+    try{
+      if (this.currentUser == null || this.currentUser == undefined){
+        this.snackbar.showSnackBar("Debes estar registrado para añadir una paloma", 'cerrar', 12, 'snackbar-error');
+      } else {
+        await this.pigeonService.updatePigeon(this.currentUser.uid, pigeon);
+        this.snackbar.showSnackBar("Se ha actualizado la paloma correctamente", 'cerrar', 8, 'snackbar-success');
+        this.pigeonForm.reset();
+        this.goBack();
       }
     } catch (error){
          this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
@@ -169,6 +178,41 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     this.currentAuthSubcribe.unsubscribe();
     this.pigeonMother.unsubscribe();
     this.pigeonFather.unsubscribe();
+  }
+
+  async getPigeonToEdit(userId: string){
+    try{
+      if (userId == null || userId == undefined || userId == ''){
+        this.snackbar.showSnackBar("Debes estar registrado para ver la información de una paloma", 'cerrar', 12, 'snackbar-error');
+      } else if (this.pigeonId == null || this.pigeonId == undefined || this.pigeonId == ''){
+        this.snackbar.showSnackBar("No hay seleccionada ninguna paloma, vuelve hacia atrás y reinténtalo.", 'cerrar', 12, 'snackbar-error');
+      } else {
+        this.currentPigeon = await this.pigeonService.getPigeonwithId(userId, this.pigeonId) as PigeonInterface;
+        this.patchValueToForm(this.currentPigeon);
+      }
+    }catch (error){
+      console.log("GetpigeonEdit", error)
+       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 
+                                        'cerrar', 8, 'snackbar-error');
+    }
+  }
+
+  patchValueToForm(data: PigeonInterface): void{
+    const birthdayDate = data.birthday != null ? new Date(data.birthday.toMillis()) : '';
+
+    let {id, registerDate, ...form} = data;
+    form.image = ''; //Si no da error porque no coincide la URL con una ruta de archivo.
+    try{
+      this.pigeonForm.patchValue(form);
+      this.pigeonForm.patchValue({
+        birthday: data.birthday != null ? new Date(data.birthday.toMillis()) : null,
+      });
+      this.hasRegisteredFather = data.registeredFather;
+      this.hasRegisteredMother = data.registeredMother; 
+    } catch (error){
+      console.log("Error", error);
+      this.snackbar.showSnackBar("Error recuperando los datos de la paloma. Vuelve a intentarlo más tarde", 'cerrar', 12, 'snackbar-error');
+    }    
   }
 
   mockdataPigeon =[

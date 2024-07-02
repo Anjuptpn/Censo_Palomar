@@ -24,19 +24,17 @@ export class PigeonsService {
     try{
       const path = 'usuarios/'+userId+'/palomas/'+pigeonId;      
       await this.firebaseService.deleteDocumentInFirestore(path);
-      await this.deletePigeonImage();
+      await this.deletePigeonImage(this.imageURL);
     } catch (error){
       throw(error);
     }
   }
 
-  async deletePigeonImage (){
-    console.log("La imagen es: ", this.imageURL);
-    if ( this.imageURL !== 'https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/assets-firebase%2Fcuadrado-grande-500.jpg?alt=media&token=b34f2714-9938-46c6-851c-2b6ccdcf47ed' 
-            && this.imageURL != null && this.imageURL !== ''){
-      await this.storageService.deleteImage(this.imageURL);
+  async deletePigeonImage (url: string){
+    if ( url !== 'https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/assets-firebase%2Fcuadrado-grande-500.jpg?alt=media&token=b34f2714-9938-46c6-851c-2b6ccdcf47ed' 
+            && url != null && url !== ''){
+      await this.storageService.deleteImage(url);
     }
-
   }
 
   async uploadImageToFirestore(imageFile: File, path: string){
@@ -49,7 +47,6 @@ export class PigeonsService {
     } catch (error){
       throw(error);
     }
-
   }
 
   async registerPigeonInFirestore(userId: string, pigeon: PigeonInterface){
@@ -67,6 +64,19 @@ export class PigeonsService {
       await this.firebaseService.updateDocumentInFirestore(pigeon, path, pigeon.id);
     } catch (error){
       throw(error);
+    }
+  }
+
+  async getPigeonwithId(userId: string, pigeonId: string){
+    try{
+      const path = 'usuarios/'+userId+'/palomas';
+      let pigeon: PigeonInterface = await this.firebaseService.getDocumentFromFirebase(pigeonId, path).then( response => {
+        return response.data() as PigeonInterface;
+      });
+      return pigeon;
+    }catch (error){
+      console.log("Service Get Pigeon", error);
+      throw (error);
     }
   }
 }

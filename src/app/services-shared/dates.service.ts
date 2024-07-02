@@ -72,7 +72,6 @@ export class DatesService {
     }
     let date = new Date (timestamp.toMillis());
     const objectDate = {
-      //stringDate: this.fillWithZeros((date.getMonth() + 1).toString(), 2) + '/' + this.fillWithZeros(date.getDate().toString(), 2) + '/' + date.getFullYear(),
       date : date,
       hour: this.fillWithZeros(date.getHours().toString() as string, 2) ,
       minutes: this.fillWithZeros(date.getMinutes().toString(), 2),

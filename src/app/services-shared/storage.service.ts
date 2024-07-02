@@ -20,6 +20,7 @@ export class StorageService {
       const url = await getDownloadURL(fileReference);
       return url;
     }).catch((error)=> {
+      console.log("Uploadimage", error)
       throw(error);
     });
   }

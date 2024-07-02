@@ -41,16 +41,31 @@ export class PigeonProfileComponent implements OnInit, OnDestroy{
     });
   }
 
-  getPigeonWithId(userId: string){
+  // getPigeonWithId(userId: string){
+  //   try{
+  //     const path = 'usuarios/'+userId+'/palomas';
+  //     this.firebaseService.getDocumentFromFirebase(this.id, path).then( response => {
+  //       this.currentPigeon = response.data() as PigeonInterface;
+  //       this.pigeonService.saveImageURL(this.currentPigeon.image);
+  //     });
+  //   }catch (error){
+  //     this.snackbar.showSnackBar(this.firebaseErrorsService.translateErrorCode(error as string), 
+  //                                     'cerrar', 8, 'snackbar-error');
+  //   }
+  // }
+
+  async getPigeonWithId(userId: string){
     try{
-      const path = 'usuarios/'+userId+'/palomas';
-      this.firebaseService.getDocumentFromFirebase(this.id, path).then( response => {
-        this.currentPigeon = response.data() as PigeonInterface;
-        this.pigeonService.saveImageURL(this.currentPigeon.image);
-      });
+      if (userId == null || userId == undefined || userId == ''){
+        this.snackbar.showSnackBar("Debes estar registrado para ver la información de una paloma", 'cerrar', 12, 'snackbar-error');
+      } else if (this.id == null || this.id == undefined || this.id == ''){
+        this.snackbar.showSnackBar("No hay seleccionada ninguna paloma, vuelve hacia atrás y reinténtalo.", 'cerrar', 12, 'snackbar-error');
+      } else {
+        this.currentPigeon = await this.pigeonService.getPigeonwithId(userId, this.id) as PigeonInterface;
+      }
     }catch (error){
-      this.snackbar.showSnackBar(this.firebaseErrorsService.translateErrorCode(error as string), 
-                                      'cerrar', 8, 'snackbar-error');
+       this.snackbar.showSnackBar(this.firebaseErrorsService.translateErrorCode(error as string), 
+                                        'cerrar', 8, 'snackbar-error');
     }
   }
 
