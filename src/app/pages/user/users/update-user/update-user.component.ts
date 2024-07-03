@@ -10,11 +10,12 @@ import { User } from '@angular/fire/auth';
 import { filter, tap } from 'rxjs';
 import { UserInterface } from '../../../../models/user.model';
 import { Location } from '@angular/common';
+import { UpdatePasswordFormComponent } from '../update-password-form/update-password-form.component';
 
 @Component({
   selector: 'app-update-user',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatFormFieldModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatFormFieldModule, ReactiveFormsModule, UpdatePasswordFormComponent],
   templateUrl: './update-user.component.html',
   styleUrl: './update-user.component.sass'
 })

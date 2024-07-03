@@ -151,9 +151,9 @@ export class AuthService {
         await updatePassword(user, newPassword)
         return true;
         
-      } catch (error){
+      } catch (error){    
         throw(this.extractErrorCode(error));
-        return false;
+        
       }
       
 

@@ -41,19 +41,6 @@ export class PigeonProfileComponent implements OnInit, OnDestroy{
     });
   }
 
-  // getPigeonWithId(userId: string){
-  //   try{
-  //     const path = 'usuarios/'+userId+'/palomas';
-  //     this.firebaseService.getDocumentFromFirebase(this.id, path).then( response => {
-  //       this.currentPigeon = response.data() as PigeonInterface;
-  //       this.pigeonService.saveImageURL(this.currentPigeon.image);
-  //     });
-  //   }catch (error){
-  //     this.snackbar.showSnackBar(this.firebaseErrorsService.translateErrorCode(error as string), 
-  //                                     'cerrar', 8, 'snackbar-error');
-  //   }
-  // }
-
   async getPigeonWithId(userId: string){
     try{
       if (userId == null || userId == undefined || userId == ''){
