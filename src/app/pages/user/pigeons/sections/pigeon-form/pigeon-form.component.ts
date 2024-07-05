@@ -127,7 +127,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
       pigeonData.registerDate = this.currentPigeon.registerDate;
       pigeonData.id = this.currentPigeon.id;
     } else {
-      pigeonData.registerDate = this.typeForm === 'Editar Paloma' ? this.currentPigeon!.registerDate : Timestamp.fromDate(new Date());
+      pigeonData.registerDate = Timestamp.fromDate(new Date());
       pigeonData.id = pigeonData.registerDate + '-' + pigeonData.ring.replace(/ /g,"-");
     }
     return pigeonData;

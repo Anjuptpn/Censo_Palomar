@@ -1,0 +1,27 @@
+@import '../../../../general-styles/css-variables'
+
+.wrapper-market-section
+    display: flex
+    justify-content: center
+    .market-section-home
+        width: 90%  
+        .title-section-home
+            color: $prussian-blue
+        .line-home
+            color: $sky-blue
+            margin-top: -8px
+        .market-text-content
+            display: flex
+            justify-content: center
+            .market-text-home
+                width: 60%
+
+@media (max-width: $breakpoint-movil)
+    .wrapper-market-section
+        .market-section-home
+            width: 95% 
+            .line-home
+                margin-top: -8px
+            .market-text-content
+                .market-text-home
+                    width: 90%

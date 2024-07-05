@@ -1,0 +1,17 @@
+@import '../../../../general-styles/form-styles'
+@import '../../../../general-styles/css-variables'
+
+.form-container
+    background: #fafafa
+    .wrapper-form
+        width: 85%
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .form-container
+        .wrapper-form
+            width: 90%
+
+@media (max-width: $breakpoint-movil)
+    .form-container
+        .wrapper-form
+            width: 97%

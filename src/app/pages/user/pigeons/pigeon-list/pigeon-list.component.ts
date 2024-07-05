@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FirebaseService } from '../../../../services-shared/firebase.service';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../../../auth/services/auth.service';

@@ -24,7 +24,7 @@ export class PigeonsService {
     try{
       const path = 'usuarios/'+userId+'/palomas/'+pigeonId;      
       await this.firebaseService.deleteDocumentInFirestore(path);
-      await this.deletePigeonImage(this.imageURL);
+      await this.storageService.deleteImage(this.imageURL);
     } catch (error){
       throw(error);
     }
@@ -49,7 +49,7 @@ export class PigeonsService {
     }
   }
 
-  async registerPigeonInFirestore(userId: string, pigeon: PigeonInterface){
+  async registerPigeonInFirestore(userId: string, pigeon: PigeonInterface): Promise<void>{
     try{
       const path = 'usuarios/'+userId+'/palomas';
       await this.firebaseService.saveInFirestore(pigeon, path, pigeon.id)
@@ -75,7 +75,6 @@ export class PigeonsService {
       });
       return pigeon;
     }catch (error){
-      console.log("Service Get Pigeon", error);
       throw (error);
     }
   }

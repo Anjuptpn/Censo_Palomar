@@ -1,0 +1,70 @@
+@import '../../../general-styles/css-variables'
+
+.container-single-news
+    margin-top: 15px
+    margin-bottom: 80px
+    .wrapper-single-news
+        width: 85%
+        .single-news
+            img
+                height: 50vh
+                width: 100%
+                object-fit: cover
+            .news-info
+                color: $prussian-blue                
+                .title-h3
+                    text-align: center
+                    margin: 0
+                .metadata
+                    display: flex
+                    justify-content: space-between
+                    .publish-date
+                        margin:5px 0 0 0
+                        color: $lapiz-lazuli
+                        font-size: 15px
+                        vertical-align: middle
+                        display: flex
+                        align-items: center
+
+                    .category-single-news
+                        margin: 5px 0 0 0
+                        background-color: $prussian-blue
+                        color: $blanco
+                        font-size: 20px
+                        font-weight: 600
+                        padding: 8px 15px
+                        border-radius: 15px
+                .body-single-news
+                    font-family: $fonts
+                    white-space: pre-wrap
+                    text-align: justify
+                    text-justify: inter-word
+                    width: 100%
+        .button
+            margin-top: 20px
+            button
+                padding: 20px 25px
+                font-size: 20px
+                font-weight: 600
+
+
+                      
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-single-news
+        .wrapper-single-news
+            width: 90%
+
+@media (max-width: $breakpoint-movil)
+    .container-single-news
+        .wrapper-single-news
+            width: 94%
+            .single-news                
+                .news-info 
+                    .metadata
+                        .publish-date
+                            margin:5px 0 0 0
+                            font-size: 15px
+                        .category-single-news
+                            margin: 5px 0 0 0
+                            font-size: 18px
+                            padding: 6px 12px

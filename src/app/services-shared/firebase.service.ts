@@ -1,8 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, collectionData, deleteDoc, doc, getDoc, setDoc, updateDoc } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { PigeonInterface } from '../models/pigeon.model';
-
+import { Firestore, WhereFilterOp, collection, collectionData, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
+import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -34,10 +32,25 @@ export class FirebaseService {
     }
   }
 
+  // getCollectionFromFirebase<collectionType>(path: string): Observable<collectionType[]>{
+  //   try{
+  //     const dataCollection = collection(this.firestore, path);
+  //     return collectionData(dataCollection) as Observable<collectionType[]>;
+  //   } catch (error){
+  //     throw (error);
+  //   }
+
+  // }
+  //versión mejorada para obtener datos ordenados por id (Fecha de registro en la mayoría de los casos).
   getCollectionFromFirebase<collectionType>(path: string): Observable<collectionType[]>{
     try{
       const dataCollection = collection(this.firestore, path);
-      return collectionData(dataCollection) as Observable<collectionType[]>;
+      const queryToDo = query(dataCollection, orderBy('id', 'desc'));
+      let collectionResult: collectionType[];
+      return from(getDocs(queryToDo).then( (result) => {
+        collectionResult =  result.docs.map(doc => doc.data() as collectionType); 
+        return collectionResult;       
+      }));  
     } catch (error){
       throw (error);
     }
@@ -58,6 +71,26 @@ export class FirebaseService {
     try{
       const document = doc(this.firestore, path);
       return await deleteDoc(document);
+    } catch (error){
+      throw (error);
+    }
+  }
+
+  async getLastest(numberNews: number, path: string){
+    try{
+      const dataCollection = collection(this.firestore, path);
+      const lasts = query(dataCollection, orderBy('id', 'desc'), limit(numberNews));
+      return await getDocs(lasts);
+    } catch (error){
+      throw (error);
+    }
+  }
+
+  async getDocumentsWithQuery(path: string, field: string, conditition: WhereFilterOp){
+    try{
+      const dataCollection = collection(this.firestore, path);
+      const queryToMake = query(dataCollection, where(field, conditition, true));
+
     } catch (error){
       throw (error);
     }

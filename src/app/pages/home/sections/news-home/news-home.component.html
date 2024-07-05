@@ -1,0 +1,33 @@
+<div class="wrapper-news-section">
+    <div class="news-section-content">
+        <h1 class="title-section-home">Últimas Noticias</h1>
+        <hr class="line-home">
+        <div class="news-text-home">
+            @if (latestNews == null || latestNews.length == 0){
+                <div class="empty-news-message">
+                    <h3>Actualmente no hay noticias publicadas</h3>                            
+                </div>
+            } @else {                        
+                @for( news of latestNews; track $index){
+                    <div class="wrapper-news">
+                        <a [routerLink]="['news/read/', news.id]">
+                            <div class="wrapper-image">
+                                <img src="{{news.image}}" class="image-news">
+                            </div>
+                            <div class="wrapper-content-news">                            
+                                <h3 class="title-news">{{news.title}}</h3>
+                                <p class="date-news">{{news.publishDate.toMillis() | date: 'dd/mm/YYYY'}} </p>
+                                <p class="category-news"><span>{{news.category}}</span></p>
+                            </div> 
+                        </a>                           
+                    </div>
+                }
+            }
+        </div>
+        @if (latestNews != null){
+            <div class="button-general">
+                <button mat-flat-button routerLink="/news">Ver todas las noticias</button>
+            </div>
+        }
+    </div>
+</div>

@@ -27,11 +27,15 @@ export class StorageService {
   
   //Documentación: https://firebase.google.com/docs/storage/web/delete-files?hl=es-419
   async deleteImage(url: string){
-    const path = this.extractPathFromUrl(url);
-    const fileReference = ref(this.storage, path);
-    await deleteObject(fileReference).catch ((error) => {
-      throw(error);
-    });
+    if ( url !== 'https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/assets-firebase%2Fcuadrado-grande-500.jpg?alt=media&token=b34f2714-9938-46c6-851c-2b6ccdcf47ed' 
+                && url != null && url !== ''){
+                  
+      const path = this.extractPathFromUrl(url);
+      const fileReference = ref(this.storage, path);
+      await deleteObject(fileReference).catch ((error) => {
+        throw(error);
+      });
+    }
   }
 
   private extractPathFromUrl(url: string): string{
@@ -42,4 +46,6 @@ export class StorageService {
     path = path.replaceAll('%40', '@');
     return path;
   }
+
+
 }

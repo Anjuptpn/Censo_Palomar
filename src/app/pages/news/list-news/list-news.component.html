@@ -1,0 +1,28 @@
+<div class="title-news-list">
+    <h4 class="title-h4">Últimas Noticias</h4>
+</div>
+<div class="container-news center-child">
+    <div class="wrapper-news">
+        @for(news of newsList; track $index){
+            <div class="container-item">
+                <a [routerLink]="['/news/read', news.id]" class="wrapper-item">                    
+                    <img src='{{news.image}}'>
+                    <div class="news-info">
+                        <h5 class="title-h5">{{news.title}}</h5>
+                        <div class="metadata">
+                            <p class="publish-date">{{news.publishDate.toMillis() | date: 'dd/MM/YYYY'}}</p>
+                            <p class="category">{{news.category}}</p>
+                        </div>
+                        <p class="news-body">{{news.body | extractWords:15}}</p> 
+                    </div>
+                </a>
+            </div>
+        }        
+        
+    </div>
+    
+</div>
+<div class="button center-child">
+    <button mat-raised-button color="primary" [routerLink]="['/']">Volver</button>
+</div>
+<app-footer></app-footer>

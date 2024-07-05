@@ -1,0 +1,71 @@
+@import '../../../general-styles/css-variables'
+
+.container-news
+    .wrapper-news
+        width: 85%
+        display: flex
+        flex-wrap: wrap
+        //justify-content: space-around
+        .container-item
+            width: 31%
+            border: 1px solid $lapiz-lazuli
+            border-radius: 15px
+            margin: 20px 0.4% 0 0.4%
+            .wrapper-item
+                text-decoration: none  
+                color: $prussian-blue              
+                img
+                    width: 100%
+                    aspect-ratio: 4/3
+                    border-radius: 14px 14px 0 0
+                    object-fit: cover
+                    
+                .news-info
+                    padding: 10px
+                    .title-h5
+                        margin: 0 0 0 0                        
+                    .metadata
+                        display: flex
+                        justify-content: space-between
+                        .publish-date
+                            margin: 3px 0 0 0 
+                            padding: 5px 0
+                        .category
+                            margin: 3px 0 0 0
+                            background-color: $prussian-blue
+                            color: $blanco
+                            padding: 5px 8px
+                            border-radius: 5px
+.button
+    margin-top: 20px
+    button
+        padding: 20px 25px
+        font-size: 20px
+        font-weight: 600
+.title-news-list
+    .title-h4
+        text-align: center
+
+.container-item:hover
+    background-color: $non-photo-blue
+    border: 1px solid $prussian-blue !important
+    
+
+
+@media (max-width: $breakpoint-movil)
+    .container-news
+        .wrapper-news
+            width: 98%
+            .container-item
+                width: 100%
+                .wrapper-item
+                    .news-info
+                        padding: 8px                       
+                        
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-news
+        .wrapper-news
+            width: 95%
+            .container-item
+                width: 48% 

@@ -1,0 +1,25 @@
+<app-admin-bar-news [newsId]="currentNews?.id"></app-admin-bar-news>
+<div class="container-single-news center-child">
+    <div class="wrapper-single-news">
+        <div class="single-news">
+            <img src="{{currentNews?.image}}">
+            <div class="news-info">
+                <div class="metadata">
+                    <p class="publish-date">
+                        <mat-icon>calendar_month</mat-icon> 
+                        {{currentNews != null ? (currentNews.publishDate.toMillis() | date: 'dd/MM/YYYY hh:mm') : ''}}
+                    </p>
+                    <p class="category-single-news">{{currentNews?.category}}</p>
+                </div>
+                <h3 class="title-h3">{{currentNews?.title}}</h3>  
+                <pre class="body-single-news">{{currentNews?.body}}</pre>
+            </div>  
+        </div>
+        <div class="button center-child">
+            <button mat-raised-button color="primary" [routerLink]="['/news/']">Volver</button>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+
+

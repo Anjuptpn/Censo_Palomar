@@ -1,0 +1,33 @@
+<div class="form-container center-child">
+    <div class="wrapper-form">
+      <form class="center-child" [formGroup]="newsForm" (ngSubmit)="submitNews()">  
+          <mat-form-field>
+              <mat-label>Título de la Noticia</mat-label>
+              <input type="text" matInput required formControlName="title">
+          </mat-form-field>
+          @if(newsForm.get('title')?.touched && newsForm.get('title')?.errors?.['required']){
+              <div class="error-form">
+                  Debes introducir un título para poder publicar la noticia.
+              </div>
+          }          
+          <mat-form-field>
+            <mat-label>Categoría de la noticia</mat-label>
+            <input type="text" matInput formControlName="category">
+          </mat-form-field>   
+          <label class="input-file-label">Subir imagen de la noticia</label>
+          <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="image" (change)="getImageFile($event)">
+  
+          <mat-form-field class="text-area">          
+            <mat-label>Cuerpo de la Noticia</mat-label>
+            <textarea formControlName="body" matInput rows="20">
+            </textarea>
+         </mat-form-field> 
+         <div class="button">
+           <button type="submit" mat-raised-button color="primary" [disabled]="!newsForm.valid">{{typeForm}}</button>
+          </div>
+      </form>
+      <div class="button">
+        <button mat-raised-button color="primary" (click)="goBack()">Cancelar</button>
+      </div>
+    </div>
+  </div>
