@@ -109,18 +109,14 @@ export class AuthService {
   }
 
   async uploadUserImageToFirestore(imageFile: File, path: string){
-    console.log("UPLOAD se ejecuta");
     try{
-      console.log("Dentro de upload");
       return await this.storageService.uploadImage(imageFile, path);
-      console.log("Dentro de upload");
     }catch (error){
       throw(error);
     }
   }
 
   async deleteUserImage(url: string){
-    console.log("DELETE se Ejecuta");
     try{
       if (url != 'https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/perfiles-usuarios%2Fcirculo-grande-500.png?alt=media&token=5aba1c10-7acf-4da5-8b0a-72e1ac2bfe56'
         && url != null && url != ''){

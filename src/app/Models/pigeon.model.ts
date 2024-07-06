@@ -12,9 +12,12 @@ export interface PigeonInterface
     state: string;
     registeredFather: boolean;
     father: string;
+    fatherId: string;
     registeredMother: boolean;
     mother: string;
+    motherId: string;
     image: string;
     notes: string; 
     registerDate: Timestamp;    
 }
+

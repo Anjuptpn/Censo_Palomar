@@ -86,11 +86,11 @@ export class FirebaseService {
     }
   }
 
-  async getDocumentsWithQuery(path: string, field: string, conditition: WhereFilterOp){
+  async getDocumentsWithQuery(path: string, field: string, simbol: WhereFilterOp, condition: string){
     try{
       const dataCollection = collection(this.firestore, path);
-      const queryToMake = query(dataCollection, where(field, conditition, true));
-
+      const queryToMake = query(dataCollection, where(field, simbol, condition));
+      return await getDocs(queryToMake);
     } catch (error){
       throw (error);
     }

@@ -62,9 +62,9 @@
 
         <mat-form-field [ngClass]="{'hidden-field': !hasRegisteredFather}">
           <mat-label>Padre</mat-label>
-          <mat-select formControlName="father">
-            @for (male of mockdataPigeon; track $index) {
-              <mat-option [value]="male.anilla">{{male.nombre}}</mat-option>
+          <mat-select formControlName="fatherId" (valueChange)="onChangeParents('father', $event)">
+            @for (male of malePigeons; track $index) {
+              <mat-option [value]="male.id">{{male.pigeonName}}</mat-option>
             }
           </mat-select>
           <mat-hint>Si no está en la lista añádelo manualmente</mat-hint>
@@ -78,9 +78,9 @@
         
         <mat-form-field [ngClass]="{'hidden-field': !hasRegisteredMother}">
           <mat-label>Madre</mat-label>
-          <mat-select  formControlName="mother">
-            @for (female of mockdataPigeon; track $index) {
-              <mat-option [value]="female.anilla">{{female.nombre}}</mat-option>
+          <mat-select  formControlName="motherId" (valueChange)="onChangeParents('mother', $event)">
+            @for (female of femalePigeons; track $index) {
+              <mat-option [value]="female.id">{{female.pigeonName}}</mat-option>
             }
           </mat-select>
           <mat-hint>Si no está en la lista añádela manualmente</mat-hint>

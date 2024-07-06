@@ -51,7 +51,10 @@
                 margin-top: 20px
                 border: 2px solid $lapiz-lazuli
                 border-radius: 10px
-                padding: 1%                
+                padding: 1%   
+                a
+                    text-decoration: none
+                    color: $prussian-blue             
                 .parent-info
                     position: relative
                     background-color: $non-photo-blue
@@ -86,6 +89,15 @@
     margin:0
     padding: 8px 0 0 0
     text-align: center
+
+.container-message
+    width: 100%
+    height: calc(100vh - 100px)
+    align-items: center
+    .wrapper-message
+        .title-h3
+            text-align: center
+
 
 @media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
     .container-pigeon-profile

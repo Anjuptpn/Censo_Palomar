@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { FirebaseService } from '../../../services-shared/firebase.service';
 import { StorageService } from '../../../services-shared/storage.service';
 import { PigeonInterface } from '../../../models/pigeon.model';
+import { QuerySnapshot } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -74,6 +75,16 @@ export class PigeonsService {
         return response.data() as PigeonInterface;
       });
       return pigeon;
+    }catch (error){
+      throw (error);
+    }
+  }
+
+  async getPigeonsByGender(gender: string, userId: string): Promise<PigeonInterface[]>{
+    try{
+      const path = 'usuarios/'+userId+'/palomas';
+      const snapshot = await this.firebaseService.getDocumentsWithQuery(path, 'gender', '==', gender);
+      return snapshot.docs.map( doc => doc.data() as PigeonInterface);
     }catch (error){
       throw (error);
     }

@@ -1,60 +1,89 @@
-<div class="container-pigeon-profile center-child">
-    @if (id != null && id != ''){
-        <div class="wrapper-pigeon-profile">
-            <div class="pigeon-profile-image-wrapper">
-                <img src="{{currentPigeon?.image == '' ? 
-                'https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/assets-firebase%2Fcuadrado-grande-500.jpg?alt=media&token=b34f2714-9938-46c6-851c-2b6ccdcf47ed' :
-                currentPigeon?.image}}" alt="Imagen de la paloma">
-            </div>
-            <div class="info-pigeon-wrapper">
-                <div class="pigeon-basic-info">
-                    <h5 class="title-h5">Información de la paloma</h5> 
-                    <span class="pigeon-state">{{currentPigeon?.state == '' ? "Sin Estado" : currentPigeon?.state}}</span>                    
-                    <p class="info-pigeon-line">
-                        <span class="label-field">Nombre: </span>
-                        <span class="info-field">{{currentPigeon?.pigeonName}}</span>
-                    </p>
-                    <p class="info-pigeon-line">
-                        <span class="label-field">Anilla: </span>
-                        <span class="info-field">{{currentPigeon?.ring}}</span>
-                    </p>
-                    <p class="info-pigeon-line">
-                        <span class="label-field">Color: </span>
-                        <span class="info-field">{{currentPigeon?.color == '' ? "--" : currentPigeon?.color}}</span>
-                    </p>
-                    <p class="info-pigeon-line">
-                        <span class="label-field">Sexo: </span>
-                        <span class="info-field">{{currentPigeon?.gender == '' ? "--" : currentPigeon?.gender}}</span>
-                    </p>
-                    <p class="info-pigeon-line">
-                        <span class="label-field">Fecha de Nacimiento: </span>
-                        <span class="info-field">{{currentPigeon?.birthday == null ? "--" : 
-                                                            currentPigeon?.birthday?.toMillis() | date: 'dd/MM/yyyy' }}</span>
-                    </p>
-                    <p class="info-pigeon-line">
-                        <span class="label-field">Estirpe: </span>
-                        <span class="info-field">{{currentPigeon?.breed == '' ? "--" : currentPigeon?.breed}}</span>
-                    </p>                         
-                </div>
-                <div class="info-pigeons-parents">
-                    <h5 class="title-h5">Información de los padres</h5>
-                    <p class="parent-info"><span class="parent-label">Padre: </span> 
-                        <span class="parent-name">{{currentPigeon?.father == '' ? "--" : currentPigeon?.father}}</span><mat-icon>visibility</mat-icon>
-                    </p>
-                    <p class="parent-info"><span class="parent-label">Madre: </span> 
-                        <span class="parent-name">{{currentPigeon?.mother == '' ? "--" : currentPigeon?.mother}}</span><mat-icon>visibility</mat-icon>
-                    </p>
-                </div>
-            </div>
-            <div class="wrapper-notes"> 
-                <h5 class="title-h5">Información Adicional</h5>           
-                <p class="pigeon-notes">{{currentPigeon?.notes == '' ? "No hay notas que mostrar" : currentPigeon?.notes}}</p>            
+@if (currentPigeon == null || currentPigeon == undefined){
+    <div class="container-message center-child">
+        <div class="wrapper-message">
+            <h3 class="title-h3">¡Ups! Esa paloma no está registrada o ha sido borrada</h3>
+            <div class="button-general">
+                <button mat-raised-button color=primary routerLink="/user/pigeon-list">Volver</button>
             </div>
         </div>
-    }@else {
-        <h4 class="title-h4">Ha ocurrido un error, no hay palomas que mostrar</h4>
-    }
-</div>
-<app-competitions-list [pigeonId]="id"></app-competitions-list>
-<app-tools-bar [itemId]="id" [path]="'/user/edit-pigeon/'"></app-tools-bar>
+    </div>
+    
+} @else {
+    <div class="container-pigeon-profile center-child">
+        @if (id != null && id != ''){
+            <div class="wrapper-pigeon-profile">
+                <div class="pigeon-profile-image-wrapper">
+                    <img src="{{currentPigeon.image == '' ? 
+                    'https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/assets-firebase%2Fcuadrado-grande-500.jpg?alt=media&token=b34f2714-9938-46c6-851c-2b6ccdcf47ed' :
+                    currentPigeon.image}}" alt="Imagen de la paloma">
+                </div>
+                <div class="info-pigeon-wrapper">
+                    <div class="pigeon-basic-info">
+                        <h5 class="title-h5">Información de la paloma</h5> 
+                        <span class="pigeon-state">{{currentPigeon.state == '' ? "Sin Estado" : currentPigeon.state}}</span>                    
+                        <p class="info-pigeon-line">
+                            <span class="label-field">Nombre: </span>
+                            <span class="info-field">{{currentPigeon.pigeonName}}</span>
+                        </p>
+                        <p class="info-pigeon-line">
+                            <span class="label-field">Anilla: </span>
+                            <span class="info-field">{{currentPigeon.ring}}</span>
+                        </p>
+                        <p class="info-pigeon-line">
+                            <span class="label-field">Color: </span>
+                            <span class="info-field">{{currentPigeon.color == '' ? "--" : currentPigeon.color}}</span>
+                        </p>
+                        <p class="info-pigeon-line">
+                            <span class="label-field">Sexo: </span>
+                            <span class="info-field">{{currentPigeon.gender == '' ? "--" : currentPigeon.gender}}</span>
+                        </p>
+                        <p class="info-pigeon-line">
+                            <span class="label-field">Fecha de Nacimiento: </span>
+                            <span class="info-field">{{currentPigeon.birthday == null ? "--" : 
+                                                                currentPigeon.birthday.toMillis() | date: 'dd/MM/yyyy' }}</span>
+                        </p>
+                        <p class="info-pigeon-line">
+                            <span class="label-field">Estirpe: </span>
+                            <span class="info-field">{{currentPigeon.breed == '' ? "--" : currentPigeon.breed}}</span>
+                        </p>                         
+                    </div>
+                    <div class="info-pigeons-parents">
+                        <h5 class="title-h5">Información de los padres</h5>
+                        @if (currentPigeon.registeredFather && currentPigeon.fatherId != null) {
+                            <a [routerLink]="['/user/pigeon-profile', currentPigeon!.fatherId]">                        
+                                <p class="parent-info"><span class="parent-label">Padre: </span>
+                                    <span class="parent-name">{{currentPigeon.father == '' ? "--" : currentPigeon.father}}</span><mat-icon>visibility</mat-icon>
+                                </p>
+                            </a>
+                        } @else {
+                            <p class="parent-info"><span class="parent-label">Padre: </span>
+                                <span class="parent-name">{{currentPigeon.father == '' ? "--" : currentPigeon.father}}</span>
+                            </p>
+                        }
+                        @if (currentPigeon.registeredFather && currentPigeon.fatherId != null) {
+                            <a [routerLink]="['/user/pigeon-profile/', currentPigeon!.motherId]">                         
+                                <p class="parent-info"><span class="parent-label">Madre: </span>
+                                    <span class="parent-name">{{currentPigeon.mother == '' ? "--" : currentPigeon.mother}}</span><mat-icon>visibility</mat-icon>
+                                </p>
+                            </a>
+                        } @else {
+                            <p class="parent-info"><span class="parent-label">Madre: </span> 
+                                <span class="parent-name">{{currentPigeon.mother == '' ? "--" : currentPigeon.mother}}</span>
+                            </p>
+                        }                    
+                    </div>
+                </div>
+                <div class="wrapper-notes"> 
+                    <h5 class="title-h5">Información Adicional</h5>           
+                    <p class="pigeon-notes">{{currentPigeon.notes == '' ? "No hay notas que mostrar" : currentPigeon.notes}}</p>            
+                </div>
+            </div>
+        }@else {
+            <h4 class="title-h4">Ha ocurrido un error, no hay palomas que mostrar</h4>
+        }
+    </div>
+    <app-competitions-list [pigeonId]="id"></app-competitions-list>
+    <app-tools-bar [itemId]="id" [path]="'/user/edit-pigeon/'"></app-tools-bar>
+}
+
 

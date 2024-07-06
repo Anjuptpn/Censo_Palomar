@@ -56,6 +56,8 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   hasRegisteredMother = true;
   pigeonForm!: FormGroup;
   currentPigeon: PigeonInterface | null = null;
+  malePigeons: PigeonInterface[] | null | undefined = null;
+  femalePigeons: PigeonInterface[] | null | undefined= null;
 
   currentAuthSubcribe: any;
   pigeonMother: any;
@@ -71,6 +73,12 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     });
     this.currentAuthSubcribe = this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
+      if (user != null) {
+        this.getPigeonsByGender('Macho', user.uid).then(response => {
+          this.malePigeons = this.typeForm === "Editar Paloma" ? response?.filter(resp => resp.id != this.pigeonId) : response});
+        this.getPigeonsByGender('Hembra', user.uid).then(response => {
+          this.femalePigeons = this.typeForm === "Editar Paloma" ? response?.filter(resp => resp.id != this.pigeonId) : response});
+      }
       if (this.typeForm === "Editar Paloma" && user != null){
         this.getPigeonToEdit(user?.uid);
       }
@@ -87,9 +95,11 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
       breed:[''],
       state: [''],
       registeredFather: [true],
+      fatherId: [''],
       father: [''],
       registeredMother: [true],
       mother: [''],
+      motherId: [''],
       image: [''],
       notes: [''],
     });       
@@ -100,8 +110,10 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
       this.prepareFormData().then(pigeon => {
         if (this.typeForm === "Editar Paloma"){
           this.updatePigeon(pigeon);
+          console.log("EL PÄJARO", pigeon);
         } else {
           this.registerPigeon(pigeon);
+          console.log("La pájara", pigeon);
         }        
       }).catch(error => {
         this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
@@ -177,7 +189,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     this.pigeonFather.unsubscribe();
   }
 
-  async getPigeonToEdit(userId: string){
+  private async getPigeonToEdit(userId: string){
     try{
       if (userId == null || userId == undefined || userId == ''){
         this.snackbar.showSnackBar("Debes estar registrado para ver la información de una paloma", 'cerrar', 12, 'snackbar-error');
@@ -193,7 +205,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     }
   }
 
-  patchValueToForm(data: PigeonInterface): void{
+  private patchValueToForm(data: PigeonInterface): void{
     const birthdayDate = data.birthday != null ? new Date(data.birthday.toMillis()) : '';
 
     let {id, registerDate, ...form} = data;
@@ -208,6 +220,32 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     } catch (error){
       this.snackbar.showSnackBar("Error recuperando los datos de la paloma. Vuelve a intentarlo más tarde", 'cerrar', 12, 'snackbar-error');
     }    
+  }
+
+  private async getPigeonsByGender(gender: string, userId: string): Promise<PigeonInterface[] | null>{
+    try{
+      if (userId == null || userId == undefined){
+        this.snackbar.showSnackBar("Debes estar registrado para ver esta sección", 'cerrar', 12, 'snackbar-error');
+        return null;
+      } else {
+        return await this.pigeonService.getPigeonsByGender(gender, userId);
+      }
+    } catch (error){
+      this.snackbar.showSnackBar("Ha ocurrido un error al recuperar las palomas "+gender, 'cerrar', 12, 'snackbar-error');
+      return null;
+    }
+  }
+
+  onChangeParents(field: string, $event: string){
+    if (field === "father"){
+      this.pigeonForm.patchValue({father: this.getFatherNameWithId(this.malePigeons, $event)});
+    }else if (field === "mother"){
+      this.pigeonForm.patchValue({mother: this.getFatherNameWithId(this.femalePigeons, $event)});
+    }
+  }
+
+  private getFatherNameWithId(parents: PigeonInterface[] | null | undefined, id: string){    
+    return parents != null && parents != undefined ? parents.find(parent => parent.id === id)?.pigeonName : '';
   }
 
   mockdataPigeon =[
