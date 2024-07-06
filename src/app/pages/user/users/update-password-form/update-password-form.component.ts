@@ -9,6 +9,7 @@ import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.se
 import { User } from '@angular/fire/auth';
 import { UserInterface } from '../../../../models/user.model';
 import { Location } from '@angular/common';
+import { SpinnerService } from '../../../../services-shared/spinner.service';
 
 
 
@@ -26,6 +27,7 @@ export class UpdatePasswordFormComponent {
   private readonly snackbar = inject(SnackbarService);
   private readonly firebaseErrors = inject(FirebaseErrorsService);
   private readonly location = inject(Location);
+  private readonly spinnerService = inject(SpinnerService);
 
   passwordForm!: FormGroup;
   currentsubscription: any;
@@ -49,6 +51,7 @@ export class UpdatePasswordFormComponent {
   
 
   async submitPasswordForm(){
+    this.spinnerService.showLoading();
     if (this.passwordForm.valid){
       this.checkEquals();
       if (this.areEquals){
@@ -70,6 +73,7 @@ export class UpdatePasswordFormComponent {
           }          
         }catch (error){
           if (error === 'auth/invalid-credential'){
+            this.spinnerService.stopLoading();
             this.snackbar.showSnackBar(
               `La contraseña actual no es correcta \nIngrese la contraseña correcta.`, 'cerrar', 8, 'snackbar-error');
           }else {
@@ -82,21 +86,16 @@ export class UpdatePasswordFormComponent {
           `La nueva contraseña no coincide con la confirmación de la contraseña. Asegúrate de poner la misma`,
           'cerrar', 8, 'snackbar-error');
       }
-      console.log ("Antigua", this.passwordForm.value.oldPassword, this.passwordForm.value.newPassword, this.passwordForm.value.repeatPassword);
     } else {
       this.snackbar.showSnackBar(
         `Hay campos obligatorios vacíos o incorrectos. \n Revisa bien los campos obligatorios`,
         'cerrar', 8, 'snackbar-error');
     }
-  }
-
-  async prepareFormData(): Promise<void>{
-    console.log("En preparación");
+    this.spinnerService.stopLoading();
   }
 
   private async updateUserData(){
     try{
-      //await this.authService.updateUserData();
       this.snackbar.showSnackBar("Se ha actualizado corretamente la información", 'cerrar', 8, 'snackbar-success');
       this.goBack();
     }catch (error){

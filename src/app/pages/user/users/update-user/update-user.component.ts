@@ -11,6 +11,7 @@ import { filter, tap } from 'rxjs';
 import { UserInterface } from '../../../../models/user.model';
 import { Location } from '@angular/common';
 import { UpdatePasswordFormComponent } from '../update-password-form/update-password-form.component';
+import { SpinnerService } from '../../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-update-user',
@@ -26,6 +27,7 @@ export class UpdateUserComponent {
   private readonly snackbar = inject(SnackbarService);
   private readonly firebaseErrors = inject(FirebaseErrorsService);
   private readonly location = inject(Location);
+  private spinnerService = inject(SpinnerService);
 
   userForm!: FormGroup;
   imageFile = new File([], "null.null");
@@ -40,11 +42,13 @@ export class UpdateUserComponent {
       tap((user) => this.currentUser = user as User))
       .subscribe( (res) => {
         if (res && this.currentUser){
+          this.spinnerService.showLoading();
           this.authService.getUserInfoFromFirebase(this.currentUser.uid).then(
             data => {
               this.currentUserData = data;
               this.patchForm(data);
-            })
+            });
+            this.spinnerService.stopLoading();
         }
     });
   }
@@ -87,6 +91,7 @@ export class UpdateUserComponent {
   }  
 
   async prepareFormData(): Promise<UserInterface>{
+    this.spinnerService.showLoading();
     let user: UserInterface = this.userForm.value;
     if(this.imageFile.name === 'null.null'){
       user.urlImage = this.currentUserData!.urlImage;
@@ -94,8 +99,9 @@ export class UpdateUserComponent {
       try{
         await this.authService.deleteUserImage(this.currentUserData!.urlImage);
         user.urlImage = await this.authService.uploadUserImageToFirestore(this.imageFile, 'perfiles-usuarios');
+        this.spinnerService.stopLoading();
       } catch (error){
-        console.log (error);
+        this.spinnerService.stopLoading();
         this.snackbar.showSnackBar(
           `Han Ocurrido un error al subir las imágenes al servidor`,
           'cerrar', 8, 'snackbar-error');
@@ -110,11 +116,14 @@ export class UpdateUserComponent {
   }
 
   private async updateUserData(userData: UserInterface){
+    this.spinnerService.showLoading();
     try{
       await this.authService.updateUserData(userData);
       this.snackbar.showSnackBar("Se ha actualizado corretamente la información", 'cerrar', 8, 'snackbar-success');
       this.goBack();
+      this.spinnerService.stopLoading();
     }catch (error){
+      this.spinnerService.stopLoading();
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                           'cerrar',  8,  'snackbar-error');
     }

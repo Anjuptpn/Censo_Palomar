@@ -1,0 +1,79 @@
+@import '../../general-styles/css-variables'
+.wrapper-loading
+    width: 100%
+    min-height: 100vh
+    background-color: $blanco
+    display: flex
+    justify-content: center
+    align-items: center
+    position: fixed
+    top: 0px
+    left: 0px
+    z-index: 3
+
+    .pulso
+        position: relative
+        width: 200px
+        height: 200px
+        align-items: center
+        border-radius: 50%
+        border: 1px solid $lapiz-lazuli
+        background: $lapiz-lazuli
+        background-size: cover
+
+        img
+            width: 150px
+            height: 150px
+            text-align: center
+            vertical-align: middle
+            z-index: 15
+        
+        
+        
+        span
+            position: absolute
+            width: 100%
+            height: 100%
+            background: $lapiz-lazuli
+            border-radius: inherit
+            animation: animateLogo 4s ease-out infinite
+            opacity: 0.8
+            animation-delay: calc(var(--i) * 1s)
+
+
+@keyframes animateLogo
+    100%
+        opacity: 0
+        transform: scale(2)
+
+@keyframes animate 
+    0%
+        width: 200px
+        height: 200px
+        opacity: 1
+
+    50%
+        opacity: 1
+    100%
+        width: 600px
+        height: 600px
+        opacity: 0
+
+
+@media (max-width: 800px)
+    .wrapper-loading      
+        min-height: calc( 100vh - 80px)       
+
+        .pulso
+            position: relative
+            width: 100px
+            height: 100px
+            align-items: center
+            border-radius: 50%
+            border: 1px solid $lapiz-lazuli
+            background: $lapiz-lazuli
+            background-size: cover
+
+            img
+                width: 75px
+                height: 75px

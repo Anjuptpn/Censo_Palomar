@@ -132,7 +132,6 @@ export class AuthService {
       const path = 'usuarios/';
       await this.firebaseService.updateDocumentInFirestore(userData, path, userData.id);
     } catch (error){
-      console.log("UPDATE", error);
       throw(error);
     }
   }

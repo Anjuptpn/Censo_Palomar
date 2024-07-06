@@ -5,6 +5,7 @@ import { filter, tap } from 'rxjs';
 import { User } from '@angular/fire/auth';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../services/firebase-errors.service';
+import { SpinnerService } from '../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-email-verification',
@@ -17,7 +18,8 @@ export class EmailVerificationComponent {
 
   private authService = inject(AuthService);
   private snackbar = inject(SnackbarService);
-  private firebaseErrors = inject(FirebaseErrorsService)
+  private firebaseErrors = inject(FirebaseErrorsService);
+  private spinnerService = inject(SpinnerService);
 
   usuario: User | null = null;
 
@@ -31,9 +33,12 @@ export class EmailVerificationComponent {
   async resendMail(){
     if (this.usuario){
       try{
+        this.spinnerService.showLoading();
         await this.authService.sendVerificationEmail(this.usuario);
         this.snackbar.showSnackBar('Correo Enviado, revisa tu buzón de correo', 'Cerrar', 8, 'snackbar-success');
+        this.spinnerService.stopLoading();
       } catch (error){
+        this.spinnerService.stopLoading();
         this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                                     'cerrar',
                                     8,

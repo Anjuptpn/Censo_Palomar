@@ -8,6 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../services/firebase-errors.service';
+import { SpinnerService } from '../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-login',
@@ -20,8 +21,9 @@ export class LoginComponent implements OnInit{
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly authService = inject(AuthService);
-  private snackbar = inject(SnackbarService);
-  private firebaseErrors = inject(FirebaseErrorsService);
+  private spinnerService = inject(SpinnerService);
+  private readonly snackbar = inject(SnackbarService);
+  private readonly firebaseErrors = inject(FirebaseErrorsService);
 
   usuario$! : Observable<any>;
 
@@ -36,19 +38,23 @@ export class LoginComponent implements OnInit{
   }
 
   inicializeForm(){
+    this.spinnerService.showLoading();
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.pattern(this.emailPattern)]], //Validators.email no funciona muy bien
       password: ['', [Validators.required]]
     });
+    this.spinnerService.stopLoading();
   }
 
-  async initSesionWithEmail(){
+  async initSesionWithEmail(){    
     try{
+      this.spinnerService.showLoading();
       await this.authService.loginWithEmailAndPassword(
         this.loginForm.get('email')?.value,
         this.loginForm.get('password')?.value);
-    }
-    catch (error){
+        this.spinnerService.stopLoading();
+    } catch (error){
+      this.spinnerService.stopLoading();
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                                     'cerrar',
                                     8,

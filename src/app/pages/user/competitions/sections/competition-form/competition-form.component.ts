@@ -15,6 +15,7 @@ import { DatesService } from '../../../../../services-shared/dates.service';
 import { CompetitionInterface } from '../../../../../models/competition.model';
 import { CompetitionsService } from '../../competitions.service';
 import { Router } from '@angular/router';
+import { SpinnerService } from '../../../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-competition-form',
@@ -44,6 +45,8 @@ export class CompetitionFormComponent {
   private readonly location = inject(Location);
   private readonly competitionsService = inject(CompetitionsService);
   private readonly router = inject(Router);
+  private spinnerService = inject(SpinnerService);
+  
 
   currentUser: User | null = null;
   competitionForm!: FormGroup;
@@ -53,13 +56,15 @@ export class CompetitionFormComponent {
   private readonly minutesAndSecondsPattern = /^[0-5][0-9]$/;
   private readonly hoursPattern = /^(0[0-9]|1[0-9]|2[0-3])$/;
 
-   ngOnInit(): void {    
+   ngOnInit(): void {  
+    this.spinnerService.showLoading();  
     this.inicializePigeonForm();
     this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
       if (this.typeForm === 'Editar Competición' && user != null ){
         this.getCompetitionToEdit(user.uid);
-      }      
+      }        
+      this.spinnerService.stopLoading();   
     });     
   }
 
@@ -84,13 +89,14 @@ export class CompetitionFormComponent {
   }
 
   submitCompetitionForm(){
+    
     if (this.competitionForm.valid){
-      const competitionData: CompetitionInterface = this.prepareFormData();      
+      const competitionData: CompetitionInterface = this.prepareFormData();            
       if (this.typeForm === "Editar Competición"){
         this.updateCompetition(competitionData);
       } else {
         this.registerCompetition(competitionData);
-      }
+      }      
     } else {
       this.snackbar.showSnackBar(
         `Hay campos obligatorios vacíos o incorrectos. \n Revisa bien los campos obligatorios`,
@@ -136,6 +142,7 @@ export class CompetitionFormComponent {
 
   async registerCompetition(competition: CompetitionInterface){    
     try{
+      this.spinnerService.showLoading();
       if (this.currentUser == null || this.currentUser == undefined){
         this.snackbar.showSnackBar("Debes estar registrado para añadir una competición", 'cerrar', 12, 'snackbar-error');
       } else if (this.pigeonId == null){
@@ -145,7 +152,9 @@ export class CompetitionFormComponent {
         this.snackbar.showSnackBar("Se ha añadido la competición correctamente", 'cerrar', 12, 'snackbar-success');
         this.competitionForm.reset();
       }
+      this.spinnerService.stopLoading();
     } catch (error){
+      this.spinnerService.stopLoading();
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                                   'cerrar', 12, 'snackbar-error');
     }    
@@ -153,6 +162,7 @@ export class CompetitionFormComponent {
 
   async updateCompetition(competition: CompetitionInterface){    
     try{
+      this.spinnerService.showLoading();
       if (this.currentUser == null || this.currentUser == undefined){
         this.snackbar.showSnackBar("Debes estar registrado para editar una competición", 'cerrar', 12, 'snackbar-error');
       } else if (this.pigeonId == null){
@@ -162,9 +172,10 @@ export class CompetitionFormComponent {
         this.snackbar.showSnackBar("Se ha actualizado la competición correctamente", 'cerrar', 12, 'snackbar-success');
         this.competitionForm.reset();
         this.goBack();
-
       }
+      this.spinnerService.stopLoading();
     } catch (error){
+      this.spinnerService.stopLoading();
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                                   'cerrar', 12, 'snackbar-error');
     }    
@@ -184,13 +195,16 @@ export class CompetitionFormComponent {
   //Funciones para editar
   async getCompetitionToEdit(userId: string){    
     try{
+      this.spinnerService.showLoading();
       if (userId == null || userId == undefined || userId == ''){
         this.snackbar.showSnackBar("Debes estar registrado para editar una competición", 'cerrar', 12, 'snackbar-error');
       } else {
         this.currentCompetition = await this.competitionsService.getCompetitionWithId(userId, this.pigeonId, this.competitionId) as CompetitionInterface;
         this.patchValueToForm(this.currentCompetition);
       }
+      this.spinnerService.stopLoading();
     } catch (error){
+      this.spinnerService.stopLoading();
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 
                                       'cerrar', 8, 'snackbar-error');
     } 

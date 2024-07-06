@@ -8,12 +8,14 @@ import { AuthService } from '../../pages/auth/services/auth.service';
 import { Observable } from 'rxjs';
 import { User } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
+import { SpinnerComponent } from '../spinner/spinner.component';
 
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [MatToolbarModule, MatIconModule, RouterOutlet, MatSidenavModule, MenuComponent, CommonModule],
+  imports: [MatToolbarModule, MatIconModule, RouterOutlet, MatSidenavModule, 
+              MenuComponent, CommonModule, SpinnerComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.sass'
 })

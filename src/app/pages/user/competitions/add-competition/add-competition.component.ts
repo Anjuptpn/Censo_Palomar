@@ -4,6 +4,7 @@ import { AuthService } from '../../../auth/services/auth.service';
 import { User } from '@angular/fire/auth';
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { CompetitionFormComponent } from '../sections/competition-form/competition-form.component';
+import { SpinnerService } from '../../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-add-competition',
@@ -25,7 +26,6 @@ export class AddCompetitionComponent implements OnInit{
     this.id = this.activedRoute.snapshot.params['id'];
     this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
-      //this.getPigeonWithId(user?.uid as string);
     });
   }
 

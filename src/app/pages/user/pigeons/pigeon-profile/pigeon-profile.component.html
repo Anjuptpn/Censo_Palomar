@@ -70,7 +70,15 @@
                             <p class="parent-info"><span class="parent-label">Madre: </span> 
                                 <span class="parent-name">{{currentPigeon.mother == '' ? "--" : currentPigeon.mother}}</span>
                             </p>
-                        }                    
+                        } 
+                        
+                        <div class="wrapper-family-tree-link center-child">
+                            <div class="family-tree-link">
+                                <button mat-raised-button color=primary [routerLink]="['/user/family-tree', currentPigeon.id]">
+                                    <mat-icon fontSet="material-icons-outlined">account_tree</mat-icon>Ver árbol genealógico
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="wrapper-notes"> 

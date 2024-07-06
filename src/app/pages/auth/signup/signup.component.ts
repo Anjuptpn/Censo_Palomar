@@ -10,6 +10,7 @@ import { UserInterface } from '../../../models/user.model';
 import { AuthService } from '../services/auth.service';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../services/firebase-errors.service';
+import { SpinnerService } from '../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-signup',
@@ -30,6 +31,7 @@ export class SignupComponent implements OnInit{
   private readonly authService = inject(AuthService);
   private snackbar = inject(SnackbarService);
   private firebaseErrors = inject(FirebaseErrorsService);
+  private spinnerService = inject(SpinnerService);
 
   private readonly emailPattern =
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -55,11 +57,14 @@ export class SignupComponent implements OnInit{
 
   async submitSignupUser(){
     if (this.registerForm.valid){
-      try{        
+      try{
+        this.spinnerService.showLoading();      
         const userData: UserInterface = this.registerForm.value;
         await this.authService.userSignup(this.imageFile, userData);
         this.registerForm.reset();
+        this.spinnerService.stopLoading();
       } catch (error){ 
+        this.spinnerService.stopLoading();
         this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                                     'cerrar',
                                     8,

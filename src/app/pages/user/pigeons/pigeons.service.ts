@@ -83,7 +83,7 @@ export class PigeonsService {
   async getPigeonsByGender(gender: string, userId: string): Promise<PigeonInterface[]>{
     try{
       const path = 'usuarios/'+userId+'/palomas';
-      const snapshot = await this.firebaseService.getDocumentsWithQuery(path, 'gender', '==', gender);
+      const snapshot = await this.firebaseService.getDocumentsWithQuery(path, 'gender', '==', gender, 'pigeonName');
       return snapshot.docs.map( doc => doc.data() as PigeonInterface);
     }catch (error){
       throw (error);

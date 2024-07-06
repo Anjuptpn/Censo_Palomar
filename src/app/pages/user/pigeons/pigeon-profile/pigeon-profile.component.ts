@@ -11,6 +11,7 @@ import { SnackbarService } from '../../../../sections/snackbar/snackbar.service'
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { PigeonsService } from '../pigeons.service';
 import { MatButton } from '@angular/material/button';
+import { SpinnerService } from '../../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-pigeon-profile',
@@ -26,6 +27,7 @@ export class PigeonProfileComponent implements OnInit, OnDestroy{
   private firebaseErrorsService = inject(FirebaseErrorsService);
   private snackbar = inject(SnackbarService);
   private pigeonService = inject(PigeonsService);
+  private spinnerService = inject(SpinnerService);
 
   id: string = '';
   currentUser: User | null = null;
@@ -34,6 +36,7 @@ export class PigeonProfileComponent implements OnInit, OnDestroy{
   routeSubscribe: any;
 
   ngOnInit(): void {
+    this.spinnerService.showLoading();
     this.routeSubscribe = this.activedRoute.params.subscribe( (id) => {
       const pathId = this.activedRoute.snapshot.paramMap.get('id');
       if (null == pathId) return;
@@ -43,11 +46,13 @@ export class PigeonProfileComponent implements OnInit, OnDestroy{
     this.currentSubscribe = this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
       this.getPigeonWithId(user?.uid as string);
+      
     });
   }
 
   async getPigeonWithId(userId: string){
     try{
+      this.spinnerService.showLoading();
       if (userId == null || userId == undefined || userId == ''){
         this.snackbar.showSnackBar("Debes estar registrado para ver la información de una paloma", 'cerrar', 12, 'snackbar-error');
       } else if (this.id == null || this.id == undefined || this.id == ''){
@@ -55,8 +60,10 @@ export class PigeonProfileComponent implements OnInit, OnDestroy{
       } else {
         this.currentPigeon = await this.pigeonService.getPigeonwithId(userId, this.id) as PigeonInterface;
       }
+      this.spinnerService.stopLoading();
     }catch (error){
-       this.snackbar.showSnackBar(this.firebaseErrorsService.translateErrorCode(error as string), 
+      this.spinnerService.stopLoading();
+      this.snackbar.showSnackBar(this.firebaseErrorsService.translateErrorCode(error as string), 
                                         'cerrar', 8, 'snackbar-error');
     }
   }

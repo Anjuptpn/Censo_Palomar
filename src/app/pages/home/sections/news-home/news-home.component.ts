@@ -4,6 +4,7 @@ import { NewsInterface } from '../../../../models/news.models';
 import { CommonModule } from '@angular/common';
 import { MatButton } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
+import { SpinnerService } from '../../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-news-home',
@@ -15,12 +16,16 @@ import { RouterLink } from '@angular/router';
 export class NewsHomeComponent implements OnInit{
 
   private newsService = inject(NewsService);
+  private spinnerService = inject(SpinnerService);
   latestNews: NewsInterface[] = [];
 
   ngOnInit(): void {
+    this.spinnerService.showLoading();
     this.newsService.getLastestNews(3).then( (result) => {
-      this.latestNews = result;        
+      this.latestNews = result;
+      this.spinnerService.stopLoading();        
       }).catch( error => {
+        this.spinnerService.stopLoading();
         this.latestNews = [];
       });    
   }

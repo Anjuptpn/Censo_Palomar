@@ -7,6 +7,7 @@ import { HeaderFormsComponent } from '../sections/header-forms/header-forms.comp
 import { AuthService } from '../services/auth.service';
 import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../services/firebase-errors.service';
+import { SpinnerService } from '../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-recovery-password',
@@ -20,6 +21,7 @@ export class RecoveryPasswordComponent {
   private readonly authService = inject(AuthService);
   private snackbar = inject(SnackbarService);
   private firebaseErrors = inject(FirebaseErrorsService);
+  private spinnerService = inject(SpinnerService);
 
   email!: FormControl;
   hasError = false;
@@ -40,11 +42,14 @@ export class RecoveryPasswordComponent {
   async sendRecoveyPassword(){
     //event.stopPropagation(); //evita que la página se recargue.
     try{
+      this.spinnerService.showLoading();
       await this.authService.sendLinkToRecoveryPassword(this.email.value);
       this.emailAlreadySent = true;
+      this.spinnerService.stopLoading();
     } catch (error){
       this.emailAlreadySent = false;
       this.hasError = true;
+      this.spinnerService.stopLoading();
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                                     'cerrar',
                                     8,

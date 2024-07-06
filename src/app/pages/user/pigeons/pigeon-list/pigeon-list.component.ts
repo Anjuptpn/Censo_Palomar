@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FirebaseService } from '../../../../services-shared/firebase.service';
 import { User } from '@angular/fire/auth';
 import { AuthService } from '../../../auth/services/auth.service';
@@ -8,6 +8,7 @@ import { RouterLink } from '@angular/router';
 import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
 import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
 import { MatButtonModule } from '@angular/material/button';
+import { SpinnerService } from '../../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-pigeon-list',
@@ -16,16 +17,18 @@ import { MatButtonModule } from '@angular/material/button';
   templateUrl: './pigeon-list.component.html',
   styleUrl: './pigeon-list.component.sass'
 })
-export class PigeonListComponent {
-  private firebaseService = inject(FirebaseService);
-  private authService = inject(AuthService);
-  private snackbar = inject(SnackbarService);  
+export class PigeonListComponent implements OnInit{
+  private readonly firebaseService = inject(FirebaseService);
+  private readonly authService = inject(AuthService);
+  private readonly snackbar = inject(SnackbarService);  
   private readonly firebaseErrors = inject(FirebaseErrorsService);
+  private spinnerService = inject(SpinnerService);
 
   currentUser: User | null = null;
-  pigeonList: PigeonInterface[] = []; 
+  pigeonList: PigeonInterface[] = [];  
 
-  constructor(){
+  ngOnInit(): void {
+    this.spinnerService.showLoading();
     this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
       this.getPigeonCollectionFromFirebase();
@@ -34,11 +37,14 @@ export class PigeonListComponent {
 
   getPigeonCollectionFromFirebase(){  
     try{
+      this.spinnerService.showLoading();
       const path = 'usuarios/'+this.currentUser?.uid+'/palomas';
       this.firebaseService.getCollectionFromFirebase<PigeonInterface>(path).subscribe( pigeons => {
         this.pigeonList = pigeons;
+        this.spinnerService.stopLoading();
       });
     } catch (error){
+      this.spinnerService.stopLoading();
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                           'cerrar',  8,  'snackbar-error');
     }     

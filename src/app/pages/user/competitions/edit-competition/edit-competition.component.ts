@@ -27,7 +27,6 @@ export class EditCompetitionComponent implements OnInit{
     this.competitionId = this.activedRoute.snapshot.params['competitionId'];
     this.authService.currentUserState.subscribe( (user) => {
       this.currentUser = user as User;
-      //this.getPigeonWithId(user?.uid as string);
     });
   }
 

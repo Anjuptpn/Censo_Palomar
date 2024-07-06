@@ -10,6 +10,7 @@ import { ToolsBarComponent } from '../../../../sections/tools-bar/tools-bar.comp
 import { CommonModule } from '@angular/common';
 import { DatesService } from '../../../../services-shared/dates.service';
 import { CompetitionsService } from '../competitions.service';
+import { SpinnerService } from '../../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-view-competition',
@@ -26,6 +27,7 @@ export class ViewCompetitionComponent implements OnInit, OnDestroy{
   private competitionsService = inject(CompetitionsService);
   private authService = inject(AuthService);
   private datesService = inject (DatesService);
+  private spinnerService = inject(SpinnerService);
 
   competitionId: string = '';
   pigeonId: string = '';
@@ -33,7 +35,8 @@ export class ViewCompetitionComponent implements OnInit, OnDestroy{
   currentCompetition:  CompetitionInterface | null = null;
   currentSubscription: any;
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
+    this.spinnerService.showLoading();
     this.pigeonId = this.activedRoute.snapshot.params['pigeonId'];
     this.competitionId = this.activedRoute.snapshot.params['competitionId'];
     this.currentSubscription = this.authService.currentUserState.subscribe( (user) => {
@@ -44,12 +47,15 @@ export class ViewCompetitionComponent implements OnInit, OnDestroy{
 
   async getCompetition(userId: string){
     try{
+      this.spinnerService.showLoading();
       if (userId == null || userId == undefined || userId == ''){
         this.snackbar.showSnackBar("Debes estar registrado para editar una competición", 'cerrar', 12, 'snackbar-error');
       } else {
         this.currentCompetition = await this.competitionsService.getCompetitionWithId(userId, this.pigeonId, this.competitionId) as CompetitionInterface;
       }
+      this.spinnerService.stopLoading();
     }catch (error){
+      this.spinnerService.stopLoading();
       this.snackbar.showSnackBar(this.firebaseErrorsService.translateErrorCode(error as string), 
                                       'cerrar', 8, 'snackbar-error');
     }

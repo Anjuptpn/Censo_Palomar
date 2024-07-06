@@ -9,6 +9,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
 import { FooterComponent } from '../../../sections/footer/footer.component';
 import { AdminBarNewsComponent } from '../../admin/sections/admin-bar-news/admin-bar-news.component';
+import { SpinnerService } from '../../../services-shared/spinner.service';
 
 @Component({
   selector: 'app-view-news',
@@ -23,6 +24,7 @@ export class ViewNewsComponent implements OnInit{
   private newsService = inject(NewsService);
   private firebaseErrors = inject(FirebaseErrorsService);
   private snackbar = inject(SnackbarService);
+  private spinnerService = inject(SpinnerService);
 
   currentNews: NewsInterface | null = null;
   newsId: string = '';
@@ -30,9 +32,14 @@ export class ViewNewsComponent implements OnInit{
   
 
   ngOnInit(): void {
+    this.spinnerService.showLoading();
     this.newsId = this.activatedRoute.snapshot.params['id'];
     this.newsService.getNewsWithId(this.newsId).then( (response) => {
         this.currentNews = response as NewsInterface;
-      }).catch(error =>  this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 'cerrar', 8, 'snackbar-error'));
+        this.spinnerService.stopLoading();
+      }).catch(error =>  {
+        this.spinnerService.stopLoading();
+        this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 'cerrar', 8, 'snackbar-error')
+      });
   }
 }
