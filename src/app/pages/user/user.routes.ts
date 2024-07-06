@@ -29,10 +29,14 @@ export const routes: Routes = [
         loadComponent: () => import('./competitions/view-competition/view-competition.component').then(
             (m) => m.ViewCompetitionComponent)
     },
+    {path: 'family-tree/:id', 
+        loadComponent: () => import('./familyTree/familiy-tree/familiy-tree.component').then(
+            (m) => m.FamiliyTreeComponent)
+    },
     {path: 'update-user', 
         loadComponent: () => import('./users/update-user/update-user.component').then(
             (m) => m.UpdateUserComponent)
-    },
+    },    
     {path: '', 
         loadComponent: () => import('./users/profile/profile.component').then(
             (m)=> m.ProfileComponent)
