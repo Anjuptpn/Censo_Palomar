@@ -1,12 +1,62 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { FamiliyLeafComponent } from '../familiy-leaf/familiy-leaf.component';
+import { FamiliyTreeService } from '../familiy-tree.service';
+import { ActivatedRoute } from '@angular/router';
+import { User } from '@angular/fire/auth';
+import { AuthService } from '../../../auth/services/auth.service';
+import { SpinnerService } from '../../../../services-shared/spinner.service';
+import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
+import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-familiy-tree',
   standalone: true,
-  imports: [],
+  imports: [FamiliyLeafComponent],
   templateUrl: './familiy-tree.component.html',
   styleUrl: './familiy-tree.component.sass'
 })
-export class FamiliyTreeComponent {
+export class FamiliyTreeComponent implements OnInit{
+
+  private readonly familyTreeService = inject(FamiliyTreeService);
+  private readonly authService = inject(AuthService);
+  private readonly activedRoute = inject(ActivatedRoute);
+  private readonly spinnerService = inject(SpinnerService);
+  private readonly firebaseErrors = inject(FirebaseErrorsService);
+  private readonly snackbar = inject(SnackbarService);
+  pigeonId: string | null = null;
+  currentUser: User | null = null; 
+  currentAuthSubscribe: any;
+  arrayPigeons: any[] = [];
+  numberOfparents = 15; //Debe ser un valor que cumpla (2^n - 1)
+
+  
+
+  ngOnInit(): void {
+    this.spinnerService.showLoading();
+    this.pigeonId = this.activedRoute.snapshot.params['id'];
+    this.currentAuthSubscribe = this.authService.currentUserState.subscribe( (user) => {
+      this.currentUser = user as User;
+      if (this.pigeonId != null && user != null) this.familyTreeService.getParents(this.pigeonId, user.uid, this.numberOfparents).then(
+        response => {
+          this.arrayPigeons = response;
+          //console.log("response", this.arrayPigeons);
+          this.spinnerService.stopLoading();
+        }        
+      ).catch(error => {
+        this.spinnerService.stopLoading();
+        this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
+                             'cerrar',  8,  'snackbar-error');
+      });
+    });
+  }
+
+  isString(value: any): boolean{
+    return typeof value === 'string';
+
+  }
+
+   getLevel(index: number): number{
+    return Math.floor(Math.log2(index + 1))
+   }
 
 }

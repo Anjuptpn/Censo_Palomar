@@ -14,8 +14,8 @@ import { CompetitionFormComponent } from '../sections/competition-form/competiti
 })
 export class EditCompetitionComponent implements OnInit{
 
-  private activedRoute = inject(ActivatedRoute);
-  private authService = inject(AuthService);
+  private readonly activedRoute = inject(ActivatedRoute);
+  private readonly authService = inject(AuthService);
 
   pigeonId: string = '';
   competitionId: string = '';

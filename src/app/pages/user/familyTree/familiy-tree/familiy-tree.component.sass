@@ -1,0 +1,33 @@
+@use 'sass:math'
+@import '../../../../general-styles/form-styles'
+
+//https://sass-lang.com/documentation/at-rules/function/
+//https://sass-lang.com/documentation/at-rules/control/for/
+@function percentageCalc($level) 
+    @return math.div(100%, math.pow(2, $level))
+
+@for $i from 1 through 5 
+    .container-tree
+        .wrapper-tree
+            .class-level-#{$i}
+                width: percentageCalc($i)
+
+.container-tree    
+    .wrapper-tree
+        width: 90%
+        flex-wrap: wrap
+        .class-level-0
+            background-color: red  
+            width: 100%         
+        .class-level-1           
+            background-color: blue
+        .class-level-2            
+            background-color: green
+        .class-level-3            
+            background-color: pink
+        .class-level-4            
+            background-color: yellow
+        .class-level-5            
+            background-color: grey
+        .class-level-6            
+            background-color: orange

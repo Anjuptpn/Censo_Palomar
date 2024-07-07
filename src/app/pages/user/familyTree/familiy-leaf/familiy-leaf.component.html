@@ -1,1 +1,11 @@
-<p>familiy-leaf works!</p>
+<div class="container-leaf">
+    <div class="wrapper-leaf">
+        @if(isString(pigeon)){
+            <h5>{{pigeon != null ? pigeon : 'Nada'}}</h5>
+        }@else {
+            <h5>{{pigeon != null ? pigeon.pigeonName : 'Nada'}}</h5>
+            <h5>{{pigeon != null ? pigeon.date : 'Nada'}}</h5>
+        }
+        
+    </div>
+</div>

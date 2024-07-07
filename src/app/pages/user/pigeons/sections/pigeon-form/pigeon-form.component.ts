@@ -18,6 +18,7 @@ import { FirebaseErrorsService } from '../../../../auth/services/firebase-errors
 import { AuthService } from '../../../../auth/services/auth.service';
 import { PigeonInterface } from '../../../../../models/pigeon.model';
 import { PigeonsService } from '../../pigeons.service';
+import { SpinnerService } from '../../../../../services-shared/spinner.service';
 
 
 
@@ -48,6 +49,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   private readonly authService = inject(AuthService);
   private readonly location = inject(Location);
   private readonly pigeonService = inject(PigeonsService);
+  private spinnerService = inject(SpinnerService);
 
   states = estados.pigeonStates;
   currentUser: User | null = null;
@@ -63,7 +65,8 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   pigeonMother: any;
   pigeonFather: any;
 
-  ngOnInit(): void {    
+  ngOnInit(): void { 
+    this.spinnerService.showLoading();   
     this.inicializePigeonForm(this.typeForm);
     this.pigeonFather = this.pigeonForm.get('registeredFather')?.valueChanges.subscribe( active =>{
       this.hasRegisteredFather = active;  
@@ -82,6 +85,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
       if (this.typeForm === "Editar Paloma" && user != null){
         this.getPigeonToEdit(user?.uid);
       }
+      this.spinnerService.stopLoading();
     })    
   }
 
@@ -110,10 +114,8 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
       this.prepareFormData().then(pigeon => {
         if (this.typeForm === "Editar Paloma"){
           this.updatePigeon(pigeon);
-          console.log("EL PÄJARO", pigeon);
         } else {
           this.registerPigeon(pigeon);
-          console.log("La pájara", pigeon);
         }        
       }).catch(error => {
         this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
@@ -146,6 +148,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   }  
 
   async registerPigeon(pigeon: PigeonInterface){
+    this.spinnerService.showLoading();
     try{
       if (this.currentUser == null || this.currentUser == undefined){
         this.snackbar.showSnackBar("Debes estar registrado para añadir una paloma", 'cerrar', 12, 'snackbar-error');
@@ -154,13 +157,16 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
         this.snackbar.showSnackBar("Se ha añadido la paloma correctamente", 'cerrar', 8, 'snackbar-success');
         this.pigeonForm.reset();
       }
+      this.spinnerService.stopLoading();
     } catch (error){
+        this.spinnerService.stopLoading();
          this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                              'cerrar',  8,  'snackbar-error');
     }
   } 
 
   async updatePigeon(pigeon: PigeonInterface){
+    this.spinnerService.showLoading();
     try{
       if (this.currentUser == null || this.currentUser == undefined){
         this.snackbar.showSnackBar("Debes estar registrado para añadir una paloma", 'cerrar', 12, 'snackbar-error');
@@ -168,8 +174,10 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
         await this.pigeonService.updatePigeon(this.currentUser.uid, pigeon);
         this.snackbar.showSnackBar("Se ha actualizado la paloma correctamente", 'cerrar', 8, 'snackbar-success');
         this.goBack();
+        this.spinnerService.stopLoading();
       }
     } catch (error){
+      this.spinnerService.stopLoading();
          this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
                              'cerrar',  8,  'snackbar-error');
     }
@@ -190,6 +198,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   }
 
   private async getPigeonToEdit(userId: string){
+    this.spinnerService.showLoading();
     try{
       if (userId == null || userId == undefined || userId == ''){
         this.snackbar.showSnackBar("Debes estar registrado para ver la información de una paloma", 'cerrar', 12, 'snackbar-error');
@@ -199,7 +208,9 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
         this.currentPigeon = await this.pigeonService.getPigeonwithId(userId, this.pigeonId) as PigeonInterface;
         this.patchValueToForm(this.currentPigeon);
       }
+      this.spinnerService.stopLoading();
     }catch (error){
+      this.spinnerService.stopLoading();
        this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 
                                         'cerrar', 8, 'snackbar-error');
     }
@@ -229,7 +240,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
         return null;
       } else {
         return await this.pigeonService.getPigeonsByGender(gender, userId);
-      }
+      }      
     } catch (error){
       this.snackbar.showSnackBar("Ha ocurrido un error al recuperar las palomas "+gender, 'cerrar', 12, 'snackbar-error');
       return null;
@@ -247,32 +258,5 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   private getFatherNameWithId(parents: PigeonInterface[] | null | undefined, id: string){    
     return parents != null && parents != undefined ? parents.find(parent => parent.id === id)?.pigeonName : '';
   }
-
-  mockdataPigeon =[
-    {
-      "anilla": "ESP0021284-2021",
-      "nombre": "Estrella",
-    },
-    {
-      "anilla": "ESP0024523-2018",
-      "nombre": "Campeón",
-    },
-    {
-      "anilla": "ESP0222598-2022",
-      "nombre": "Flecha",
-    },
-    {
-      "anilla": "CAN0565124-2023",
-      "nombre": "Canaria",
-    },
-    {
-      "anilla": "NOR-017-0466",
-      "nombre": "Noruega",
-    },
-    {
-      "anilla": "HUNG-D-759392",
-      "nombre": "Húngara",
-    }
-  ];
 
 }

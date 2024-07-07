@@ -89,7 +89,7 @@ export class FirebaseService {
   async getDocumentsWithQuery(path: string, field: string, comparation: WhereFilterOp, condition: string, order: string){
     try{
       const dataCollection = collection(this.firestore, path);
-      const queryToMake = query(dataCollection, where(field, comparation, condition), orderBy(order, 'desc'));
+      const queryToMake = query(dataCollection, where(field, comparation, condition), orderBy(order, 'asc'));
       return await getDocs(queryToMake);
     } catch (error){
       throw (error);

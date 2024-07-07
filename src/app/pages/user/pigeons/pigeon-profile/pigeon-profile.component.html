@@ -60,7 +60,7 @@
                                 <span class="parent-name">{{currentPigeon.father == '' ? "--" : currentPigeon.father}}</span>
                             </p>
                         }
-                        @if (currentPigeon.registeredFather && currentPigeon.fatherId != null) {
+                        @if (currentPigeon.registeredMother && currentPigeon.motherId != null) {
                             <a [routerLink]="['/user/pigeon-profile/', currentPigeon!.motherId]">                         
                                 <p class="parent-info"><span class="parent-label">Madre: </span>
                                     <span class="parent-name">{{currentPigeon.mother == '' ? "--" : currentPigeon.mother}}</span><mat-icon>visibility</mat-icon>

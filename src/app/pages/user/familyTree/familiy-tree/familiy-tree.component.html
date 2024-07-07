@@ -1,1 +1,24 @@
 <p>familiy-tree works!</p>
+
+<!-- <div class="container-tree center-child">
+    <div class="wrapper-tree center-child">
+        @for (cosa of arrayPigeons; track $index){
+            @if (isString(cosa)) {
+                <p>Por String: {{cosa}}</p>
+            }@else {
+                <p>Por Objeto: {{cosa.pigeonName}}</p>
+            }  
+        }
+    </div>
+</div> -->
+
+<div class="container-tree center-child">
+    <div class="wrapper-tree center-child">
+        @for (paloma of arrayPigeons; track $index){
+            <div class="class-level-{{getLevel($index)}} center-child">                
+                <app-familiy-leaf [pigeon]="paloma"></app-familiy-leaf>
+            </div>  
+        }
+    </div>
+</div>
+    
