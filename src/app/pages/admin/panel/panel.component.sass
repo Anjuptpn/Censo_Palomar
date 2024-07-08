@@ -1,0 +1,42 @@
+@import '../../../general-styles/css-variables'
+
+$icon-size: 25px
+
+.container-panel
+    .wrapper-panel
+        width: 90%
+        .title-h3
+            text-align: center
+        .item-panel
+            display: flex
+            justify-content: center
+            margin: 15px 0
+            .button-panel
+                width: 50%
+                button
+                    padding: 25px 0
+                    width: 100%
+                    font-size: 18px
+                    letter-spacing: 0
+                    font-weight: 600
+                    mat-icon
+                        font-size: $icon-size 
+                        width: $icon-size
+                        height: $icon-size
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-panel
+        .wrapper-panel
+            width: 90%
+            .item-panel
+                .button-panel
+                    width: 60%
+            
+
+@media (max-width: $breakpoint-movil)
+    .container-panel
+        .wrapper-panel
+            width: 95%
+            .item-panel
+                .button-panel
+                    width: 85%

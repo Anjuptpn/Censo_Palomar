@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
   <a [routerLink]="['/admin/update-news', newsId]">Editar Esta Noticia</a>
   <a [routerLink]="['/admin/write-news']">Añadir nueva noticia</a>
   <a (click)="deleteNews()">Borrar esta Noticia</a>
-  <a href="#">Panel de Administrador</a>
+  <a [routerLink]="['/admin/panel']">Panel de Administrador</a>
 </div>`,
   styleUrl: './admin-bar-news.component.sass'
 })

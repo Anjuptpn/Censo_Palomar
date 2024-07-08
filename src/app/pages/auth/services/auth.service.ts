@@ -144,13 +144,25 @@ export class AuthService {
         const credentials = EmailAuthProvider.credential(user.email, oldPassword);
         await reauthenticateWithCredential(user, credentials);
         await updatePassword(user, newPassword)
-        return true;
-        
+        return true;        
       } catch (error){    
         throw(this.extractErrorCode(error));
         
-      }
-      
+      }  
+    }
 
+    async isAdminUser(user: User){
+      const userInfo = await this.getUserInfoFromFirebase(user.uid);
+      return userInfo.rol === "Administrador";
+    }
+
+    getAllUsersFromFirebase(){
+      try{
+        
+        return this.firebaseService.getCollectionFromFirebase<UserInterface>('usuarios');
+      }catch (error){    
+        throw(this.extractErrorCode(error));
+        
+      } 
     }
 }

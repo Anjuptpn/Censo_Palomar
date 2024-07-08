@@ -1,0 +1,77 @@
+@import '../../../general-styles/css-variables.sass'
+
+.title-list-user
+    .title-h3
+        text-align: center
+
+p
+    margin: 0
+    padding: 0
+
+.container-list-users
+    margin-bottom: 100px    
+    .wrapper-list-users
+        width: 70%
+        .user-item
+            border: 1px solid $lapiz-lazuli
+            border-radius: 15px
+            margin-top: 15px
+            width: 100%
+            display: flex
+            .wrapper-image
+                width: 30%
+                img
+                    width: 100%
+                    height: 100%
+                    aspect-ratio: 4/3
+                    object-fit: cover
+                    border-radius: 15px
+
+            .info-user-content
+                flex-direction: column
+                justify-content: center
+                width: 70%
+                box-sizing: border-box
+                padding: 20px
+                .user-item-content
+                    font-size: 16px
+                    margin: 5px 0 0
+                    .label-user
+                        
+                        font-weight: 700
+                    .info-user
+    .button-general
+        margin-top: 30px
+
+.user-admin
+    background-color: $non-photo-blue
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-list-users   
+        .wrapper-list-users
+            width: 80%
+            
+
+@media (max-width: $breakpoint-movil)
+    .container-list-users
+        margin-bottom: 80px    
+        .wrapper-list-users
+            width: 98%
+            .user-item
+                border: 1px solid $lapiz-lazuli
+                border-radius: 10px
+                margin-top: 12px
+                .wrapper-image
+                    img
+                        aspect-ratio: 16/9
+                        object-fit: cover
+                        border-radius: 15px
+
+                .info-user-content
+                    width: 70%
+                    padding: 8px
+                    .user-item-content
+                        font-size: 15px
+                        margin: 3px 0 0
+        .button-general
+            margin-top: 25px

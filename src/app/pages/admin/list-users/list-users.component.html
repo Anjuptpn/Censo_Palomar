@@ -1,0 +1,36 @@
+<div class="title-list-user">
+    <h3 class="title-h3">Lista de usuarios</h3>    
+</div>
+<div class="container-list-users center-child">
+    <div class="wrapper-list-users">        
+        @if(userList.length > 0){
+            @for(user of userList; track $index){                
+                <div class="user-item {{user.rol === 'Administrador' ? 'user-admin' : ''}}">
+                    <div class="wrapper-image">
+                        <img src="{{user.urlImage}}" alt="Paloma">        
+                    </div>
+                    <div class="info-user-content center-child">
+                        <p class="user-item-content"><span class="label-user">Nombre: </span><span class="info-user">{{user.name}}</span></p>
+                        <p class="user-item-content"><span class="label-user">Email: </span><span class="info-user">{{user.email}}</span></p>
+                        <p class="user-item-content">
+                            <span class="label-user">Fecha de Registro: </span>
+                            <span class="info-user">{{user.registerDate.toMillis() | date: 'dd/MM/yyyy hh:mm'}}</span>
+                        </p>
+                        <p class="user-item-content"><span class="label-user">Club: </span><span class="info-user">{{user.club}}</span></p>
+                        <p class="user-item-content"><span class="label-user">Rol: </span><span class="info-user">{{user.rol}}</span></p>
+                         
+                    </div>
+                </div>
+            }
+        }@else {
+            <h3 class="empty-list title-h5"> No hay usuarios que mostrar </h3>
+        }
+
+        <div class="button-general">
+            <button mat-raised-button color="primary" [routerLink]="'/admin/panel'"> 
+                Volver
+            </button>
+        </div>
+    </div>
+    
+</div>

@@ -9,6 +9,15 @@ export const routes: Routes = [
         loadComponent: () => import('./news/update-news/update-news.component').then(
             (m)=> m.UpdateNewsComponent)
     },
+    {path: 'list-users', 
+        loadComponent: () => import('./list-users/list-users.component').then(
+            (m)=> m.ListUsersComponent)
+    }
+    ,
+    {path: 'panel', 
+        loadComponent: () => import('./panel/panel.component').then(
+            (m)=> m.PanelComponent)
+    },
     {path: '', 
         loadComponent: () => import('./news/update-news/update-news.component').then(
             (m)=> m.UpdateNewsComponent)
