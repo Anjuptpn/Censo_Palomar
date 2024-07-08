@@ -1,24 +1,46 @@
-<p>familiy-tree works!</p>
-
-<!-- <div class="container-tree center-child">
-    <div class="wrapper-tree center-child">
-        @for (cosa of arrayPigeons; track $index){
-            @if (isString(cosa)) {
-                <p>Por String: {{cosa}}</p>
-            }@else {
-                <p>Por Objeto: {{cosa.pigeonName}}</p>
-            }  
-        }
+@if (arrayPigeons == null || arrayPigeons == undefined || showMessage) {
+    <div class="title empty">
+        <h3 class="title-h4">
+            No se ha podido generar el árbol genealógico.<br>Esa paloma no está correctamente registrada o ha sido borrada
+        </h3>
+    </div>      
+    <div class="button-general">
+        <button mat-raised-button color=primary [routerLink]="['/user/pigeon-list']">Ir al listado de palomas</button>
+    </div>   
+}@else {
+    <div class="title">
+        <h3 class="title-h4">
+            Árbol genealógico
+        </h3>
+    </div> 
+    <div class="container-tree center-child">
+        <div class="wrapper-tree center-child">
+            @for (paloma of arrayPigeons; track $index){
+                @if(isSmallScreen && $index == 3){
+                    <div class="tree-title">
+                        <h5 class="title-h5">Abuelos Maternos</h5>
+                    </div>
+                }
+                @if(isSmallScreen && $index == 5){
+                    <div class="tree-title">
+                        <h5 class="title-h5">Abuelos Paternos</h5>
+                    </div>
+                }
+                <div class="class-level-{{getLevel($index)}} center-child wrapper-component">                
+                    <app-familiy-leaf class="module center-child" [pigeon]="paloma" [index]="$index"></app-familiy-leaf>
+                </div> 
+            }
+        </div>
     </div>
-</div> -->
+    @if(isSmallScreen){
+        <div class="title-notes">
+            <h5 class="title-h6">NOTA: para una mejor visualización del árbol genealógico es mejor utilizar dispositivos con pantallas más grandes</h5>
+        </div>
+    }
+    <div class="button-general spacer-button">
+        <button mat-raised-button color=primary [routerLink]="['/user/pigeon-list']">Volver al listado de palomas</button>
+    </div> 
+}
 
-<div class="container-tree center-child">
-    <div class="wrapper-tree center-child">
-        @for (paloma of arrayPigeons; track $index){
-            <div class="class-level-{{getLevel($index)}} center-child">                
-                <app-familiy-leaf [pigeon]="paloma"></app-familiy-leaf>
-            </div>  
-        }
-    </div>
-</div>
+
     

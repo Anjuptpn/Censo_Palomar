@@ -6,28 +6,65 @@
 @function percentageCalc($level) 
     @return math.div(100%, math.pow(2, $level))
 
-@for $i from 1 through 5 
+@for $i from 0 through 5 
     .container-tree
         .wrapper-tree
             .class-level-#{$i}
                 width: percentageCalc($i)
+                margin-bottom: 5px
 
 .container-tree    
     .wrapper-tree
         width: 90%
         flex-wrap: wrap
-        .class-level-0
-            background-color: red  
-            width: 100%         
-        .class-level-1           
-            background-color: blue
-        .class-level-2            
-            background-color: green
-        .class-level-3            
-            background-color: pink
-        .class-level-4            
-            background-color: yellow
-        .class-level-5            
-            background-color: grey
-        .class-level-6            
-            background-color: orange
+        flex-direction: row
+        .tree-title
+            width: 100%
+            .title-h5
+                margin: 15px 0 15px 0
+                padding: 0
+                text-align: center
+        .wrapper-component            
+            .module
+                flex-grow: 1
+
+.title
+    .title-h4
+        text-align: center
+        
+.error
+    margin-top: 100px
+
+.spacer-button
+    margin: 50px 0 100px 0
+
+.title-notes
+    box-sizing: border-box
+    padding: 0 30px
+    .title-h6
+        text-align: center
+
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-tree    
+        .wrapper-tree
+            width: calc(100% - 10px)
+            flex-wrap: wrap
+            flex-direction: row
+
+@media (max-width: $breakpoint-movil)
+    .container-tree    
+        .wrapper-tree
+            width: calc(100% - 2px)
+            flex-wrap: wrap
+            flex-direction: row
+            .class-level-2
+                width: 50%
+    
+    .class-level-3, .class-level-4, .class-level-5
+        display: none
+
+    .button-general
+        button
+            font-size: 15px
+        
