@@ -21,14 +21,12 @@ export class FamiliyTreeService {
       if (mother == ''){
         if (currentPigeon.mother != null && currentPigeon.mother != undefined){
           familyArray[2*index+1] = currentPigeon.mother;
-          console.log("MAdre sin registar", currentPigeon.mother, index);
         } 
       } 
       let father = await this.fillArrayWithParents(currentPigeon.fatherId, path, 2*index+2, nodes, familyArray);
       if (father == ''){
         if (currentPigeon.father != null && currentPigeon.father != undefined){
           familyArray[2*index+2] = currentPigeon.father;
-          console.log("Padre sin registar", currentPigeon.father, index);
         }
       } 
     } catch (error){

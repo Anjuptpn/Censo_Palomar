@@ -5,6 +5,7 @@ import { Timestamp } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { StorageService } from '../../../services-shared/storage.service';
 import { FirebaseService } from '../../../services-shared/firebase.service';
+import { from, map, take } from 'rxjs';
 
 interface RespuestaDeError{
   code: string;
@@ -156,9 +157,29 @@ export class AuthService {
       return userInfo.rol === "Administrador";
     }
 
+    async getUserRole(user: User){
+      const userInfo = await this.getUserInfoFromFirebase(user.uid);
+    }
+    
+    isUserLogged(){
+      return authState(this.auth).pipe( 
+        take(1),
+        map( user => {
+          if (!!user){
+            return true;
+          } else {
+            return false;
+          }
+        })
+      );
+    }
+
+    isMailVerificated (user: User) :boolean{
+      return user.emailVerified;
+    }
+
     getAllUsersFromFirebase(){
       try{
-        
         return this.firebaseService.getCollectionFromFirebase<UserInterface>('usuarios');
       }catch (error){    
         throw(this.extractErrorCode(error));

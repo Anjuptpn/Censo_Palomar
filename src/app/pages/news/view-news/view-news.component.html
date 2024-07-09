@@ -1,4 +1,6 @@
-<app-admin-bar-news [newsId]="currentNews?.id"></app-admin-bar-news>
+@if(isAdmin){
+    <app-admin-bar-news [newsId]="currentNews?.id"></app-admin-bar-news>
+}
 <div class="container-single-news center-child">
     <div class="wrapper-single-news">
         <div class="single-news">

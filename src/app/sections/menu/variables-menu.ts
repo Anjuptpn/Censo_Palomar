@@ -3,42 +3,93 @@ export const menuLinks = [
       "tag": "Inicio",
       "link": "",
       "icon": "home",
-      "image": ""
+      "image": "",
+      "showincase": "All"
     },
     {
-      "tag": "Iniciar Sesión",
-      "link": "/auth/login",
-      "icon": "login",
-      "image": ""
-    },
-    {
-      "tag": "Registrarse",
-      "link": "/auth/sign-up",
-      "icon": "person_add",
-      "image": ""
-    },
-    {
-      "tag": "Mis Palomas",
-      "link": "/user/pigeon-list",
-      "icon": "",
-      "image": "assets/icon-paloma.svg"
-    },
-    {
-      "tag": "Registrar Paloma",
-      "link": "/user/pigeon-register",
-      "icon": "",
-      "image": "assets/Icon-add-paloma.svg"
+      "tag": "Panel del Administrador",
+      "link": "/admin/panel",
+      "icon": "admin_panel_settings",
+      "image": "",
+      "showincase": "Admin"
     },
     {
       "tag": "Perfil",
       "link": "/user",
       "icon": "person",
-      "image": ""
+      "image": "",
+      "showincase": "logged"
     },
     {
+      "tag": "Mis Palomas",
+      "link": "/user/pigeon-list",
+      "icon": "",
+      "image": "assets/icon-paloma.svg",
+      "showincase": "logged"
+    },
+    {
+      "tag": "Registrar Paloma",
+      "link": "/user/pigeon-register",
+      "icon": "",
+      "image": "assets/Icon-add-paloma.svg",
+      "showincase": "logged"
+
+    },
+    {
+      "tag": "Iniciar Sesión",
+      "link": "/auth/login",
+      "icon": "login",
+      "image": "",
+      "showincase": "notLogged"
+    },
+    {
+      "tag": "Registrarse",
+      "link": "/auth/sign-up",
+      "icon": "person_add",
+      "image": "",
+      "showincase": "notLogged"
+    },
+    {
+      "tag": "Noticias",
+      "link": "/news",
+      "icon": "newspaper",
+      "image": "",
+      "showincase": "All"
+    },
+    {
+      "tag": "Añadir noticia",
+      "link": "/admin/write-news",
+      "icon": "article",
+      "image": "",
+      "showincase": "Admin"
+    },
+    {
+      "tag": "Publicar Anuncio",
+      "link": "/8",
+      "icon": "add_box",
+      "image": "",
+      "showincase": "logged"
+    },
+    {
+      "tag": "Palomas en Venta",
+      "link": "/5",
+      "icon": "campaign",
+      "image": "",
+      "showincase": "All"
+    },
+    {
+      "tag": "Ver mis Anuncios",
+      "link": "/6",
+      "icon": "list_alt",
+      "image": "",
+      "showincase": "logged"
+    },    
+    {
       "tag": "Cerrar Sesión",
-      "link": "",
+      "link": '',
       "icon": "logout",
-      "image": ""
+      "image": "",
+      "showincase": "logged"
     }
+    
   ]

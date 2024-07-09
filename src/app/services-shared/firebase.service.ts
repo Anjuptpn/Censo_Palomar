@@ -25,23 +25,13 @@ export class FirebaseService {
   //Recuperar una colección concreta
   async getDocumentFromFirebase(id: string, path: string){
     try{
-      const document = await doc(this.firestore, path, id);
-      return getDoc(document);
+      const document = doc(this.firestore, path, id);
+      return await getDoc(document);
     } catch (error){
       throw (error);
     }
   }
-
-  // getCollectionFromFirebase<collectionType>(path: string): Observable<collectionType[]>{
-  //   try{
-  //     const dataCollection = collection(this.firestore, path);
-  //     return collectionData(dataCollection) as Observable<collectionType[]>;
-  //   } catch (error){
-  //     throw (error);
-  //   }
-
-  // }
-  //versión mejorada para obtener datos ordenados por id (Fecha de registro en la mayoría de los casos).
+  
   getCollectionFromFirebase<collectionType>(path: string): Observable<collectionType[]>{
     try{
       const dataCollection = collection(this.firestore, path);

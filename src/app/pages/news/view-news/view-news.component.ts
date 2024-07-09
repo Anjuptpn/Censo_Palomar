@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NewsInterface } from '../../../models/news.models';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NewsService } from '../news.service';
@@ -10,6 +10,7 @@ import { MatButton } from '@angular/material/button';
 import { FooterComponent } from '../../../sections/footer/footer.component';
 import { AdminBarNewsComponent } from '../../admin/sections/admin-bar-news/admin-bar-news.component';
 import { SpinnerService } from '../../../services-shared/spinner.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 @Component({
   selector: 'app-view-news',
@@ -18,21 +19,33 @@ import { SpinnerService } from '../../../services-shared/spinner.service';
   templateUrl: './view-news.component.html',
   styleUrl: './view-news.component.sass'
 })
-export class ViewNewsComponent implements OnInit{
+export class ViewNewsComponent implements OnInit, OnDestroy{
 
   private activatedRoute = inject(ActivatedRoute);
   private newsService = inject(NewsService);
   private firebaseErrors = inject(FirebaseErrorsService);
   private snackbar = inject(SnackbarService);
   private spinnerService = inject(SpinnerService);
+  private authService = inject(AuthService);
+  
 
   currentNews: NewsInterface | null = null;
   newsId: string = '';
   currentSubscription: any;
+  isAdmin = false;
+  authsubscription: any;
   
-
   ngOnInit(): void {
     this.spinnerService.showLoading();
+    this.authsubscription = this.authService.currentUserState.subscribe( user => {
+      if (user != null){        
+        this.authService.isAdminUser(user).then( isAdmin => {
+          this.isAdmin = isAdmin;
+        });
+      } else {
+        this.isAdmin = false;
+      }
+    });
     this.newsId = this.activatedRoute.snapshot.params['id'];
     this.newsService.getNewsWithId(this.newsId).then( (response) => {
         this.currentNews = response as NewsInterface;
@@ -41,5 +54,10 @@ export class ViewNewsComponent implements OnInit{
         this.spinnerService.stopLoading();
         this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 'cerrar', 8, 'snackbar-error')
       });
+  }
+
+  ngOnDestroy(): void {
+    this.authsubscription.unsubscribe();
+    
   }
 }
