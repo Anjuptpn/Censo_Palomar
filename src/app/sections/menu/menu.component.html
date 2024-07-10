@@ -19,7 +19,7 @@
         @if (link.icon === ''){
           <img src='{{link.image}}' alt="ICON" width="30px">
         } @else {
-          <mat-icon>{{link.icon}}</mat-icon>
+          <mat-icon [fontSet]="link.tag=='Publicar Anuncio' ? 'material-icons-outlined' : ''">{{link.icon}}</mat-icon>
         }        
         <span class="menu-link">  {{link.tag}} </span>
     </div>

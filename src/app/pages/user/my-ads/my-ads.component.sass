@@ -1,0 +1,107 @@
+@import '../../../general-styles/css-variables.sass'
+
+.title-list-ads
+    .title-h3
+        text-align: center
+
+p
+    margin: 0
+    padding: 0
+
+.container-list-ads
+    margin-bottom: 100px    
+    .wrapper-list-ads
+        width: 70%
+        .ads-item
+            color: $prussian-blue
+            border: 1px solid $lapiz-lazuli
+            border-radius: 5px
+            margin-top: 15px
+            width: 100%
+            display: flex
+            .wrapper-image
+                width: 20%
+                display: flex
+                justify-content: start
+                img
+                    width: 100%
+                    aspect-ratio: 16/10
+                    object-fit: cover
+                    border-radius: 4px 0 0 4px
+
+            .info-ads-content
+                color: $prussian-blue
+                flex-direction: column
+                justify-content: center
+                width: 60%
+                box-sizing: border-box
+                padding: 20px
+                .ads-item-content
+                    font-size: 16px
+                    margin: 5px 0 0
+                    .label-ads                         
+                        font-weight: 700
+            .title-ads
+                font-size: 18px
+                font-weight: 700
+
+            .wrapper-links
+                display: flex
+                justify-content: center
+                align-items: center
+                width: 20%
+                button
+                    margin: 3px
+                    background-color: $transparente
+                    color: $lapiz-lazuli
+                    border: 0
+                button:hover
+                    cursor: pointer
+                    color: $moonstone
+    .button-general
+        margin-top: 30px
+
+
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-list-ads   
+        .wrapper-list-ads
+            width: 85%
+            
+
+@media (max-width: $breakpoint-movil)
+    .container-list-ads
+        margin-bottom: 80px    
+        .wrapper-list-ads
+            width: 96%
+            .ads-item
+                border: 1px solid $lapiz-lazuli
+                border-radius: 10px
+                margin-top: 12px
+                display: flex
+                flex-wrap: wrap
+                .wrapper-image                    
+                    width: 100%
+                    img  
+                        width: 100%                      
+                        object-fit: cover
+                        aspect-ratio: 16/9
+                        border-radius: 5px 5px 0 0
+
+                .info-ads-content
+                    width: 100%
+                    padding: 8px
+                    .ads-item-content
+                        font-size: 14px
+                        margin: 3px 0 0
+                .wrapper-links
+                    width: 100%
+                    button
+                        margin: 3px
+                        background-color: $transparente
+                        color: $lapiz-lazuli
+                        border: 0
+                    button:hover
+                        cursor: pointer
+                        color: $moonstone
+        .button-general
+            margin-top: 25px

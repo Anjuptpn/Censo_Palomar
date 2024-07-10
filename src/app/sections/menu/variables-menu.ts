@@ -65,21 +65,21 @@ export const menuLinks = [
     },
     {
       "tag": "Publicar Anuncio",
-      "link": "/8",
+      "link": "/ads/publish-ads",
       "icon": "add_box",
       "image": "",
       "showincase": "logged"
     },
     {
       "tag": "Palomas en Venta",
-      "link": "/5",
+      "link": "/ads",
       "icon": "campaign",
       "image": "",
       "showincase": "All"
     },
     {
       "tag": "Ver mis Anuncios",
-      "link": "/6",
+      "link": "/user/my-ads",
       "icon": "list_alt",
       "image": "",
       "showincase": "logged"

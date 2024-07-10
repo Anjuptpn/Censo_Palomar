@@ -1,0 +1,51 @@
+<div class="container-ad center-child">
+    <div class="wrapper-ad">
+        <div class="single-ad center-child">
+            <div class="wrapper-image">
+                <img src="{{currentAd?.image}}">
+            </div>
+            <div class="wrapper-info">
+                <h3 class="title-h3">{{currentAd?.title}}</h3> 
+                <h5 class="title-h5">Características</h5>
+                <pre class="details-ad">{{currentAd?.details}}</pre> 
+                <div class="metadata-ad">
+                    <p class="price-ads"><span class="label-price">Precio: </span>{{currentAd?.price}}€</p>
+                    <p class="publish-date"> 
+                        <mat-icon>calendar_month</mat-icon> Publicado: 
+                        {{currentAd != null ? (currentAd.publishDate.toMillis() | date: 'dd/MM/YYYY hh:mm') : ''}}
+                    </p>                    
+                </div>             
+                <cdk-accordion class="accordion">                    
+                    <cdk-accordion-item  #accordionItem="cdkAccordionItem" class="accordion-item"
+                      role="button" tabindex="0" [attr.id]="'accordion-header-1'"
+                      [attr.aria-expanded]="accordionItem.expanded" [attr.aria-controls]="'accordion-body-1'">
+                        <div class="accordion-item-header" (click)="accordionItem.toggle()">
+                            Ver información de contacto
+                            <span class="accordion-item-action">
+                            {{ accordionItem.expanded ? 'cerrar' : 'abrir' }}
+                            </span>
+                        </div>
+                        <div
+                            class="accordion-item-body"
+                            [style.display]="accordionItem.expanded ? '' : 'none'"
+                            [attr.id]="'accordion-body-1'"
+                            [attr.aria-labelledby]="'accordion-header-1'">
+                            {{currentAd?.contact}}
+                        </div>
+                    </cdk-accordion-item>                    
+                  </cdk-accordion>
+            </div>
+              
+              
+              
+        </div>
+        <div class="button center-child">
+            <button mat-raised-button color="primary" [routerLink]="['/ads/']">Volver</button>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>
+
+
+
+ 

@@ -10,7 +10,7 @@ import { CompetitionFormComponent } from '../sections/competition-form/competiti
   standalone: true,
   imports: [CompetitionFormComponent],
   templateUrl: './edit-competition.component.html',
-  styleUrl: './edit-competition.component.sass'
+  styles: ``,
 })
 export class EditCompetitionComponent implements OnInit{
 

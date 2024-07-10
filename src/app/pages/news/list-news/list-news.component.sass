@@ -1,7 +1,7 @@
 @import '../../../general-styles/css-variables'
 
-.container-news
-    .wrapper-news
+.container-items
+    .wrapper-items
         width: 85%
         display: flex
         flex-wrap: wrap
@@ -20,7 +20,7 @@
                     border-radius: 14px 14px 0 0
                     object-fit: cover
                     
-                .news-info
+                .item-info
                     padding: 10px
                     .title-h5
                         margin: 0 0 0 0                        
@@ -30,7 +30,7 @@
                         .publish-date
                             margin: 3px 0 0 0 
                             padding: 5px 0
-                        .category
+                        .featured-item
                             margin: 3px 0 0 0
                             background-color: $prussian-blue
                             color: $blanco
@@ -42,7 +42,7 @@
         padding: 20px 25px
         font-size: 20px
         font-weight: 600
-.title-news-list
+.title-list
     .title-h4
         text-align: center
 
@@ -53,19 +53,19 @@
 
 
 @media (max-width: $breakpoint-movil)
-    .container-news
-        .wrapper-news
+    .container-items
+        .wrapper-items
             width: 98%
             .container-item
                 width: 100%
                 .wrapper-item
-                    .news-info
+                    .item-info
                         padding: 8px                       
                         
 
 @media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
-    .container-news
-        .wrapper-news
+    .container-items
+        .wrapper-items
             width: 95%
             .container-item
                 width: 48% 

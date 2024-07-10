@@ -13,7 +13,7 @@ import { Location } from '@angular/common';
   template: `<div class="container-bar">
   <a [routerLink]="['/admin/update-news', newsId]">Editar Esta Noticia</a>
   <a [routerLink]="['/admin/write-news']">Añadir nueva noticia</a>
-  <a (click)="deleteNews()">Borrar esta Noticia</a>
+  <a (click)="openModal()">Borrar esta Noticia</a>
   <a [routerLink]="['/admin/panel']">Panel de Administrador</a>
 </div>`,
   styleUrl: './admin-bar-news.component.sass'
@@ -44,7 +44,7 @@ export class AdminBarNewsComponent {
   }
 
 
-  openModal(item: string){
+  openModal(){
     const dialog = this.dialogService.showDialog('Eliminar noticia', `¿Está seguro de que quiere eliminar esta Noticia?`, 'Cancelar', 'Aceptar').subscribe( (res) => {
       res ? this.deleteNews() : '';      
       dialog.unsubscribe();

@@ -1,0 +1,44 @@
+<div class="title-list-ads">
+    <h3 class="title-h3">Lista de anuncios</h3>    
+</div>
+<div class="container-list-ads center-child">
+    <div class="wrapper-list-ads">        
+        @if(adsList.length > 0){
+            @for(ads of adsList; track $index){ 
+                <div class="ads-item">
+                    <div class="wrapper-image">
+                        <img src="{{ads.image}}" alt="Paloma">         
+                    </div>
+                    <div class="info-ads-content center-child">
+                        <p class="title-ads"><span class="info-title">{{ads.title}}</span></p>
+                        <p class="ads-item-content"><span class="label-ads">Precio: </span><span class="info-ads">{{ads.price}}</span></p>
+                        <p class="ads-item-content">
+                            <span class="label-ads">Fecha de Publicación: </span>
+                            <span class="info-ads">{{ads.publishDate.toMillis() | date: 'dd/MM/yyyy hh:mm'}}</span>
+                        </p>
+                    </div>
+                    <div class="wrapper-links">
+                        <button [routerLink]="['/ads/advertisement', ads.id]" mat-icon-button><mat-icon>visibility</mat-icon></button>
+                        <button [routerLink]="['/ads/edit-ads', ads.id]" mat-icon-button><mat-icon>edit_square</mat-icon></button>
+                        <button (click)="openModal(ads.id, ads.userId, ads.image)" mat-icon-button><mat-icon>delete</mat-icon></button>
+                        
+                    </div>                   
+                </div>
+            }
+        }@else {
+            <h3 class="empty-list title-h5"> No tiene anuncios publicados</h3>
+        }
+
+        <div class="button-general">
+            <button mat-raised-button color="primary" [routerLink]="'/ads/publish-ads'"> 
+                Publica un anuncio
+            </button>
+        </div>
+        <div class="button-general">
+            <button mat-raised-button color="primary" (click)="goBack()"> 
+                Volver
+            </button>
+        </div>
+    </div>
+    
+</div>

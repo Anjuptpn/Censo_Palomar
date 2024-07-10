@@ -1,0 +1,149 @@
+@import '../../../general-styles/css-variables'
+.container-ad
+    margin-top: 15px
+    margin-bottom: 80px
+    .wrapper-ad
+        width: 85%
+        .single-ad
+            color: $prussian-blue
+            flex-wrap: wrap
+            .wrapper-image
+                width: 50%
+                img
+                    height: calc(100vh - 120px)
+                    width: 100%
+                    object-fit: cover
+            .wrapper-info
+                width: 50%
+                box-sizing: border-box
+                padding: 20px 20px 15px 30px
+                
+                .title-h3
+                    text-align: center
+                
+                .metadata-ad
+                    display: flex
+                    flex-direction: row
+                    justify-content: space-between
+                    .price-ads
+                        font-size: 25px
+                        font-weight: 700
+                        background-color: $prussian-blue
+                        color: $blanco
+                        padding: 5px 10px
+                        border-radius: 5px
+                    .publish-date
+                        margin:5px 0 0 0
+                        color: $lapiz-lazuli
+                        font-size: 15px
+                        vertical-align: middle
+                        display: flex
+                        align-items: center                                                
+                .title-h5
+                    text-align: center
+                    margin: 0                
+                .details-ad
+                    font-family: $fonts
+                    white-space: pre-wrap
+                    text-align: justify
+                    text-justify: inter-word
+                    width: 100%
+                .accordion
+                    width: 100%
+                    display: block
+                    background-color: $lapiz-lazuli
+                    .accordion-item
+                        font-family: $fonts
+                        background-color: $lapiz-lazuli
+                        
+                        .accordion-item-header
+                            color: $blanco
+                            display: flex
+                            justify-content: space-between
+                            padding: 12px
+                            .accordion-item-action
+                                font-size: 12px
+                                color: $sky-blue
+                        .accordion-item-header:hover
+                            cursor: pointer
+                        .accordion-item-body
+                            background-color: $sky-blue
+                            padding: 18px
+
+        .button
+            margin-top: 20px
+            button
+                padding: 20px 25px
+                font-size: 20px
+                font-weight: 600
+
+
+
+                      
+@media (max-width: $breakpoint-tablet) and (min-width: $breakpoint-movil)
+    .container-ad
+        .wrapper-ad
+            width: 95%
+
+@media (max-width: $breakpoint-movil)
+    .container-ad
+        .wrapper-ad
+            width: 96%
+            .single-ad
+                .wrapper-image
+                    width: 100%
+                    img                        
+                        height: 50vh
+                        aspect-ratio: 4/3
+                        object-fit: cover
+                .wrapper-info
+                    width: 100%
+                    padding: 0 5px 15px 5px
+                    
+                    .title-h3
+                        font-size: 23px                    
+                    .metadata-ad
+                        .price-ads
+                            font-size: 17px
+                            font-weight: 700
+                            background-color: $prussian-blue
+                            color: $blanco
+                            padding: 3px 5px
+                            border-radius: 5px
+                        .publish-date
+                            margin:0 0 0 0
+                            color: $lapiz-lazuli
+                            font-size: 12px
+                            vertical-align: middle
+                            display: flex
+                            align-items: center                                                
+                    .title-h5
+                        text-align: center
+                        margin: 0                
+                    .details-ad
+                        font-family: $fonts
+                        white-space: pre-wrap
+                        text-align: justify
+                        text-justify: inter-word
+                        width: 100%
+                    .accordion
+                        width: 100%
+                        display: block
+                        background-color: $lapiz-lazuli
+                        .accordion-item
+                            font-family: $fonts
+                            background-color: $lapiz-lazuli
+                            
+                            .accordion-item-header
+                                color: $blanco
+                                display: flex
+                                justify-content: space-between
+                                padding: 12px
+                                .accordion-item-action
+                                    font-size: 12px
+                                    color: $sky-blue
+                            .accordion-item-header:hover
+                                cursor: pointer
+                            .accordion-item-body
+                                background-color: $sky-blue
+                                padding: 18px

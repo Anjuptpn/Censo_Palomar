@@ -9,23 +9,20 @@ export class StorageService {
   private storage: Storage = inject(Storage);
 
 
-  //Documentacion aquí: https://firebase.google.com/docs/storage/web/upload-files?hl=es-419
   async uploadImage(file: File, path: string): Promise<string>{
     if (file.name === "null.null"){
       return '';
     }
-    const imagePath = path + "/" + file.name;
+    const imagePath = path + "/" + file.name;    
     const fileReference = ref(this.storage, imagePath);
     return uploadBytes(fileReference, file).then( async () => {
       const url = await getDownloadURL(fileReference);
       return url;
     }).catch((error)=> {
-      console.log("Uploadimage", error)
       throw(error);
     });
   }
   
-  //Documentación: https://firebase.google.com/docs/storage/web/delete-files?hl=es-419
   async deleteImage(url: string){
     if ( url !== 'https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/assets-firebase%2Fcuadrado-grande-500.jpg?alt=media&token=b34f2714-9938-46c6-851c-2b6ccdcf47ed' 
                 && url != null && url !== ''){
@@ -44,6 +41,7 @@ export class StorageService {
     let path = url.slice(startPosition + 3, finishPosition);
     path = path.replaceAll('%2F', '/');
     path = path.replaceAll('%40', '@');
+    path = decodeURI(path);
     return path;
   }
 

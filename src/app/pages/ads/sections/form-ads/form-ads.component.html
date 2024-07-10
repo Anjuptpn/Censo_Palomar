@@ -1,0 +1,51 @@
+<div class="form-container center-child">
+    <div class="wrapper-form">
+      <form class="center-child" [formGroup]="adsForm" (ngSubmit)="submitAds()">  
+          <mat-form-field>
+              <mat-label>Título del anuncio</mat-label>
+              <input type="text" matInput required formControlName="title" 
+              placeholder="Especifica en pocas palanbras lo que vendes">
+          </mat-form-field>
+          @if(adsForm.get('title')?.touched && adsForm.get('title')?.errors?.['required']){
+              <div class="error-form">
+                  Debes introducir un título para poder publicar el anuncio.
+              </div>
+          }          
+          <mat-form-field>
+            <mat-label>Precio</mat-label>
+            <input type="number" matInput formControlName="price">
+          </mat-form-field>
+          @if(adsForm.get('price')?.touched && adsForm.get('price')?.errors?.['required']){
+            <div class="error-form">
+                Debes introducir un precio para poder publicar el anuncio. (Debe ser un número válido ejemplo 23,50...)
+            </div>
+          } 
+
+          <mat-form-field>
+            <mat-label>Información de contacto</mat-label>
+            <input type="text" matInput formControlName="contact" placeholder="Correo, Red Social, Teléfono, etc">
+          </mat-form-field>
+          @if(adsForm.get('contact')?.touched && adsForm.get('contact')?.errors?.['required']){
+            <div class="error-form">
+                Debes introducir un teléfono, correo, app de mensajería, red social, etc con el que te puedan contactar.
+            </div>
+          }   
+
+          <label class="input-file-label">Subir imagen del anuncio</label>
+          <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="image" (change)="getImageFile($event)">
+  
+          <mat-form-field class="text-area">          
+            <mat-label>Detalles del Anuncio</mat-label>
+            <textarea formControlName="details" matInput rows="8" placeholder="Incluye la información de lo que vendes con todo el nivel de detalle posible">
+            </textarea>
+         </mat-form-field> 
+         <div class="button">
+           <button type="submit" mat-raised-button color="primary" [disabled]="!adsForm.valid">{{typeForm}}</button>
+          </div>
+      </form>
+      <div class="button">
+        <button mat-raised-button color="primary" (click)="goBack()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+

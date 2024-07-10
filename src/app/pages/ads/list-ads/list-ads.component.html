@@ -1,0 +1,28 @@
+<div class="title-list">
+    <h4 class="title-h4">Últimas Noticias</h4>
+</div>
+<div class="container-items center-child">
+    <div class="wrapper-items">
+        @for(ads of adsList; track $index){
+            <div class="container-item">
+                <a [routerLink]="['/ads/advertisement', ads.id]" class="wrapper-item">                    
+                    <img src='{{ads.image}}'>
+                    <div class="item-info">
+                        <h5 class="title-h5">{{ads.title}}</h5>
+                        <div class="metadata">
+                            <p class="publish-date">{{ads.publishDate.toMillis() | date: 'dd/MM/YYYY'}}</p>
+                            <p class="featured-item price">{{ads.price}}€</p>
+                        </div>
+                        <p class="item-body">{{ads.details | extractWords:15}}</p> 
+                    </div>
+                </a>
+            </div>
+        }        
+        
+    </div>
+    
+</div>
+<div class="button center-child">
+    <button mat-raised-button color="primary" (click)="goBack()">Volver</button>
+</div>
+<app-footer></app-footer>

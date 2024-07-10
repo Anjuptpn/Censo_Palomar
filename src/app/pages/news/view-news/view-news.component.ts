@@ -28,7 +28,6 @@ export class ViewNewsComponent implements OnInit, OnDestroy{
   private spinnerService = inject(SpinnerService);
   private authService = inject(AuthService);
   
-
   currentNews: NewsInterface | null = null;
   newsId: string = '';
   currentSubscription: any;
@@ -52,7 +51,7 @@ export class ViewNewsComponent implements OnInit, OnDestroy{
         this.spinnerService.stopLoading();
       }).catch(error =>  {
         this.spinnerService.stopLoading();
-        this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 'cerrar', 8, 'snackbar-error')
+        this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 'cerrar', 8, 'snackbar-error');
       });
   }
 

@@ -11,7 +11,7 @@ import { SpinnerService } from '../../../../services-shared/spinner.service';
   standalone: true,
   imports: [RouterLink, CompetitionFormComponent],
   templateUrl: './add-competition.component.html',
-  styleUrl: './add-competition.component.sass'
+  styles: ``,
 })
 export class AddCompetitionComponent implements OnInit{
 

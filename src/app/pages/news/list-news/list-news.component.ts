@@ -7,6 +7,8 @@ import { RouterLink } from '@angular/router';
 import { FooterComponent } from '../../../sections/footer/footer.component';
 import { MatButton } from '@angular/material/button';
 import { SpinnerService } from '../../../services-shared/spinner.service';
+import { FirebaseErrorsService } from '../../auth/services/firebase-errors.service';
+import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-list-news',
@@ -17,23 +19,29 @@ import { SpinnerService } from '../../../services-shared/spinner.service';
 })
 export class ListNewsComponent implements OnInit, OnDestroy{
 
-  private newsService = inject(NewsService);
-  private spinnerService = inject(SpinnerService);
+  private readonly newsService = inject(NewsService);
+  private readonly spinnerService = inject(SpinnerService);
+  private readonly firebaseErrors = inject(FirebaseErrorsService);
+  private readonly snackbar = inject(SnackbarService);
   newsList: NewsInterface[] = [];
   newsObservable: any;
   
   ngOnInit(): void {
-    this.spinnerService.showLoading();
-    this.newsObservable = this.newsService.getNewsFromFirebase().subscribe(res => {
-      if (res){
-        this.newsList = res;
-      }
-      this.spinnerService.stopLoading();
-    });
+    try{
+      this.spinnerService.showLoading();
+      this.newsObservable = this.newsService.getNewsFromFirebase().subscribe(res => {
+        if (res){
+          this.newsList = res;
+        }
+        this.spinnerService.stopLoading();
+      });
+    } catch (error){
+      this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 'cerrar', 8, 'snackbar-error');
+    }
   }
 
   ngOnDestroy(): void {
-    this.newsObservable.unsubscribe;
+    this.newsObservable.unsubscribe();
   }
 
 }

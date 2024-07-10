@@ -36,6 +36,10 @@ export const routes: Routes = [
     {path: 'update-user', 
         loadComponent: () => import('./users/update-user/update-user.component').then(
             (m) => m.UpdateUserComponent)
+    },
+    {path: 'my-ads', 
+        loadComponent: () => import('./my-ads/my-ads.component').then(
+            (m) => m.MyAdsComponent)
     },    
     {path: '', 
         loadComponent: () => import('./users/profile/profile.component').then(

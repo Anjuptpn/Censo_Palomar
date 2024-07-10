@@ -2,13 +2,42 @@
     <div class="market-section-home">
         <h1 class="title-section-home">Anuncios</h1>
         <hr class="line-home">
-        <div class="market-text-content">       
-            <div class="market-text-home">
-                <p>En esta sección próximamente se podrán ver los últimos anuncios publicados por los usuarios de la aplicación.</p>
-                <div class="market-button-home">
-                    <button mat-flat-button color=primary>Ver anuncios</button>
+        @if(adsList.length != 0){
+            <div class="market-text-content">       
+                <div class="market-text-home">
+                    <p>En esta sección próximamente se podrán ver los últimos anuncios publicados por los usuarios de la aplicación.</p>
                 </div>
             </div>
-        </div> 
+        } 
     </div>
 </div>
+@if(adsList.length > 0){
+    <div class="container-items center-child">
+        <div class="wrapper-items">
+            @for(ads of adsList; track $index){
+                <div class="container-item">
+                    <a [routerLink]="['/ads/advertisement', ads.id]" class="wrapper-item">                    
+                        <img src='{{ads.image}}'>
+                        <div class="item-info">
+                            <h5 class="title-h5">{{ads.title}}</h5>
+                            <div class="metadata">
+                                <p class="publish-date">{{ads.publishDate.toMillis() | date: 'dd/MM/YYYY'}}</p>
+                                <p class="featured-item price">{{ads.price}}€</p>
+                            </div>
+                            <p class="item-body">{{ads.details | extractWords:15}}</p> 
+                        </div>
+                    </a>
+                </div>
+            } 
+        </div>
+    </div>
+}
+
+<div class="button-general">
+    <button mat-raised-button color=primary [routerLink]="'/ads'">Anuncios</button>
+</div>
+
+
+
+
+

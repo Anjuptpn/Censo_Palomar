@@ -8,6 +8,7 @@ export const routes: Routes = [
     {path: 'user', loadChildren: () => import('./pages/user/user.routes'), canActivate: [loggedUserGuard]},
     {path: 'admin', loadChildren: () => import('./pages/admin/admin.routes'), canActivate: [onlyAdminGuard, loggedUserGuard]},
     {path: 'news', loadChildren: () => import('./pages/news/news.routes')},
+    {path: 'ads', loadChildren: () => import('./pages/ads/ads.routes')},
     {path: '', component: HomeComponent},
     {path: '**', component: HomeComponent}
 ];
