@@ -151,6 +151,7 @@ export class CompetitionFormComponent {
         await this.competitionsService.registerCompetitionInFirestore(this.currentUser?.uid, this.pigeonId, competition);
         this.snackbar.showSnackBar("Se ha añadido la competición correctamente", 'cerrar', 12, 'snackbar-success');
         this.competitionForm.reset();
+        this.goBack();
       }
       this.spinnerService.stopLoading();
     } catch (error){

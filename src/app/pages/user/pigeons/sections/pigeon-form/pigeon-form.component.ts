@@ -156,6 +156,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
         await this.pigeonService.registerPigeonInFirestore(this.currentUser.uid, pigeon);
         this.snackbar.showSnackBar("Se ha añadido la paloma correctamente", 'cerrar', 8, 'snackbar-success');
         this.pigeonForm.reset();
+        this.goBack();
       }
       this.spinnerService.stopLoading();
     } catch (error){
