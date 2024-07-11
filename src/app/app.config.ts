@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -10,14 +10,24 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { environment } from '../environments/environment';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), 
-    provideClientHydration(), 
+  providers: [provideRouter(routes),
+    provideClientHydration(),
     provideAnimationsAsync(),
-    {provide: MAT_DATE_LOCALE, useValue: 'es-ES'},
-    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)), 
-    provideAuth(() => getAuth()), 
-    provideFirestore(() => getFirestore()), 
-    provideStorage(() => getStorage())]
+    { provide: MAT_DATE_LOCALE, useValue: 'es-ES' },
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideAuth(() => getAuth()),
+    provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()), provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    }), provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    }), provideServiceWorker('ngsw-worker.js', {
+        enabled: !isDevMode(),
+        registrationStrategy: 'registerWhenStable:30000'
+    })]
 };
