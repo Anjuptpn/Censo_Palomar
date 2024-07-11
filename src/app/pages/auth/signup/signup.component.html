@@ -46,11 +46,11 @@
       <label class="input-file-label">Subir imagen de perfil</label>
       <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="urlImage" (change)="getFileForm($event)">      
       <mat-checkbox required formControlName="policy">
-            Acepto las <a href="#">condiciones de uso</a>
+            Acepto la <a routerLink="/privacy-policy">Política de Privacidad</a>
         </mat-checkbox>
       @if (registerForm.get('policy')?.touched && registerForm.get('policy')?.errors?.['required']){
           <div class="error-form">
-              Debes leer y aceptar las políticas de uso.
+              Debes leer y aceptar la <a routerLink="/privacy-policy">Política de Privacidad</a>.
           </div>
       }    
 

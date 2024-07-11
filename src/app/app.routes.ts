@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { loggedUserGuard } from './guards/logged-user.guard';
 import { onlyAdminGuard } from './guards/only-admin.guard';
+import { PolicyComponent } from './pages/policy/policy.component';
 
 export const routes: Routes = [    
     {path: 'auth', loadChildren: () => import('./pages/auth/auth.routes')},
@@ -9,6 +10,7 @@ export const routes: Routes = [
     {path: 'admin', loadChildren: () => import('./pages/admin/admin.routes'), canActivate: [onlyAdminGuard, loggedUserGuard]},
     {path: 'news', loadChildren: () => import('./pages/news/news.routes')},
     {path: 'ads', loadChildren: () => import('./pages/ads/ads.routes')},
+    {path: 'privacy-policy', component: PolicyComponent},
     {path: '', component: HomeComponent},
     {path: '**', component: HomeComponent}
 ];
