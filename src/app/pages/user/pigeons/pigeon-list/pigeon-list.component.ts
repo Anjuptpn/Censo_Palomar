@@ -1,14 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FirebaseService } from '../../../../services-shared/firebase.service';
+import { FirebaseService } from '../../../../services/firebase.service';
 import { User } from '@angular/fire/auth';
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
+import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { MatButtonModule } from '@angular/material/button';
-import { SpinnerService } from '../../../../services-shared/spinner.service';
+import { SpinnerService } from '../../../../services/spinner.service';
 
 @Component({
   selector: 'app-pigeon-list',

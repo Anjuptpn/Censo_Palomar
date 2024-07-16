@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { FirebaseService } from '../../../services-shared/firebase.service';
-import { StorageService } from '../../../services-shared/storage.service';
+import { FirebaseService } from '../../../services/firebase.service';
+import { StorageService } from '../../../services/storage.service';
 import { PigeonInterface } from '../../../models/pigeon.model';
 import { QuerySnapshot } from '@angular/fire/firestore';
 

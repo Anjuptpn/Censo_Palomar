@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { filter, tap } from 'rxjs';
 import { User } from '@angular/fire/auth';
-import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../services/firebase-errors.service';
-import { SpinnerService } from '../../../services-shared/spinner.service';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
+import { SpinnerService } from '../../../services/spinner.service';
 
 @Component({
   selector: 'app-email-verification',

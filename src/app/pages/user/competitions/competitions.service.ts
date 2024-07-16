@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FirebaseService } from '../../../services-shared/firebase.service';
+import { FirebaseService } from '../../../services/firebase.service';
 import { CompetitionInterface } from '../../../models/competition.model';
 
 

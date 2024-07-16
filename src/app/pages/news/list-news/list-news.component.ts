@@ -1,14 +1,14 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NewsService } from '../news.service';
 import { NewsInterface } from '../../../models/news.models';
-import { ExtractWords } from '../../../services-shared/extract-words.pipe';
+import { ExtractWords } from '../../../services/extract-words.pipe';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { FooterComponent } from '../../../sections/footer/footer.component';
+import { FooterComponent } from '../../../shared/footer/footer.component';
 import { MatButton } from '@angular/material/button';
-import { SpinnerService } from '../../../services-shared/spinner.service';
-import { FirebaseErrorsService } from '../../auth/services/firebase-errors.service';
-import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
+import { SpinnerService } from '../../../services/spinner.service';
+import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-list-news',

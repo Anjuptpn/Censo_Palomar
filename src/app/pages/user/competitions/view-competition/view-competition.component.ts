@@ -1,16 +1,16 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { CompetitionInterface } from '../../../../models/competition.model';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
+import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
-import { ToolsBarComponent } from '../../../../sections/tools-bar/tools-bar.component';
+import { ToolsBarComponent } from '../../../../shared/tools-bar/tools-bar.component';
 import { CommonModule } from '@angular/common';
-import { DatesService } from '../../../../services-shared/dates.service';
+import { DatesService } from '../../../../services/dates.service';
 import { CompetitionsService } from '../competitions.service';
-import { SpinnerService } from '../../../../services-shared/spinner.service';
+import { SpinnerService } from '../../../../services/spinner.service';
 
 @Component({
   selector: 'app-view-competition',

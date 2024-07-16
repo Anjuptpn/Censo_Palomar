@@ -1,14 +1,14 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AdsService } from '../ads.service';
-import { FirebaseErrorsService } from '../../auth/services/firebase-errors.service';
-import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
-import { SpinnerService } from '../../../services-shared/spinner.service';
-import { AuthService } from '../../auth/services/auth.service';
+import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { SpinnerService } from '../../../services/spinner.service';
+import { AuthService } from '../../../services/auth.service';
 import { AdsInterface } from '../../../models/ads.model';
 import { MatIcon } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { FooterComponent } from '../../../sections/footer/footer.component';
+import { FooterComponent } from '../../../shared/footer/footer.component';
 import { MatButton } from '@angular/material/button';
 import { CdkAccordionModule } from '@angular/cdk/accordion';
 

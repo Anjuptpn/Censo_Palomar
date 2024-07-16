@@ -1,11 +1,11 @@
 import { Component, Input, inject } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { MatIconModule } from '@angular/material/icon';
-import { FirebaseService } from '../../../../../services-shared/firebase.service';
+import { FirebaseService } from '../../../../../services/firebase.service';
 import { CompetitionInterface } from '../../../../../models/competition.model';
-import { SnackbarService } from '../../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../../auth/services/firebase-errors.service';
-import { AuthService } from '../../../../auth/services/auth.service';
+import { SnackbarService } from '../../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../../services/firebase-errors.service';
+import { AuthService } from '../../../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 

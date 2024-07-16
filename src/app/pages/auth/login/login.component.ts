@@ -4,16 +4,17 @@ import { MatInputModule } from '@angular/material/input';
 import { HeaderFormsComponent } from '../sections/header-forms/header-forms.component';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { AuthService } from '../services/auth.service';
+import { AuthService } from '../../../services/auth.service';
 import { Observable } from 'rxjs';
-import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../services/firebase-errors.service';
-import { SpinnerService } from '../../../services-shared/spinner.service';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
+import { SpinnerService } from '../../../services/spinner.service';
+import { FooterComponent } from '../../../shared/footer/footer.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatInputModule, MatButtonModule, RouterLink, ReactiveFormsModule, HeaderFormsComponent],
+  imports: [MatInputModule, MatButtonModule, RouterLink, ReactiveFormsModule, HeaderFormsComponent, FooterComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.sass'
 })

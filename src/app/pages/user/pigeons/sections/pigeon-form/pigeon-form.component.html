@@ -38,7 +38,7 @@
           <div class="error-form">
               El formato de la fecha no es correcto
           </div>
-      }    
+        }    
 
         <mat-radio-group aria-label="Género de la paloma" formControlName="gender">
           <label class="input-file-label">Género: </label><br>
@@ -92,6 +92,12 @@
 
         <label class="input-file-label">Subir imagen de la paloma</label>
         <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="image" (change)="getImageFile($event)">
+
+        @if(inputImageError){
+          <div class="error-form">
+              El formato del fichero no es correcto
+          </div>
+        } 
 
         <mat-form-field class="text-area">          
           <mat-label>Notas</mat-label>

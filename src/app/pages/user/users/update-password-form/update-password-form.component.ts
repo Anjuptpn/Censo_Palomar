@@ -3,13 +3,12 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AuthService } from '../../../auth/services/auth.service';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
+import { AuthService } from '../../../../services/auth.service';
+import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { User } from '@angular/fire/auth';
-import { UserInterface } from '../../../../models/user.model';
 import { Location } from '@angular/common';
-import { SpinnerService } from '../../../../services-shared/spinner.service';
+import { SpinnerService } from '../../../../services/spinner.service';
 
 
 

@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { AuthService } from '../../../auth/services/auth.service';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
+import { AuthService } from '../../../../services/auth.service';
+import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { User } from '@angular/fire/auth';
 import { filter, tap } from 'rxjs';
 import { UserInterface } from '../../../../models/user.model';
 import { Location } from '@angular/common';
 import { UpdatePasswordFormComponent } from '../update-password-form/update-password-form.component';
-import { SpinnerService } from '../../../../services-shared/spinner.service';
+import { SpinnerService } from '../../../../services/spinner.service';
 
 @Component({
   selector: 'app-update-user',
@@ -31,6 +31,8 @@ export class UpdateUserComponent {
 
   userForm!: FormGroup;
   imageFile = new File([], "null.null");
+  inputImageError: boolean =  false;
+  fileTypesPermited = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
   currentsubscription: any;
   currentUser: User | null = null;
   currentUserData: UserInterface | null = null;
@@ -52,6 +54,7 @@ export class UpdateUserComponent {
         }
     });
   }
+  
   private initializeForm(): void{
     this.userForm = this.formBuilder.group({
       name: ['', Validators.required],
@@ -61,11 +64,18 @@ export class UpdateUserComponent {
     })
   }
 
-  getFileForm($event: any): void{
-    this.imageFile = $event.target.files[0];
+  getFileForm ($event: any): void{
+    let extension = $event.target.files[0].name as string;
+    extension = extension.slice(extension.lastIndexOf('.'));
+    if (this.fileTypesPermited.includes(extension.toLowerCase())){
+      this.imageFile = $event.target.files[0];
+      this.inputImageError = false;
+    } else {
+      this.inputImageError = true;
+    }
   }
 
-  submitUpdateUser(){
+  submitUpdateUser(): void{
     if (this.userForm.valid){
       this.prepareFormData().then(userData =>
         this.updateUserData(userData)).
@@ -115,7 +125,7 @@ export class UpdateUserComponent {
     return user;
   }
 
-  private async updateUserData(userData: UserInterface){
+  private async updateUserData(userData: UserInterface): Promise<void>{
     this.spinnerService.showLoading();
     try{
       await this.authService.updateUserData(userData);

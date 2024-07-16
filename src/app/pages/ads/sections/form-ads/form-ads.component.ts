@@ -1,8 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
-import { Location } from '@angular/common';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
+import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { AdsService } from '../../ads.service';
 import { AdsInterface } from '../../../../models/ads.model';
 import { MatInputModule } from '@angular/material/input';
@@ -10,14 +9,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { Timestamp } from '@angular/fire/firestore';
 import { User } from '@angular/fire/auth';
-import { AuthService } from '../../../auth/services/auth.service';
-import { SpinnerService } from '../../../../services-shared/spinner.service';
-import { Router } from '@angular/router';
+import { AuthService } from '../../../../services/auth.service';
+import { SpinnerService } from '../../../../services/spinner.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-form-ads',
   standalone: true,
-  imports: [ReactiveFormsModule, MatInputModule, MatButtonModule, MatFormFieldModule],
+  imports: [ReactiveFormsModule, MatInputModule, MatButtonModule, MatFormFieldModule, RouterLink],
   templateUrl: './form-ads.component.html',
   styleUrl: './form-ads.component.sass'
 })
@@ -27,14 +26,15 @@ export class FormAdsComponent {
 
   private readonly formBuilder = inject(FormBuilder);
   private readonly snackbar = inject(SnackbarService);
-  private readonly location = inject(Location);
+  private readonly router = inject(Router);
   private readonly firebaseErrors = inject(FirebaseErrorsService);
   private readonly adsService = inject(AdsService);
   private readonly authService = inject(AuthService);
   private readonly spinnerService = inject(SpinnerService);
-  private readonly router = inject(Router);
 
   imageFile = new File([], "null.null");
+  inputImageError: boolean =  false;
+  fileTypesPermited = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
   adsForm!: FormGroup;
   currentAds: AdsInterface | null = null;
   currentUser: User | null = null;
@@ -53,7 +53,7 @@ export class FormAdsComponent {
        
   }
 
-  private inicializeadsForm (){
+  private inicializeadsForm (): void{
     this.adsForm = this.formBuilder.group({
       title: ['', Validators.required],
       details: [''],      
@@ -62,7 +62,8 @@ export class FormAdsComponent {
       image: ['']
     });       
   }
-  private async getAdToEdit(){
+  
+  private async getAdToEdit(): Promise<void>{
     try{
       if (this.adsId == null || this.adsId == undefined || this.adsId == ''){
         this.snackbar.showSnackBar("No hay seleccionada ningún anuncio, vuelve hacia atrás y reinténtalo.", 'cerrar', 12, 'snackbar-error');
@@ -86,7 +87,7 @@ export class FormAdsComponent {
     }
   }
 
-  async submitAds(){
+  async submitAds(): Promise<void>{
     this.spinnerService.showLoading();
     if(this.currentUser != null && this.currentUser != undefined){
       if(this.adsForm.valid){     
@@ -111,7 +112,7 @@ export class FormAdsComponent {
     }
   }
 
-  private patchValueToForm(data: AdsInterface){
+  private patchValueToForm(data: AdsInterface): void{
     try{
       let {id, publishDate, userId, ...form} = data;
       form.image = '';    
@@ -143,23 +144,23 @@ export class FormAdsComponent {
     return ads;
   }
 
-  async publishAd(ads: AdsInterface){
+  async publishAd(ads: AdsInterface): Promise<void>{
     try{
        await this.adsService.publishAd(ads);
        this.snackbar.showSnackBar("Se ha publicado el anuncio correctamente", 'cerrar', 8, 'snackbar-success');
        this.adsForm.reset();
-       this.goBack();
+       this.router.navigateByUrl("/user/my-ads");
     }catch (error){
       this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),'cerrar',  8,  'snackbar-error');
     }
   }
 
-  async updateAds(ads: AdsInterface){
+  async updateAds(ads: AdsInterface): Promise<void>{
     try{
         if (this.currentUser != null && this.currentUser != undefined){
           await this.adsService.updateAd(ads);
           this.snackbar.showSnackBar("Se ha actualizado la noticia correctamente", 'cerrar', 8, 'snackbar-success');
-          this.goBack();
+          this.router.navigateByUrl("/user/my-ads");
         } else {
           this.snackbar.showSnackBar("Se ha actualizado la noticia correctamente", 'cerrar', 8, 'snackbar-success');
         }
@@ -169,11 +170,15 @@ export class FormAdsComponent {
     }
   }
   
-  getImageFile ($event: any){
-    this.imageFile = $event.target.files[0];
+  getImageFile ($event: any): void{
+    let extension = $event.target.files[0].name as string;
+    extension = extension.slice(extension.lastIndexOf('.'));
+    if (this.fileTypesPermited.includes(extension.toLowerCase())){
+      this.imageFile = $event.target.files[0];
+      this.inputImageError = false;
+    } else {
+      this.inputImageError = true;
+    }
   }
 
-  goBack(): void{
-    this.location.back()
-  }
 }

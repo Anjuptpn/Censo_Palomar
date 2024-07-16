@@ -2,15 +2,15 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { NewsInterface } from '../../../models/news.models';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NewsService } from '../news.service';
-import { FirebaseErrorsService } from '../../auth/services/firebase-errors.service';
-import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
-import { FooterComponent } from '../../../sections/footer/footer.component';
+import { FooterComponent } from '../../../shared/footer/footer.component';
 import { AdminBarNewsComponent } from '../../admin/sections/admin-bar-news/admin-bar-news.component';
-import { SpinnerService } from '../../../services-shared/spinner.service';
-import { AuthService } from '../../auth/services/auth.service';
+import { SpinnerService } from '../../../services/spinner.service';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-view-news',

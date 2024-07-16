@@ -44,7 +44,13 @@
       }
       <!-- Cambio de look del botón aquí https://www.viget.com/articles/styling-native-file-upload-input-field/ -->
       <label class="input-file-label">Subir imagen de perfil</label>
-      <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="urlImage" (change)="getFileForm($event)">      
+      <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="urlImage" (change)="getFileForm($event)"> 
+      @if(inputImageError){
+        <div class="error-form">
+            El formato del fichero no es correcto
+        </div>
+      }
+          
       <mat-checkbox required formControlName="policy">
             Acepto la <a routerLink="/privacy-policy">Política de Privacidad</a>
         </mat-checkbox>
@@ -64,6 +70,7 @@
         <a class="enlace-signup" routerLink="/auth/login/">¿Ya tienes cuenta?</a>  
     </p>
 </div>
+<app-footer></app-footer>
 
 
 

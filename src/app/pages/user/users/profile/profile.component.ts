@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { User } from '@angular/fire/auth';
 import { UserInterface } from '../../../../models/user.model';
 import { filter, tap } from 'rxjs';
@@ -8,9 +8,9 @@ import {MatListModule} from '@angular/material/list';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
-import { SpinnerService } from '../../../../services-shared/spinner.service';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
+import { SpinnerService } from '../../../../services/spinner.service';
+import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 
 @Component({
   selector: 'app-profile',

@@ -7,10 +7,11 @@ import { MatInput } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 import { HeaderFormsComponent } from '../sections/header-forms/header-forms.component';
 import { UserInterface } from '../../../models/user.model';
-import { AuthService } from '../services/auth.service';
-import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../services/firebase-errors.service';
-import { SpinnerService } from '../../../services-shared/spinner.service';
+import { AuthService } from '../../../services/auth.service';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
+import { SpinnerService } from '../../../services/spinner.service';
+import { FooterComponent } from '../../../shared/footer/footer.component';
 
 @Component({
   selector: 'app-signup',
@@ -21,7 +22,8 @@ import { SpinnerService } from '../../../services-shared/spinner.service';
                 MatInput, 
                 ReactiveFormsModule, 
                 RouterLink,
-                HeaderFormsComponent],
+                HeaderFormsComponent,
+                FooterComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.sass'
 })
@@ -37,6 +39,8 @@ export class SignupComponent implements OnInit{
   /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   registerForm!: FormGroup;
   imageFile = new File([], "null.null"); //fichero vacío, no se permite que sea null
+  inputImageError: boolean =  false;
+  fileTypesPermited = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 
   ngOnInit(): void {
     this.inicializeForm();
@@ -78,7 +82,14 @@ export class SignupComponent implements OnInit{
     }
   }
 
-  getFileForm($event: any): void{
-    this.imageFile = $event.target.files[0];
-  }  
+  getFileForm ($event: any): void{
+    let extension = $event.target.files[0].name as string;
+    extension = extension.slice(extension.lastIndexOf('.'));
+    if (this.fileTypesPermited.includes(extension.toLowerCase())){
+      this.imageFile = $event.target.files[0];
+      this.inputImageError = false;
+    } else {
+      this.inputImageError = true;
+    }
+  } 
 }

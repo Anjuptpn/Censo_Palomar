@@ -1,10 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { User } from '@angular/fire/auth';
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { CompetitionFormComponent } from '../sections/competition-form/competition-form.component';
-import { SpinnerService } from '../../../../services-shared/spinner.service';
+import { SpinnerService } from '../../../../services/spinner.service';
 
 @Component({
   selector: 'app-add-competition',

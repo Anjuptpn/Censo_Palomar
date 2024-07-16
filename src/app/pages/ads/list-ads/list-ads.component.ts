@@ -1,13 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { SpinnerService } from '../../../services-shared/spinner.service';
+import { SpinnerService } from '../../../services/spinner.service';
 import { AdsService } from '../ads.service';
 import { CommonModule, Location } from '@angular/common';
-import { FirebaseErrorsService } from '../../auth/services/firebase-errors.service';
-import { SnackbarService } from '../../../sections/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
+import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
 import { AdsInterface } from '../../../models/ads.model';
 import { RouterLink } from '@angular/router';
-import { FooterComponent } from '../../../sections/footer/footer.component';
-import { ExtractWords } from '../../../services-shared/extract-words.pipe';
+import { FooterComponent } from '../../../shared/footer/footer.component';
+import { ExtractWords } from '../../../services/extract-words.pipe';
 import { MatButton } from '@angular/material/button';
 
 @Component({

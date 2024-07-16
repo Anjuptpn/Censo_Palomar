@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './sections/header/header.component';
+import { HeaderComponent } from './shared/header/header.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 @Component({
@@ -9,8 +9,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
   imports: [RouterOutlet,            
             HeaderComponent,            
             MatSidenavModule],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.sass'
+  template: `<app-header></app-header>`,
+  styles: ``
 })
 export class AppComponent {
   title = 'censo_palomar';

@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from '../../../auth/services/auth.service';
+import { AuthService } from '../../../../services/auth.service';
 import { User } from '@angular/fire/auth';
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { CompetitionFormComponent } from '../sections/competition-form/competition-form.component';

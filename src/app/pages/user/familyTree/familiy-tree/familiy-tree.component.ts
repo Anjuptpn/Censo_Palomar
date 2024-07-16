@@ -3,10 +3,10 @@ import { FamiliyLeafComponent } from '../familiy-leaf/familiy-leaf.component';
 import { FamiliyTreeService } from '../familiy-tree.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { User } from '@angular/fire/auth';
-import { AuthService } from '../../../auth/services/auth.service';
-import { SpinnerService } from '../../../../services-shared/spinner.service';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
+import { AuthService } from '../../../../services/auth.service';
+import { SpinnerService } from '../../../../services/spinner.service';
+import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
+import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
 import { MatButton } from '@angular/material/button';
 import { BreakpointObserver } from '@angular/cdk/layout';
 

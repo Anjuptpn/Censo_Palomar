@@ -1,0 +1,47 @@
+<div class="wrapper-footer center-child">
+    <div class="content-footer">
+        <div class="wrapper-image-footer">
+            <img src="/assets/logo-blanco.png" alt="Logo">
+        </div>
+        <div class="wrapper-links">
+            <h3>Enlaces</h3>
+            <ul class="list-links-footer">
+                @for (link of menuLinks; track $index){
+                    @if(link.showincase === "All"){
+                        <li class="link-footer"><a [routerLink]="link.link">{{link.tag}}</a></li>
+                    }
+                }                
+            </ul>
+        </div>
+        @if(isLogged){
+            <div class="wrapper-links login-users">
+                <h3>Enlaces de interés</h3>
+                <ul class="list-links-footer">
+                    @for (link of menuLinks; track $index){
+                        @if(link.showincase === "logged"){
+                            <li class="link-footer"><a [routerLink]="link.link">{{link.tag}}</a></li>
+                        }
+                    }                
+                </ul>
+            </div>
+        }
+        @if(!isLogged){
+            <div class="wrapper-links not-login-users">
+                <h3>Enlaces</h3>
+                <ul class="list-links-footer">
+                    @for (link of menuLinks; track $index){
+                        @if(link.showincase === "notLogged"){
+                            <li class="link-footer"><a [routerLink]="link.link">{{link.tag}}</a></li>
+                        }
+                    }                
+                </ul>
+            </div>
+        }
+    </div>
+</div>
+<div class="final-footer">
+    <a class="link-policy" routerLink="/legal-notice">Aviso Legal</a>
+    <a class="link-policy" routerLink="/privacy-policy">Política de Privacidad</a>
+    <a class="link-policy" routerLink="/cookies-policy">Política de Cookies</a>
+    
+</div>

@@ -4,14 +4,14 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { User } from '@angular/fire/auth';
 import { CommonModule } from '@angular/common';
 import { CompetitionsListComponent } from '../../competitions/sections/competitions-list/competitions-list.component';
-import { ToolsBarComponent } from '../../../../sections/tools-bar/tools-bar.component';
-import { AuthService } from '../../../auth/services/auth.service';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
+import { ToolsBarComponent } from '../../../../shared/tools-bar/tools-bar.component';
+import { AuthService } from '../../../../services/auth.service';
+import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
+import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { PigeonsService } from '../pigeons.service';
 import { MatButton } from '@angular/material/button';
-import { SpinnerService } from '../../../../services-shared/spinner.service';
+import { SpinnerService } from '../../../../services/spinner.service';
 
 @Component({
   selector: 'app-pigeon-profile',

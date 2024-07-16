@@ -7,15 +7,15 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { CommonModule, Location } from '@angular/common';
 import { User } from '@angular/fire/auth';
-import { SnackbarService } from '../../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../../auth/services/firebase-errors.service';
-import { AuthService } from '../../../../auth/services/auth.service';
+import { SnackbarService } from '../../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../../services/firebase-errors.service';
+import { AuthService } from '../../../../../services/auth.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { DatesService } from '../../../../../services-shared/dates.service';
+import { DatesService } from '../../../../../services/dates.service';
 import { CompetitionInterface } from '../../../../../models/competition.model';
 import { CompetitionsService } from '../../competitions.service';
 import { Router } from '@angular/router';
-import { SpinnerService } from '../../../../../services-shared/spinner.service';
+import { SpinnerService } from '../../../../../services/spinner.service';
 
 @Component({
   selector: 'app-competition-form',

@@ -38,7 +38,7 @@ export const routes: Routes = [
             (m) => m.UpdateUserComponent)
     },
     {path: 'my-ads', 
-        loadComponent: () => import('./my-ads/my-ads.component').then(
+        loadComponent: () => import('../ads/my-ads/my-ads.component').then(
             (m) => m.MyAdsComponent)
     },    
     {path: '', 

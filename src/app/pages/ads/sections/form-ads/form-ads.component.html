@@ -33,7 +33,12 @@
 
           <label class="input-file-label">Subir imagen del anuncio</label>
           <input type="file" accept=".jpg, .jpeg, .png, .gif, .webp" formControlName="image" (change)="getImageFile($event)">
-  
+          @if(inputImageError){
+            <div class="error-form">
+                El formato del fichero no es correcto
+            </div>
+          }
+          
           <mat-form-field class="text-area">          
             <mat-label>Detalles del Anuncio</mat-label>
             <textarea formControlName="details" matInput rows="8" placeholder="Incluye la información de lo que vendes con todo el nivel de detalle posible">
@@ -44,7 +49,7 @@
           </div>
       </form>
       <div class="button">
-        <button mat-raised-button color="primary" (click)="goBack()">Cancelar</button>
+        <button mat-raised-button color="primary" [routerLink]="'/user/my-ads'">Cancelar</button>
       </div>
     </div>
   </div>

@@ -13,12 +13,12 @@ import { CommonModule, Location } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { Timestamp } from '@angular/fire/firestore';
 import { User } from '@angular/fire/auth';
-import { SnackbarService } from '../../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../../auth/services/firebase-errors.service';
-import { AuthService } from '../../../../auth/services/auth.service';
+import { SnackbarService } from '../../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../../services/firebase-errors.service';
+import { AuthService } from '../../../../../services/auth.service';
 import { PigeonInterface } from '../../../../../models/pigeon.model';
 import { PigeonsService } from '../../pigeons.service';
-import { SpinnerService } from '../../../../../services-shared/spinner.service';
+import { SpinnerService } from '../../../../../services/spinner.service';
 
 
 
@@ -60,6 +60,8 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   currentPigeon: PigeonInterface | null = null;
   malePigeons: PigeonInterface[] | null | undefined = null;
   femalePigeons: PigeonInterface[] | null | undefined= null;
+  inputImageError: boolean =  false;
+  fileTypesPermited = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
 
   currentAuthSubcribe: any;
   pigeonMother: any;
@@ -109,7 +111,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     });       
   }
 
-  submitPigeonForm(){
+  submitPigeonForm(): void{
     if(this.pigeonForm.valid){      
       this.prepareFormData().then(pigeon => {
         if (this.typeForm === "Editar Paloma"){
@@ -147,7 +149,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     return pigeonData;
   }  
 
-  async registerPigeon(pigeon: PigeonInterface){
+  async registerPigeon(pigeon: PigeonInterface): Promise<void>{
     this.spinnerService.showLoading();
     try{
       if (this.currentUser == null || this.currentUser == undefined){
@@ -166,7 +168,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     }
   } 
 
-  async updatePigeon(pigeon: PigeonInterface){
+  async updatePigeon(pigeon: PigeonInterface): Promise<void>{
     this.spinnerService.showLoading();
     try{
       if (this.currentUser == null || this.currentUser == undefined){
@@ -184,8 +186,15 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     }
   } 
 
-  getImageFile ($event: any){
-    this.imageFile = $event.target.files[0];
+  getImageFile ($event: any): void{
+    let extension = $event.target.files[0].name as string;
+    extension = extension.slice(extension.lastIndexOf('.'));
+    if (this.fileTypesPermited.includes(extension.toLowerCase())){
+      this.imageFile = $event.target.files[0];
+      this.inputImageError = false;
+    } else {
+      this.inputImageError = true;
+    }
   }
 
   goBack(): void{
@@ -198,7 +207,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     this.pigeonFather.unsubscribe();
   }
 
-  private async getPigeonToEdit(userId: string){
+  private async getPigeonToEdit(userId: string): Promise<void>{
     this.spinnerService.showLoading();
     try{
       if (userId == null || userId == undefined || userId == ''){
@@ -248,7 +257,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     }
   }
 
-  onChangeParents(field: string, $event: string){
+  onChangeParents(field: string, $event: string): void{
     if (field === "father"){
       this.pigeonForm.patchValue({father: this.getFatherNameWithId(this.malePigeons, $event)});
     }else if (field === "mother"){

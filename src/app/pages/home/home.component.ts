@@ -1,17 +1,18 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { Title } from '@angular/platform-browser';
-import { FooterComponent } from '../../sections/footer/footer.component';
-import { DialogService } from '../../sections/dialog/dialog.service';
+import { FooterComponent } from '../../shared/footer/footer.component';
+import { DialogService } from '../../shared/dialog/dialog.service';
 import { NewsInterface } from '../../models/news.models';
-import { AdsComponent } from './sections/ads/ads.component';
-import { NewsHomeComponent } from './sections/news-home/news-home.component';
+import { AdsComponent } from '../ads/sections/ads-home/ads.component';
+import { RouterLink } from '@angular/router';
+import { NewsHomeComponent } from '../news/sections/news-home/news-home.component';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatButtonModule, FooterComponent, AdsComponent, NewsHomeComponent],
+  imports: [MatButtonModule, FooterComponent, AdsComponent, NewsHomeComponent, RouterLink],
   templateUrl: './home.component.html',
   styleUrl: './home.component.sass'
 })

@@ -1,8 +1,8 @@
 import { Component, inject, Input } from '@angular/core';
 import { NewsService } from '../../../news/news.service';
-import { SnackbarService } from '../../../../sections/snackbar/snackbar.service';
-import { FirebaseErrorsService } from '../../../auth/services/firebase-errors.service';
-import { DialogService } from '../../../../sections/dialog/dialog.service';
+import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
+import { DialogService } from '../../../../shared/dialog/dialog.service';
 import { RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 
