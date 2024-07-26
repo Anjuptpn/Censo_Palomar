@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { SpinnerService } from '../../../../services/spinner.service';
-import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 
 @Component({

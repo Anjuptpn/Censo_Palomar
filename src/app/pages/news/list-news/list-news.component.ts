@@ -8,7 +8,7 @@ import { FooterComponent } from '../../../shared/footer/footer.component';
 import { MatButton } from '@angular/material/button';
 import { SpinnerService } from '../../../services/spinner.service';
 import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
-import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-list-news',

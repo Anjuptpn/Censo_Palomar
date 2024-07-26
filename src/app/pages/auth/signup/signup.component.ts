@@ -8,7 +8,7 @@ import { RouterLink } from '@angular/router';
 import { HeaderFormsComponent } from '../sections/header-forms/header-forms.component';
 import { UserInterface } from '../../../models/user.model';
 import { AuthService } from '../../../services/auth.service';
-import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
 import { SpinnerService } from '../../../services/spinner.service';
 import { FooterComponent } from '../../../shared/footer/footer.component';

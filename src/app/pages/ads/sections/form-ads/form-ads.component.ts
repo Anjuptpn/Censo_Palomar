@@ -1,6 +1,6 @@
 import { Component, inject, Input } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { AdsService } from '../../ads.service';
 import { AdsInterface } from '../../../../models/ads.model';

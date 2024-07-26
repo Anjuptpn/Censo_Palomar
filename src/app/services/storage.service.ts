@@ -8,7 +8,6 @@ export class StorageService {
 
   private storage: Storage = inject(Storage);
 
-
   async uploadImage(file: File, path: string): Promise<string>{
     if (file.name === "null.null"){
       return '';
@@ -44,6 +43,5 @@ export class StorageService {
     path = decodeURI(path);
     return path;
   }
-
 
 }

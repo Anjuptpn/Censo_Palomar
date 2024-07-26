@@ -6,15 +6,11 @@ import { Timestamp } from '@angular/fire/firestore';
 })
 export class DatesService {
 
-  constructor() { }
 
-  createFirebaseTimestamp(date: Date, hour: string, minutes: string, seconds: string){
-    if (hour == null || minutes == null || seconds == null){
+  createFirebaseTimestamp(date: Date, hour: string, minutes: string, seconds: string): Timestamp | null{
+    if (hour == null || minutes == null || seconds == null || date == null){
       return null;
-    }
-    if (date == null){
-      return null;
-    }
+    }    
     const partsDate = date.toLocaleString('es-Es').split('/');
     let stringDate = partsDate[2].split(',')[0] + '-' + this.fillWithZeros(partsDate[1], 2) + '-' + 
           this.fillWithZeros(partsDate[0], 2) + 'T' + hour + ":" + minutes + ":" + seconds + ".000";
@@ -28,7 +24,7 @@ export class DatesService {
     return (finishdate.toMillis() - startDate.toMillis())/60000;
   }
 
-  convertirSegundosAHorasMinutosYSegundos(mins: number | null | undefined){
+  convertSecondsToHourMinutesAndSeconds(mins: number | null | undefined): string | null{
     if (mins == null || undefined){
       return null
     }
@@ -40,8 +36,7 @@ export class DatesService {
 
     return this.fillWithZeros(hour, 2) + ':' + this.fillWithZeros(minutes, 2)
                        +':'+this.fillWithZeros(calculateSeconds, 2);
-  }
-  
+  }  
 
   private fillWithZeros (data: string, lengthString: number): string{
     if (data.length < lengthString){
@@ -55,7 +50,7 @@ export class DatesService {
     return Timestamp.fromDate(new Date());
   }
 
-  calculateSpeed(distance: number | null, time: number | null){
+  calculateSpeed(distance: number | null, time: number | null): number | null{
     if (distance == null || time == null){
       return null;
     }
@@ -79,22 +74,5 @@ export class DatesService {
     };
     return objectDate;
   }
-
-  // Añade mucha más complejidad al problema de lo que soluciona se descarta.
-  // addTimeZoneOffset(date: Date): Date{
-  //   if (date.toISOString().indexOf('Z') != -1){
-  //     const stringDate = date.toISOString().split('Z');
-  //     const timezoneOffset = date.getTimezoneOffset();
-  //     const isPositive = timezoneOffset >= 0 ? '+' : '-';
-  //     return new Date(stringDate[0]+
-  //                       isPositive+
-  //                       this.fillWithZeros(String(Math.abs(timezoneOffset) / 60), 2)+":00");
-
-  //   } else {
-  //     return date;
-  //   }
-
-  // }
-
 
 }

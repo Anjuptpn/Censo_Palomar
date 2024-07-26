@@ -3,7 +3,7 @@ import { User } from '@angular/fire/auth';
 import { MatIconModule } from '@angular/material/icon';
 import { FirebaseService } from '../../../../../services/firebase.service';
 import { CompetitionInterface } from '../../../../../models/competition.model';
-import { SnackbarService } from '../../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../../../services/firebase-errors.service';
 import { AuthService } from '../../../../../services/auth.service';
 import { CommonModule } from '@angular/common';

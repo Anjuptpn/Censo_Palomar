@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { CompetitionsService } from '../../pages/user/competitions/competitions.service';
-import { SnackbarService } from '../snackbar/snackbar.service';
+import { SnackbarService } from '../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../services/firebase-errors.service';
 import { DialogService } from '../dialog/dialog.service';
 import { User } from '@angular/fire/auth';

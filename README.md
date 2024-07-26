@@ -1,27 +1,63 @@
 # CensoPalomar
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.1.
+###### Trabajo de Fin de Grado: Aplicación web para aficionados a la colombofilia
 
-## Development server
+###### Demo
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Se puede ver el proyecto en funcionamiento en el siguiente enlace: https://censo-palomar.web.app/
 
-## Code scaffolding
+## Desarrollado con:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+**Node.js** versión: 20.13.1
 
-## Build
+**Npm** versión: 10.8.0
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+**Angular** versión: 17.1.1
 
-## Running unit tests
+**Angular Material** versión: 17.3.9
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Cómo instalar el proyecto en local
 
-## Running end-to-end tests
+Para instalarlo, es necesario que se tengan instalados los siguientes programas:
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+*Node.js* y *Angular*
 
-## Further help
+Para instalarlo, clone o descargue el zip. Y en la carpeta de extracción usar el comando:
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+```npm install```
+
+Una vez instalado, en el fichero /src/environments/environment.ts colocar la configuración de tu proyecto de Firebase. Que será similar al siguiente código:
+
+```
+    export const environment = {
+        firebaseConfig: {
+            apiKey: "XXXXXXXXXXXXXXXXX-XXXXXXXXXXXXXXXXXXXXX",
+            authDomain: "XXXXXXXXXX.firebaseapp.com",
+            projectId: "nombre del proyecto",
+            storageBucket: "nombreDelProyecto.appspot.com",
+            messagingSenderId: "XXXXXXXXXXXX",
+            appId: "X:XXXXXXXXXXXX:web:XXXXXXXXXXXXXXXXXXXXXX"     
+        },     
+    };
+```
+Y en el fichero app.config.ts se debe colocar el siguiente código: 
+
+```
+    export const appConfig: ApplicationConfig = {
+    providers: [
+        provideRouter(appRoutes),
+        provideAnimations(),
+        provideFirebaseApp(()=>initializeApp(environment.firebase)),
+        provideAuth(() => getAuth()),
+        provideFirestore(() => getFirestore()),
+        provideStorage(() => getStorage())
+    ]}
+```
+
+## Iniciar el servidor en local.
+
+Psrs arrancar el servidor en local se usa el comando 
+
+```npm install```
+
+Luego en la dirección `http://localhost:4200/`. Se mostrará la aplicación funcionando.

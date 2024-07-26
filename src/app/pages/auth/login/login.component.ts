@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
 import { Observable } from 'rxjs';
-import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
 import { SpinnerService } from '../../../services/spinner.service';
 import { FooterComponent } from '../../../shared/footer/footer.component';

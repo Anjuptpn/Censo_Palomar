@@ -4,7 +4,6 @@ import { AuthService } from '../../../../services/auth.service';
 import { User } from '@angular/fire/auth';
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { CompetitionFormComponent } from '../sections/competition-form/competition-form.component';
-import { SpinnerService } from '../../../../services/spinner.service';
 
 @Component({
   selector: 'app-add-competition',

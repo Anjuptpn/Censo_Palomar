@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { User } from '@angular/fire/auth';
 import { CompetitionInterface } from '../../../../models/competition.model';
-import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../../../services/auth.service';
@@ -65,7 +65,7 @@ export class ViewCompetitionComponent implements OnInit, OnDestroy{
     if(minutes == null || minutes == undefined){
       return null;
     }
-    return this.datesService.convertirSegundosAHorasMinutosYSegundos(minutes);
+    return this.datesService.convertSecondsToHourMinutesAndSeconds(minutes);
   }
 
   ngOnDestroy(): void {

@@ -1,9 +1,10 @@
-<h1>Parámetro 1 {{pigeonId}}</h1>
-<h1>Parámetro 2 {{competitionId}}</h1>
-
 <div class="wrapper-title-register center-child">
     <div class="title-register">
         <h2 class="title-form">Editar competición / entrenamiento</h2>
     </div>
 </div> 
-<app-competition-form [pigeonId]="pigeonId" [competitionId]="competitionId" [typeForm]="'Editar Competición'"></app-competition-form>
+<app-competition-form 
+    [pigeonId]="pigeonId" 
+    [competitionId]="competitionId" 
+    [typeForm]="'Editar Competición'">
+</app-competition-form>

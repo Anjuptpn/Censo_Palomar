@@ -5,7 +5,8 @@ import { Timestamp } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { StorageService } from './storage.service';
 import { FirebaseService } from './firebase.service';
-import { from, map, take } from 'rxjs';
+import { map, take } from 'rxjs';
+import { promises } from 'node:dns';
 
 interface RespuestaDeError{
   code: string;
@@ -22,23 +23,15 @@ export class AuthService {
   private storageService = inject(StorageService);
   private firebaseService = inject(FirebaseService);
 
-  constructor() { }
+  get currentUserState(){
+    return authState(this.auth);
+  }
 
   async userSignup(imageFile: File, userData: UserInterface, role = 'Colombófilo'): Promise<void>{
     try{
-      //Aquí se extrae el objeto User del Usercredentials que devuelve.
       const { user } = await createUserWithEmailAndPassword( this.auth, userData.email, userData.password);
-      if (user){
-        userData.id = user.uid;
-        userData.rol = role;
-        userData.password = '-';
-        userData.registerDate = Timestamp.fromDate(new Date());
-        if (imageFile.name !== 'null.null'){
-          userData.urlImage = await this.storageService.uploadImage(imageFile, 'perfiles-usuarios');
-        } else {
-          userData.urlImage = "https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/perfiles-usuarios%2Fcirculo-grande-500.png?alt=media&token=5aba1c10-7acf-4da5-8b0a-72e1ac2bfe56"
-        }
-        //this.saveUserData(userData);
+      if (user){        
+        await this.fillUserData(user, imageFile, userData, role);
         this.firebaseService.saveInFirestore(userData, 'usuarios', user.uid);
         this.sendVerificationEmail(user);
         this.router.navigate(['/auth/email-verification']);        
@@ -48,9 +41,17 @@ export class AuthService {
     }
   }
 
-  //Devuelve el estado del usuario
-  get currentUserState(){
-    return authState(this.auth);
+  private async fillUserData(user: User, imageFile: File, userData: UserInterface, role: string): Promise<void>{
+    userData.id = user.uid;
+    userData.rol = role;
+    userData.password = '-';
+    userData.registerDate = Timestamp.fromDate(new Date());
+    if (imageFile.name !== 'null.null'){
+      userData.urlImage = await this.storageService.uploadImage(imageFile, 'perfiles-usuarios');
+
+    } else {
+      userData.urlImage = "https://firebasestorage.googleapis.com/v0/b/censo-palomar.appspot.com/o/perfiles-usuarios%2Fcirculo-grande-500.png?alt=media&token=5aba1c10-7acf-4da5-8b0a-72e1ac2bfe56"
+    }
   }
 
   async sendVerificationEmail (user: User): Promise<void>{
@@ -61,7 +62,6 @@ export class AuthService {
     }
   }
 
-  //Inicio de Sesión
   async loginWithEmailAndPassword (email: string, password: string): Promise<void>{
     try{
       const { user } = await signInWithEmailAndPassword (this.auth, email, password);
@@ -77,7 +77,6 @@ export class AuthService {
     this.router.navigate([route]);
   }
 
-  //Recuperación de contraseña
   async sendLinkToRecoveryPassword (email: string): Promise<void>{
     try{
       await sendPasswordResetEmail(this.auth, email);
@@ -86,7 +85,6 @@ export class AuthService {
     }
   }
 
-  //Cerrar Sesión
   async logout(){
     try {
       await this.auth.signOut();
@@ -127,7 +125,7 @@ export class AuthService {
       throw(error);
     }
   }
-    //Actualizar Usuario
+
   async updateUserData (userData: UserInterface){
     try{
       const path = 'usuarios/';
@@ -146,13 +144,12 @@ export class AuthService {
         await reauthenticateWithCredential(user, credentials);
         await updatePassword(user, newPassword)
         return true;        
-      } catch (error){    
-        throw(this.extractErrorCode(error));
-        
+      } catch (error){
+        throw(this.extractErrorCode(error));        
       }  
     }
 
-    async isAdminUser(user: User){
+    async isAdminUser(user: User): Promise<boolean>{
       const userInfo = await this.getUserInfoFromFirebase(user.uid);
       return userInfo.rol === "Administrador";
     }

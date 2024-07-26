@@ -3,7 +3,7 @@ import { SpinnerService } from '../../../services/spinner.service';
 import { AdsService } from '../ads.service';
 import { CommonModule, Location } from '@angular/common';
 import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
-import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { AdsInterface } from '../../../models/ads.model';
 import { RouterLink } from '@angular/router';
 import { FooterComponent } from '../../../shared/footer/footer.component';

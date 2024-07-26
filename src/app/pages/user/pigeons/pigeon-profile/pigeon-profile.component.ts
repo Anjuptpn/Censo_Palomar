@@ -7,7 +7,7 @@ import { CompetitionsListComponent } from '../../competitions/sections/competiti
 import { ToolsBarComponent } from '../../../../shared/tools-bar/tools-bar.component';
 import { AuthService } from '../../../../services/auth.service';
 import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
-import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../services/snackbar.service';
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { PigeonsService } from '../pigeons.service';
 import { MatButton } from '@angular/material/button';

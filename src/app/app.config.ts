@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
 import { provideServiceWorker } from '@angular/service-worker';
 
-export const appConfig: ApplicationConfig = {
+export const appConfig2: ApplicationConfig = {
   providers: [provideRouter(routes),
     provideClientHydration(),
     provideAnimationsAsync(),
@@ -31,3 +31,14 @@ export const appConfig: ApplicationConfig = {
         registrationStrategy: 'registerWhenStable:30000'
     })]
 };
+
+export const appConfig: ApplicationConfig = {
+    providers: [
+      provideRouter(routes),
+      provideAnimationsAsync(),
+      provideFirebaseApp(()=>initializeApp(environment.firebaseConfig)),
+      provideAuth(() => getAuth()),
+      provideFirestore(() => getFirestore()),
+      provideStorage(() => getStorage())
+    ]}
+  

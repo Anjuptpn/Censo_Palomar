@@ -3,7 +3,7 @@ import { NewsInterface } from '../../../models/news.models';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NewsService } from '../news.service';
 import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
-import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { CommonModule } from '@angular/common';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from '@angular/material/button';
@@ -46,13 +46,14 @@ export class ViewNewsComponent implements OnInit, OnDestroy{
       }
     });
     this.newsId = this.activatedRoute.snapshot.params['id'];
+
     this.newsService.getNewsWithId(this.newsId).then( (response) => {
-        this.currentNews = response as NewsInterface;
-        this.spinnerService.stopLoading();
-      }).catch(error =>  {
-        this.spinnerService.stopLoading();
-        this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 'cerrar', 8, 'snackbar-error');
-      });
+      this.currentNews = response as NewsInterface;
+      this.spinnerService.stopLoading();
+    }).catch(error =>  {
+      this.spinnerService.stopLoading();
+      this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string), 'cerrar', 8, 'snackbar-error');
+    });
   }
 
   ngOnDestroy(): void {

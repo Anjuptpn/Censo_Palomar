@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../../services/auth.service';
-import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { User } from '@angular/fire/auth';
 import { Location } from '@angular/common';
@@ -63,8 +63,7 @@ export class UpdatePasswordFormComponent {
                   `La contraseña ha sido actualizada`, 'cerrar', 8, 'snackbar-success');
               } else {
                 this.snackbar.showSnackBar(
-                  `Error`,
-                  'cerrar', 8, 'snackbar-error');
+                  `Ha ocurrido un error la contraseña no ha podido actualizarse`, 'cerrar', 8, 'snackbar-error');
               }
           } else {
             this.snackbar.showSnackBar(
@@ -91,16 +90,6 @@ export class UpdatePasswordFormComponent {
         'cerrar', 8, 'snackbar-error');
     }
     this.spinnerService.stopLoading();
-  }
-
-  private async updateUserData(){
-    try{
-      this.snackbar.showSnackBar("Se ha actualizado corretamente la información", 'cerrar', 8, 'snackbar-success');
-      this.goBack();
-    }catch (error){
-      this.snackbar.showSnackBar(this.firebaseErrors.translateErrorCode(error as string),
-                          'cerrar',  8,  'snackbar-error');
-    }
   }
 
   goBack(): void{

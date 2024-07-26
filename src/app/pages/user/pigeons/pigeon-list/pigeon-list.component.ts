@@ -5,7 +5,7 @@ import { AuthService } from '../../../../services/auth.service';
 import { PigeonInterface } from '../../../../models/pigeon.model';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { MatButtonModule } from '@angular/material/button';
 import { SpinnerService } from '../../../../services/spinner.service';

@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthService } from '../../../../services/auth.service';
-import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
 import { User } from '@angular/fire/auth';
 import { filter, tap } from 'rxjs';
@@ -113,7 +113,7 @@ export class UpdateUserComponent {
       } catch (error){
         this.spinnerService.stopLoading();
         this.snackbar.showSnackBar(
-          `Han Ocurrido un error al subir las imágenes al servidor`,
+          `Ha ocurrido un error al subir las imágenes al servidor`,
           'cerrar', 8, 'snackbar-error');
       }
     }     

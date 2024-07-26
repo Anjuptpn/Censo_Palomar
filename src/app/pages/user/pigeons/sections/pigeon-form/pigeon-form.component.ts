@@ -13,7 +13,7 @@ import { CommonModule, Location } from '@angular/common';
 import { MatSelectModule } from '@angular/material/select';
 import { Timestamp } from '@angular/fire/firestore';
 import { User } from '@angular/fire/auth';
-import { SnackbarService } from '../../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../../../services/firebase-errors.service';
 import { AuthService } from '../../../../../services/auth.service';
 import { PigeonInterface } from '../../../../../models/pigeon.model';
@@ -49,7 +49,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
   private readonly authService = inject(AuthService);
   private readonly location = inject(Location);
   private readonly pigeonService = inject(PigeonsService);
-  private spinnerService = inject(SpinnerService);
+  private readonly spinnerService = inject(SpinnerService);
 
   states = estados.pigeonStates;
   currentUser: User | null = null;
@@ -129,7 +129,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     }
   }
 
-  async prepareFormData(): Promise<PigeonInterface>{ 
+  private async prepareFormData(): Promise<PigeonInterface>{ 
     let pigeonData: PigeonInterface = this.pigeonForm.value;    
     if (this.typeForm === 'Editar Paloma' && this.imageFile.name === 'null.null'){
       pigeonData.image = this.currentPigeon!.image;
@@ -137,7 +137,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
       if (this.typeForm === "Editar Paloma"){
         this.pigeonService.deletePigeonImage(this.currentPigeon!.image);
       }
-      pigeonData.image = await this.pigeonService.uploadImageToFirestore(this.imageFile, 'Palomas/'+this.currentUser?.email);
+      pigeonData.image = await this.pigeonService.uploadImageToFirestore( this.imageFile, 'Palomas/'+this.currentUser?.email);
     } 
     if (this.typeForm === 'Editar Paloma' && this.currentPigeon != null){
       pigeonData.registerDate = this.currentPigeon.registerDate;
@@ -149,7 +149,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     return pigeonData;
   }  
 
-  async registerPigeon(pigeon: PigeonInterface): Promise<void>{
+  private async registerPigeon(pigeon: PigeonInterface): Promise<void>{
     this.spinnerService.showLoading();
     try{
       if (this.currentUser == null || this.currentUser == undefined){
@@ -168,7 +168,7 @@ export class PigeonFormComponent implements OnInit, OnDestroy{
     }
   } 
 
-  async updatePigeon(pigeon: PigeonInterface): Promise<void>{
+  private async updatePigeon(pigeon: PigeonInterface): Promise<void>{
     this.spinnerService.showLoading();
     try{
       if (this.currentUser == null || this.currentUser == undefined){

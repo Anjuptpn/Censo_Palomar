@@ -2,7 +2,7 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AdsService } from '../ads.service';
 import { FirebaseErrorsService } from '../../../services/firebase-errors.service';
-import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { SpinnerService } from '../../../services/spinner.service';
 import { AuthService } from '../../../services/auth.service';
 import { AdsInterface } from '../../../models/ads.model';

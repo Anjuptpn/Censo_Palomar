@@ -7,7 +7,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { CommonModule, Location } from '@angular/common';
 import { User } from '@angular/fire/auth';
-import { SnackbarService } from '../../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../../services/snackbar.service';
 import { FirebaseErrorsService } from '../../../../../services/firebase-errors.service';
 import { AuthService } from '../../../../../services/auth.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
@@ -50,7 +50,6 @@ export class CompetitionFormComponent {
 
   currentUser: User | null = null;
   competitionForm!: FormGroup;
-  //currentCompetition: CompetitionInterface | null = null;
   currentCompetition: any = null;
   private readonly numberPattern = /^\d+(.\d+)?$/; //No funciona con input type number.
   private readonly minutesAndSecondsPattern = /^[0-5][0-9]$/;
@@ -104,7 +103,7 @@ export class CompetitionFormComponent {
     }
   }
 
-  prepareFormData(): CompetitionInterface{
+  private prepareFormData(): CompetitionInterface{
     const startDate = this.datesService.createFirebaseTimestamp(
       this.competitionForm.value.competitionDate, this.competitionForm.value.startHour, 
       this.competitionForm.value.startMinutes, this.competitionForm.value.startSeconds);

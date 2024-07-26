@@ -6,7 +6,7 @@ import { User } from '@angular/fire/auth';
 import { AuthService } from '../../../../services/auth.service';
 import { SpinnerService } from '../../../../services/spinner.service';
 import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
-import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../services/snackbar.service';
 import { MatButton } from '@angular/material/button';
 import { BreakpointObserver } from '@angular/cdk/layout';
 

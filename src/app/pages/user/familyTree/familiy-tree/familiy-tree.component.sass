@@ -1,12 +1,10 @@
 @use 'sass:math'
 @import '../../../../general-styles/form-styles'
 
-//https://sass-lang.com/documentation/at-rules/function/
-//https://sass-lang.com/documentation/at-rules/control/for/
 @function percentageCalc($level) 
     @return math.div(100%, math.pow(2, $level))
 
-@for $i from 0 through 5 
+@for $i from 0 through 3 
     .container-tree
         .wrapper-tree
             .class-level-#{$i}

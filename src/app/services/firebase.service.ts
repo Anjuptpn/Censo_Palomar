@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, WhereFilterOp, collection, collectionData, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
+import { Firestore, WhereFilterOp, collection, deleteDoc, doc, getDoc, getDocs, limit, orderBy, query, setDoc, updateDoc, where } from '@angular/fire/firestore';
 import { from, Observable } from 'rxjs';
 
 @Injectable({
@@ -7,12 +7,8 @@ import { from, Observable } from 'rxjs';
 })
 export class FirebaseService {
 
-  //private authService = inject(AuthService);
   private firestore = inject(Firestore);
 
-  constructor() { }
-
-  //Almacenar Datos
   async saveInFirestore(dataCollection: any, path: string, id: string){
     try{
       const document = doc(this.firestore, path, id);
@@ -22,7 +18,6 @@ export class FirebaseService {
     }
   }
 
-  //Recuperar una colección concreta
   async getDocumentFromFirebase(id: string, path: string){
     try{
       const document = doc(this.firestore, path, id);
@@ -38,16 +33,13 @@ export class FirebaseService {
       const queryToDo = query(dataCollection, orderBy('id', 'desc'));
       let collectionResult: collectionType[];
       return from(getDocs(queryToDo).then( (result) => {
-        collectionResult =  result.docs.map(doc => doc.data() as collectionType); 
-        return collectionResult;       
+        return result.docs.map(doc => doc.data() as collectionType);        
       }));  
     } catch (error){
       throw (error);
     }
-
   }
 
-  //Actualizar Documentos
   async updateDocumentInFirestore(dataCollection: any, path: string, id: string){
     try{
       const document = doc(this.firestore, path, id);
@@ -76,7 +68,12 @@ export class FirebaseService {
     }
   }
 
-  async getDocumentsWithQuery(path: string, field: string, comparation: WhereFilterOp, condition: string, order: string){
+  async getDocumentsWithQuery(
+        path: string, 
+        field: string, 
+        comparation: WhereFilterOp, 
+        condition: string, 
+        order: string){
     try{
       const dataCollection = collection(this.firestore, path);
       const queryToMake = query(dataCollection, where(field, comparation, condition), orderBy(order, 'asc'));

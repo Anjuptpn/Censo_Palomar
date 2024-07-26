@@ -3,7 +3,7 @@ import { MatButton } from '@angular/material/button';
 import { AdsService } from '../../ads.service';
 import { RouterLink } from '@angular/router';
 import { FirebaseErrorsService } from '../../../../services/firebase-errors.service';
-import { SnackbarService } from '../../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../../services/snackbar.service';
 import { CommonModule } from '@angular/common';
 import { AdsInterface } from '../../../../models/ads.model';
 import { ExtractWords } from '../../../../services/extract-words.pipe';

@@ -3,7 +3,7 @@ import { MatIcon } from '@angular/material/icon';
 import { AuthService } from '../../../services/auth.service';
 import { SpinnerService } from '../../../services/spinner.service';
 import { UserInterface } from '../../../models/user.model';
-import { SnackbarService } from '../../../shared/snackbar/snackbar.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { RouterLink } from '@angular/router';
 import { MatButton } from '@angular/material/button';
 import { CommonModule } from '@angular/common';

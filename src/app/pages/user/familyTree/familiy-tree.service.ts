@@ -9,7 +9,7 @@ export class FamiliyTreeService {
 
   constructor(private readonly firebase: FirebaseService) { }
   
-  async fillArrayWithParents (pigeon: string, path: string, index: number, nodes: number, familyArray: (string | PigeonInterface)[]): Promise<any>{
+  private async fillArrayWithParents (pigeon: string, path: string, index: number, nodes: number, familyArray: (string | PigeonInterface)[]): Promise<any>{
     if (index >= nodes) return;
     if (pigeon == null || pigeon == '' || pigeon == undefined) return '';
     try{      
@@ -31,8 +31,7 @@ export class FamiliyTreeService {
       } 
     } catch (error){
       throw(error);
-    }
-    
+    }    
   }
   
   async getParents (pigeon: string, userId: string, nodes: number){
@@ -46,15 +45,12 @@ export class FamiliyTreeService {
       }      
     } else{
       return [];
-    }
-
-    
+    }    
   }
 
   private levelIsValid(level: number): boolean{
     if (level < 0) return false; //Número negativos
     return (((level + 1) & level) === 0); //Combrobamos que level+1 es potencia de 2
   }
-
     
 }
