@@ -53,11 +53,18 @@ Y en el fichero app.config.ts se debe colocar el siguiente código:
         provideStorage(() => getStorage())
     ]}
 ```
+puede que sea necesario instalar Firebase CLI utilizando los siguientes comandos:
+
+Instalación: ```npm install -g firebase-tools```
+
+Inicio de sesión: ```firebase-login```
+
+Inicializar firebase: ```firebase-init```
 
 ## Iniciar el servidor en local.
 
-Psrs arrancar el servidor en local se usa el comando 
+Para arrancar el servidor en local se usa el comando 
 
-```npm install```
+```ng serve```
 
 Luego en la dirección `http://localhost:4200/`. Se mostrará la aplicación funcionando.
