@@ -26,7 +26,19 @@ Para instalarlo, clone o descargue el zip. Y en la carpeta de extracción usar e
 
 ```npm install```
 
-Una vez instalado, en el fichero /src/environments/environment.ts colocar la configuración de tu proyecto de Firebase. Que será similar al siguiente código:
+Una vez instalado, es necesario crear un proyecto en Firebase siguiendo estos pasos:
+
+:Dirigirse a la consola de firebase, https://firebase.google.com
+:Iniciar sesión con una cuenta de Google
+:Seleccionar "Crear un Proyecto"
+:Ingresar el nombre del proyecto
+:Seleccionar si quieres activar Google Analytics en el proyecto
+:Agregar Firebase a Aplicación web
+:Registrar el nombre de la app en la pantalla que aparece
+:Ya el proyecto está creado, copiar las claves para configurar Firebase.
+
+
+Una vez creado el proyecto, en el fichero /src/environments/environment.ts colocar la configuración de tu proyecto de Firebase. Que será similar al siguiente código:
 
 ```
     export const environment = {
