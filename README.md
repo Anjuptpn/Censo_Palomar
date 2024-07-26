@@ -28,14 +28,14 @@ Para instalarlo, clone o descargue el zip. Y en la carpeta de extracción usar e
 
 Una vez instalado, es necesario crear un proyecto en Firebase siguiendo estos pasos:
 
-:Dirigirse a la consola de firebase, https://firebase.google.com
-:Iniciar sesión con una cuenta de Google
-:Seleccionar "Crear un Proyecto"
-:Ingresar el nombre del proyecto
-:Seleccionar si quieres activar Google Analytics en el proyecto
-:Agregar Firebase a Aplicación web
-:Registrar el nombre de la app en la pantalla que aparece
-:Ya el proyecto está creado, copiar las claves para configurar Firebase.
+1. Dirigirse a la consola de firebase, https://firebase.google.com
+2. Iniciar sesión con una cuenta de Google
+3. Seleccionar "Crear un Proyecto"
+4. Ingresar el nombre del proyecto
+5. Seleccionar si quieres activar Google Analytics en el proyecto
+6. Agregar Firebase a Aplicación web
+7. Registrar el nombre de la app en la pantalla que aparece
+8. Ya el proyecto está creado, copiar las claves para configurar Firebase.
 
 
 Una vez creado el proyecto, en el fichero /src/environments/environment.ts colocar la configuración de tu proyecto de Firebase. Que será similar al siguiente código:
